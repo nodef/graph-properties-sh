@@ -18,6 +18,8 @@ using std::set_difference;
 using std::copy;
 using std::abs;
 using std::swap;
+using std::min_element;
+using std::max_element;
 
 
 
@@ -56,6 +58,51 @@ int countIf(I ib, I ie, F fn) {
 template <class J, class F>
 int countIf(const J& x, F fn) {
   return count_if(x.begin(), x.end(), fn);
+}
+
+
+
+
+// MIN/MAX/AVG-VALUE
+// -----------------
+
+template <class I>
+auto minValue(I ib, I ie) {
+  return *min_element(ib, ie);
+}
+
+template <class J>
+auto minValue(J&& x) {
+  return minValue(x.begin(), x.end());
+}
+
+
+template <class I>
+auto maxValue(I ib, I ie) {
+  return *max_element(ib, ie);
+}
+
+template <class J>
+auto maxValue(J&& x) {
+  return maxValue(x.begin(), x.end());
+}
+
+
+template <class I>
+auto avgValue(I ib, I ie) {
+  using T = typename iterator_traits<I>::value_type;
+  T a = T();
+  int N = 0;
+  for (T v : x) {
+    a += v;
+    N++;
+  }
+  return a/N;
+}
+
+template <class J>
+auto avgValue(J&& x) {
+  return avgValue(x.begin(), x.end());
 }
 
 
@@ -512,39 +559,73 @@ V absErrorOmp(const vector<T>& x, const vector<U>& y, int i, int N, V a=V()) {
 
 
 
+// ADD
+// ---
+
+template <class V, class T, class U>
+void add(V *a, const T *x, const U *y, int N) {
+  for (int i=0; i<N; i++)
+    a[i] = x[i] + y[i];
+}
+
+template <class V, class T, class U>
+void add(vector<V>& a, const vector<T>& x, const vector<U>& y) {
+  add(a.data(), x.data(), y.data(), int(x.size()));
+}
+
+template <class V, class T, class U>
+void add(vector<V>& a, const vector<T>& x, const vector<U>& y, int i, int N) {
+  add(a.data()+i, x.data()+i, y.data()+i, N);
+}
+
+template <class T, class U>
+auto add(const vector<T>& x, const vector<U>& y) {
+  vector<T> a(N); add(a.data(), x.data(), y.data(), int(x.size()));
+  return a;
+}
+
+
+
+
 // MULTIPLY
 // --------
 
-template <class T, class U, class V>
-void multiply(T *a, const U *x, const V *y, int N) {
+template <class V, class T, class U>
+void multiply(V *a, const T *x, const U *y, int N) {
   for (int i=0; i<N; i++)
     a[i] = x[i] * y[i];
 }
 
-template <class T, class U, class V>
-void multiply(vector<T>& a, const vector<U>& x, const vector<V>& y) {
+template <class V, class T, class U>
+void multiply(vector<V>& a, const vector<T>& x, const vector<U>& y) {
   multiply(a.data(), x.data(), y.data(), int(x.size()));
 }
 
-template <class T, class U, class V>
-void multiply(vector<T>& a, const vector<U>& x, const vector<V>& y, int i, int N) {
+template <class V, class T, class U>
+void multiply(vector<V>& a, const vector<T>& x, const vector<U>& y, int i, int N) {
   multiply(a.data()+i, x.data()+i, y.data()+i, N);
 }
 
+template <class T, class U>
+auto multiply(const vector<T>& x, const vector<U>& y) {
+  vector<T> a(N); multiply(a.data(), x.data(), y.data(), int(x.size()));
+  return a;
+}
 
-template <class T, class U, class V>
-void multiplyOmp(T *a, const U *x, const V *y, int N) {
+
+template <class V, class T, class U>
+void multiplyOmp(V *a, const T *x, const U *y, int N) {
   #pragma omp parallel for schedule(static,4096)
   for (int i=0; i<N; i++)
     a[i] = x[i] * y[i];
 }
 
-template <class T, class U, class V>
-void multiplyOmp(vector<T>& a, const vector<U>& x, const vector<V>& y) {
+template <class V, class T, class U>
+void multiplyOmp(vector<V>& a, const vector<T>& x, const vector<U>& y) {
   multiplyOmp(a.data(), x.data(), y.data(), int(x.size()));
 }
 
-template <class T, class U, class V>
-void multiplyOmp(vector<T>& a, const vector<U>& x, const vector<V>& y, int i, int N) {
+template <class V, class T, class U>
+void multiplyOmp(vector<V>& a, const vector<T>& x, const vector<U>& y, int i, int N) {
   multiplyOmp(a.data()+i, x.data()+i, y.data()+i, N);
 }

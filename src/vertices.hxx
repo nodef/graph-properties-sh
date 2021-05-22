@@ -58,6 +58,22 @@ auto vertexData(const G& x) {
 
 
 
+// DEGREES
+// -------
+
+template <class G, class J>
+auto degrees(const G& x, J&& ks) {
+  return vertexData(x, ks, [&](int u) { return x.degree(u); });
+}
+
+template <class G>
+auto degrees(const G& x) {
+  return degrees(x, x.vertices());
+}
+
+
+
+
 // CONTAINER
 // ---------
 
