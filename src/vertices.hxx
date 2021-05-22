@@ -1,10 +1,12 @@
 #pragma once
 #include <vector>
 #include <set>
+#include <functional>
 #include "_main.hxx"
 
 using std::vector;
 using std::set;
+using std::hash;
 
 
 

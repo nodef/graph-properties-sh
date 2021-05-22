@@ -92,6 +92,7 @@ void setFrom(C& a, J&& x) {
 
 template <class J>
 auto setFrom(J&& x) {
+  using I = decltype(x.begin());
   using T = typename iterator_traits<I>::value_type;
   set<T> a; setFrom(a, x);
   return a;

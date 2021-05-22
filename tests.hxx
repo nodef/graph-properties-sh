@@ -33,12 +33,11 @@ const char* testCopy() {
 
 const char* testTranspose() {
   DiGraph<> g;
-  DiGraph<> h;
   g.addEdge(1, 2);
   g.addEdge(2, 4);
   g.addEdge(4, 3);
   g.addEdge(3, 1);
-  transpose(g, h);
+  auto h = transpose(g);
 
   if (!(
    h.order() == 4  &&
