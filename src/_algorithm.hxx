@@ -2,11 +2,13 @@
 #include <cmath>
 #include <vector>
 #include <unordered_map>
+#include <set>
 #include <iterator>
 #include <algorithm>
 
 using std::vector;
 using std::unordered_map;
+using std::set;
 using std::iterator_traits;
 using std::back_inserter;
 using std::find;
@@ -79,6 +81,25 @@ auto indices(J&& x) {
 
 
 
+// *-FROM
+// ------
+
+template <class C, class J>
+void setFrom(C& a, J&& x) {
+  a.clear();
+  a.insert(x.begin(), x.end());
+}
+
+template <class J>
+auto setFrom(J&& x) {
+  using T = typename iterator_traits<I>::value_type;
+  set<T> a; setFrom(a, x);
+  return a;
+}
+
+
+
+
 // SET-DIFFERENCE
 // --------------
 
@@ -120,17 +141,33 @@ void reorder(vector<T>& x, vector<int> is) {
 
 
 
+// INSERT
+// ------
+
+template <class T>
+void insertIndex(vector<T>& a, int i, T v) {
+  a.insert(a.begin()+i, v);
+}
+
+template <class T>
+void insertIndex(vector<T>& a, int i, int n, T v) {
+  a.insert(a.begin()+i, n, v);
+}
+
+
+
+
 // ERASE
 // -----
 
 template <class T>
-void eraseIndex(vector<T>& x, int i) {
-  x.erase(x.begin()+i);
+void eraseIndex(vector<T>& a, int i) {
+  a.erase(a.begin()+i);
 }
 
 template <class T>
-void eraseIndex(vector<T>& x, int i, int I) {
-  x.erase(x.begin()+i, x.begin()+I);
+void eraseIndex(vector<T>& a, int i, int I) {
+  a.erase(a.begin()+i, a.begin()+I);
 }
 
 
