@@ -142,6 +142,7 @@ void showAll(const char *pre, const G& x, const H& xt, const Options& o) {
 
 template <class G>
 void doTransformTo(G& a, GraphTransform o) {
+  typedef GraphTransform T;
   switch (o) {
     default: break;
     case T::IDENTITY: break;
@@ -167,7 +168,6 @@ auto doTransform(const G& x, GraphTransform o) {
 // -------
 
 void runMtx(const Options& o) {
-  typedef GraphTransform T;
   printf("Loading graph %s ...\n", o.file.c_str());
   auto x  = readMtx(o.file.c_str()); println(x);
   doTransformTo(x, o.transform);
@@ -183,19 +183,21 @@ void runMtx(const Options& o) {
 // --------
 
 void runSnap(const Options& o) {
-  typedef GraphTransform T;
   printf("Using graph %s ...\n", o.file.c_str());
   string data = readFile(o.file.c_str());
   int M = countLines(data), steps = o.samples, jump = M/steps;
   printf("- temporal-edges: %d (including repeated ones)\n", M);
+  printf("---\n");
   DiGraph<> xo;
   stringstream s(data);
-  while (true) {
+  for (int i=0;; ++i) {
     if (!readSnapTemporal(xo, s, jump)) break; println(xo);
     auto x  = doTransform(xo, o.transform);
     auto xt = transposeWithDegree(x);
     print(xt); printf(" (transposeWithDegree)\n");
+    printf("- sample:  %d (of %d)\n", i+1, o.samples);
     showAll("", x, xt, o);
+    printf("---\n");
   }
 }
 
