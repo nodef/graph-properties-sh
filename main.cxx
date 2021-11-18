@@ -121,6 +121,46 @@ void showBlockgraph(const char *pre, const G& x, const H& xt) {
 }
 
 
+template <class G, class H>
+void showAll(const char *pre, const G& x, const H& xt, const Options& o) {
+  showBasics (pre, x);
+  showDegree (pre, x, xt);
+  showSpecial(pre, x, xt);
+  // showDepth  (pre, x, xt);  // slow!
+  if (o.components) showComponents   (pre, x, xt);
+  if (o.identicals) showInIdenticals (pre, x, xt);
+  if (o.identicals) showOutIdenticals(pre, x, xt);
+  if (o.chains)     showChains       (pre, x, xt);
+  if (o.blockgraph) showBlockgraph   (pre, x, xt);
+}
+
+
+
+
+// DO TRANSFORM
+// ------------
+
+template <class G>
+void doTransformTo(G& a, GraphTransform o) {
+  switch (o) {
+    default: break;
+    case T::IDENTITY: break;
+    case T::LOOP_DEADENDS:
+      selfLoopTo(a, [&](int u) { return isDeadEnd(a, u); });
+      print(a); printf(" (loopDeadEnds)\n"); break;
+    case T::LOOP_VERTICES:
+      selfLoopTo(a, [&](int u) { return true; });
+      print(a); printf(" (loopVertices)\n"); break;
+  }
+}
+
+template <class G>
+auto doTransform(const G& x, GraphTransform o) {
+  auto a = copy(x); doTransformTo(a, o);
+  return a;
+}
+
+
 
 
 // RUN-MTX
@@ -130,27 +170,10 @@ void runMtx(const Options& o) {
   typedef GraphTransform T;
   printf("Loading graph %s ...\n", o.file.c_str());
   auto x  = readMtx(o.file.c_str()); println(x);
-  switch (o.transform) {
-    default: break;
-    case T::IDENTITY: break;
-    case T::LOOP_DEADENDS:
-      selfLoopTo(x, [&](int u) { return isDeadEnd(x, u); });
-      print(x); printf(" (loopDeadEnds)\n"); break;
-    case T::LOOP_VERTICES:
-      selfLoopTo(x, [&](int u) { return true; });
-      print(x); printf(" (loopVertices)\n"); break;
-  }
+  doTransformTo(x, o.transform);
   auto xt = transposeWithDegree(x);
   print(xt); printf(" (transposeWithDegree)\n");
-  showBasics ("", x);
-  showDegree ("", x, xt);
-  showSpecial("", x, xt);
-  // showDepth  ("", x, xt);  // slow!
-  if (o.components) showComponents   ("", x, xt);
-  if (o.identicals) showInIdenticals ("", x, xt);
-  if (o.identicals) showOutIdenticals("", x, xt);
-  if (o.chains)     showChains       ("", x, xt);
-  if (o.blockgraph) showBlockgraph   ("", x, xt);
+  showAll("", x, xt, o);
 }
 
 
@@ -160,6 +183,20 @@ void runMtx(const Options& o) {
 // --------
 
 void runSnap(const Options& o) {
+  typedef GraphTransform T;
+  printf("Using graph %s ...\n", o.file.c_str());
+  string data = readFile(o.file.c_str());
+  int M = countLines(data), steps = o.samples, jump = M/steps;
+  printf("- temporal-edges: %d (including repeated ones)\n", M);
+  DiGraph<> xo;
+  stringstream s(data);
+  while (true) {
+    if (!readSnapTemporal(xo, s, jump)) break; println(xo);
+    auto x  = doTransform(xo, o.transform);
+    auto xt = transposeWithDegree(x);
+    print(xt); printf(" (transposeWithDegree)\n");
+    showAll("", x, xt, o);
+  }
 }
 
 
