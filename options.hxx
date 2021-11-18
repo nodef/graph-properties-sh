@@ -26,7 +26,7 @@ string pathExtname(const string& path) {
 }
 
 
-Options readOptions(int argc, const char **argv) {
+Options readOptions(int argc, char **argv) {
   Options a;
   for (int i=1; i<argc; ++i) {
     string k = argv[i];

@@ -3,6 +3,7 @@
 #include <array>
 #include <vector>
 #include <algorithm>
+#include "_openmp.hxx"
 
 using std::array;
 using std::vector;

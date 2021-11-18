@@ -20,7 +20,7 @@ using namespace std;
 
 int main(int argc, char **argv) {
   Options o = readOptions(argc, argv);
-  printf("Using graph %s ...\n", o.file);
+  printf("Using graph %s ...\n", o.file.c_str());
   printf("\n");
   return 0;
 }
