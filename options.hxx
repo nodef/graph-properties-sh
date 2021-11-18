@@ -6,11 +6,61 @@ using std::string;
 
 
 
+// FILE FORMAT
+// -----------
+
+enum class FileFormat {
+  UNKNOWN,
+  FIXED_MTX,
+  TEMPORAL_TXT
+};
+
+auto parseFileFormat(const string& x) {
+  typedef FileFormat F;
+  if (x=="mtx" || x==".mtx") return F::FIXED_MTX;
+  if (x=="txt" || x==".txt") return F::TEMPORAL_TXT;
+  return F::UNKNOWN;
+}
+
+
+
+
+// GRAPH TRANSFORM
+// ---------------
+
+enum class GraphTransform {
+  UNKNOWN,
+  IDENTITY,
+  LOOP_DEADENDS,
+  LOOP_VERTICES
+};
+
+auto parseGraphTransform(const string& x) {
+  typedef GraphTransform T;
+  if (x=="identity" || x=="default" || x=="none" || x=="") return T::IDENTITY;
+  if (x=="loop-deadends" || x=="loop")     return T::LOOP_DEADENDS;
+  if (x=="loop-vertices" || x=="loop-all") return T::LOOP_VERTICES;
+  return T::UNKNOWN;
+}
+
+
+
+
+// OPTIONS
+// -------
+
 struct Options {
+  private:
+  typedef FileFormat     F;
+  typedef GraphTransform T;
+  public:
   bool   help;
   string error;
   string file;
-  string format;
+  string formatStr;
+  string transformStr;
+  F format;
+  T transform;
   bool components;
   bool blockgraph;
   bool chains;
@@ -27,11 +77,14 @@ string pathExtname(const string& path) {
 
 
 Options readOptions(int argc, char **argv) {
+  typedef FileFormat     F;
+  typedef GraphTransform T;
   Options a;
   for (int i=1; i<argc; ++i) {
     string k = argv[i];
     if (k=="--help") a.help = true;
-    else if (k=="-f" || k=="--format") a.format = argv[++i];
+    else if (k=="-f" || k=="--format")    a.formatStr    = argv[++i];
+    else if (k=="-t" || k=="--transform") a.transformStr = argv[++i];
     else if (k=="--components") a.components = true;
     else if (k=="--blockgraph") a.blockgraph = true;
     else if (k=="--chains")     a.chains     = true;
@@ -40,8 +93,22 @@ Options readOptions(int argc, char **argv) {
     else if (!a.file.empty()) { a.error = "\'"+k+"\' file cannot be read as well"; break; }
     else a.file = k;
   }
-  if (a.file.empty()) { a.error  = "no input file specified"; return a; }
-  if (a.format.empty()) a.format = pathExtname(a.file).substr(1);
-  if (a.format!="mtx" || a.format!="txt") { a.error = "\'"+a.format+"\' format is not recognized"; return a; }
+  if (a.file.empty())    { a.error  = "no input file specified"; return a; }
+  if (a.formatStr.empty()) a.formatStr = pathExtname(a.file);
+  a.format    = parseFileFormat(a.formatStr);
+  a.transform = parseGraphTransform(a.transformStr);
+  if (a.format   ==F::UNKNOWN) { a.error = "\'"+a.formatStr   +"\' format is not recognized";    return a; }
+  if (a.transform==T::UNKNOWN) { a.error = "\'"+a.transformStr+"\' transform is not recognized"; return a; }
   return a;
+}
+
+
+
+
+// HELP
+// ----
+
+const char* helpMessage() {
+  return "For usage details, please try the following URL:\n"
+  "https://github.com/puzzlef/graph-properties";
 }
