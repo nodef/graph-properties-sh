@@ -1,9 +1,9 @@
 #pragma once
-#include <utility>
+#include <tuple>
 #include "dfs.hxx"
 #include "deadEnds.hxx"
 
-using std::make_pair;
+using std::make_tuple;
 
 
 
@@ -21,17 +21,17 @@ int depth(const G& x, int u) {
 
 
 
-// MIN/MAX DEPTH
-// -------------
+// MIN/MAX/AVG
+// -----------
 
 template <class G, class H>
 int minDepth(const G& x, const H& xt) {
-  int dmin = x.order();
+  int dmin = x.order(), D = 0;
   deadEndsForEach(xt, [&](int u) {
-    int d = depth(x, u);
+    int d = depth(x, u); ++D;
     if (d<dmin) dmin = d;
   });
-  return dmin;
+  return D>0? dmin : 0;
 }
 
 template <class G, class H>
@@ -45,28 +45,27 @@ int maxDepth(const G& x, const H& xt) {
 }
 
 template <class G, class H>
-auto minMaxDepth(const G& x, const H& xt) {
-  int dmin = x.order(), dmax = 0;
-  deadEndsForEach(xt, [&](int u) {
-    int d = depth(x, u);
-    if (d<dmin) dmin = d;
-    if (d>dmax) dmax = d;
-  });
-  return make_pair(dmin, dmax);
-}
-
-
-
-
-// AVG DEPTH
-// ---------
-
-template <class G, class H>
 float avgDepth(const G& x, const H& xt) {
   int ds = 0, D = 0;
   deadEndsForEach(xt, [&](int u) {
-    int d = depth(x, u);
-    ds += d; ++D;
+    int d = depth(x, u); ++D;
+    ds += d;
   });
-  return ds/float(D);
+  return D>0? ds/float(D) : 0;
+}
+
+
+template <class G, class H>
+auto minMaxAvgDepth(const G& x, const H& xt) {
+  int dmin = x.order();
+  int dmax = 0, ds = 0, D = 0;
+  deadEndsForEach(xt, [&](int u) {
+    int d = depth(x, u); ++D;
+    if (d<dmin) dmin = d;
+    if (d>dmax) dmax = d;
+    ds += d;
+  });
+  if (D==0) dmin = 0;
+  float davg = D>0? ds/float(D) : 0;
+  return make_tuple(dmin, dmax, davg);
 }

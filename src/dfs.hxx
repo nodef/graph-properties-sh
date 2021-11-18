@@ -89,7 +89,7 @@ void dfsDepthDoLoop(vector<bool>& vis, const G& x, int u, int d, F fn) {
   if (vis[u]) return;  // dont visit if done already!
   vis[u] = true; fn(u, d++);
   for (int v : x.edges(u))
-    if (!vis[v]) dfsDoLoop(vis, x, v, d, fn);
+    if (!vis[v]) dfsDepthDoLoop(vis, x, v, d, fn);
 }
 
 template <class G, class F>

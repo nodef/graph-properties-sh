@@ -32,7 +32,7 @@ auto groupDetails(const vector2d<int>& gs) {
     if (G>gmax) gmax = G;
     GE += G;
   }
-  return make_tuple(GS, gmin, gmax, GE/float(GS));
+  return make_tuple(GS, gmin, gmax, GS>0? GE/float(GS) : 0);
 }
 
 
@@ -41,17 +41,17 @@ void showBasics(const char *pre, const G& x) {
   printf("- %sorder:   %d (vertices)\n",        pre, x.order());
   printf("- %ssize:    %d (edges)\n",           pre, x.size());
   printf("- %sspan:    %d (vertex-id limit)\n", pre, x.span());
-  printf("- %sdensity: %e (fully connectedness fraction)", pre, density(x));
+  printf("- %sdensity: %e (fully connectedness fraction)\n", pre, density(x));
 }
 
 template <class G, class H>
 void showDegree(const char *pre, const G& x, const H& xt) {
   printf("- %sdegree-min:   %d (minimum out-degree)\n", pre, minDegree(x));
   printf("- %sdegree-max:   %d (maximum out-degree)\n", pre, maxDegree(x));
-  printf("- %sdegree-avg:   %d (average out-degree)\n", pre, avgDegree(x));
+  printf("- %sdegree-avg:   %f (average out-degree)\n", pre, avgDegree(x));
   printf("- %sindegree-min: %d (minimum in-degree)\n",  pre, minDegree(xt));
   printf("- %sindegree-max: %d (maximum in-degree)\n",  pre, maxDegree(xt));
-  printf("- %sindegree-avg: %d (average in-degree)\n",  pre, avgDegree(xt));
+  printf("- %sindegree-avg: %f (average in-degree)\n",  pre, avgDegree(xt));
 }
 
 template <class G, class H>
@@ -65,9 +65,10 @@ void showSpecial(const char *pre, const G& x, const H& xt) {
 
 template <class G, class H>
 void showDepth(const char *pre, const G& x, const H& xt) {
-  printf("- %sdepth-min: %d (minimum path length from beginnings)\n", pre, minDepth(x, xt));
-  printf("- %sdepth-max: %d (maximum path length from beginnings)\n", pre, maxDepth(x, xt));
-  printf("- %sdepth-avg: %f (average path length from beginnings)\n", pre, avgDepth(x, xt));
+  auto [dmin, dmax, davg] = minMaxAvgDepth(x, xt);
+  printf("- %sdepth-min: %d (minimum path length from beginnings)\n", pre, dmin);
+  printf("- %sdepth-max: %d (maximum path length from beginnings)\n", pre, dmax);
+  printf("- %sdepth-avg: %f (average path length from beginnings)\n", pre, davg);
 }
 
 template <class G, class H>
@@ -92,18 +93,18 @@ template <class G, class H>
 void showOutIdenticals(const char *pre, const G& x, const H& xt) {
   auto [inum, imin, imax, iavg] = groupDetails(inIdenticals(xt, x));
   printf("- %soutidenticals:    %d (vertices with identical out-edges)\n", pre, inum);
-  printf("- %soutidentical-min: %d (minimum in-identical size)\n", pre, imin);
-  printf("- %soutidentical-max: %d (maximum in-identical size)\n", pre, imax);
-  printf("- %soutidentical-avg: %f (average in-identical size)\n", pre, iavg);
+  printf("- %soutidentical-min: %d (minimum out-identical size)\n", pre, imin);
+  printf("- %soutidentical-max: %d (maximum out-identical size)\n", pre, imax);
+  printf("- %soutidentical-avg: %f (average out-identical size)\n", pre, iavg);
 }
 
 template <class G, class H>
 void showChains(const char *pre, const G& x, const H& xt) {
   auto [cnum, cmin, cmax, cavg] = groupDetails(chains(xt, x));
   printf("- %schains:    %d (vertices connected in a line)\n", pre, cnum);
-  printf("- %schain-min: %d (minimum in-identical size)\n", pre, cmin);
-  printf("- %schain-max: %d (maximum in-identical size)\n", pre, cmax);
-  printf("- %schain-avg: %f (average in-identical size)\n", pre, cavg);
+  printf("- %schain-min: %d (minimum chain size)\n", pre, cmin);
+  printf("- %schain-max: %d (maximum chain size)\n", pre, cmax);
+  printf("- %schain-avg: %f (average chain size)\n", pre, cavg);
 }
 
 template <class G, class H>
@@ -144,7 +145,7 @@ void runMtx(const Options& o) {
   showBasics ("", x);
   showDegree ("", x, xt);
   showSpecial("", x, xt);
-  showDepth  ("", x, xt);
+  // showDepth  ("", x, xt);  // slow!
   if (o.components) showComponents   ("", x, xt);
   if (o.identicals) showInIdenticals ("", x, xt);
   if (o.identicals) showOutIdenticals("", x, xt);

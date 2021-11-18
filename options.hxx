@@ -54,17 +54,17 @@ struct Options {
   typedef FileFormat     F;
   typedef GraphTransform T;
   public:
-  bool   help;
-  string error;
-  string file;
-  string formatStr;
-  string transformStr;
-  F format;
-  T transform;
-  bool components;
-  bool blockgraph;
-  bool chains;
-  bool identicals;
+  bool   help  = false;
+  string error = "";
+  string file  = "";
+  string formatStr    = "";
+  string transformStr = "";
+  F format    = F::UNKNOWN;
+  T transform = T::IDENTITY;
+  bool components = true;
+  bool blockgraph = true;
+  bool chains     = true;
+  bool identicals = true;
 };
 
 
