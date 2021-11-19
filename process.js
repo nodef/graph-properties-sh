@@ -3,9 +3,10 @@ const os = require('os');
 const path = require('path');
 
 const RGRAPH = /^Using graph .*\/(.*?)\.txt \.\.\./m;
+const RGRAPD = /^order: (\d+) size: (\d+) {}/m;
 const RTEMPE = /^- temporal-edges: (\d+)/m;
 const RSPACE = /^---/m;
-const RFIELD = /^- (.+?): (\S+)/m;
+const RFIELD = /^- (.+?):\s+(\S+)/m;
 
 
 
