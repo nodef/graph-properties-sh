@@ -56,11 +56,11 @@ void showSpecial(const char *pre, const G& x, const H& xt) {
 
 template <class G, class H>
 void showLevels(const char *pre, const G& x, const H& xt) {
-  auto [lmin, lmax, lavg] = minMaxAvgDepth(x, xt);
-  printf("- %slevels:    %d (vertices in a level are independent)\n",     pre, cnum);
-  printf("- %slevel-min: %d (minimum vertices in a level)\n", pre, lmin);
-  printf("- %slevel-max: %d (maximum vertices in a level)\n", pre, lmax);
-  printf("- %slevel-avg: %f (average vertices in a level)\n", pre, lavg);
+  auto [lnum, lmin, lmax, lavg] = groupDetails(levelwiseGroups(xt));
+  printf("- %slevels:    %d (vertices in a level are independent)\n", pre, lnum);
+  printf("- %slevel-min: %d (minimum vertices in a level)\n",         pre, lmin);
+  printf("- %slevel-max: %d (maximum vertices in a level)\n",         pre, lmax);
+  printf("- %slevel-avg: %f (average vertices in a level)\n",         pre, lavg);
 }
 
 template <class G, class H>
