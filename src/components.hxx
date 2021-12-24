@@ -3,7 +3,6 @@
 #include "_main.hxx"
 #include "vertices.hxx"
 #include "dfs.hxx"
-#include "topologicalSort.hxx"
 
 using std::vector;
 
@@ -55,6 +54,7 @@ auto componentIds(const G& x, const vector2d<int>& cs) {
 
 // BLOCKGRAPH
 // ----------
+// Each component is represented as a vertex.
 
 template <class H, class G>
 void blockgraph(H& a, const G& x, const vector2d<int>& cs) {
@@ -70,26 +70,6 @@ template <class G>
 auto blockgraph(const G& x, const vector2d<int>& cs) {
   G a; blockgraph(a, x, cs);
   return a;
-}
-
-
-
-
-// SORTED-COMPONENTS
-// -----------------
-
-template <class G>
-auto sortedComponents(const G& x, vector2d<int> cs) {
-  auto b = blockgraph(x, cs);
-  auto bks = topologicalSort(b);
-  reorder(cs, bks);
-  return cs;
-}
-
-template <class G, class H>
-auto sortedComponents(const G& x, const H& xt) {
-  auto cs = components(x, xt);
-  return sortedComponents(x, cs);
 }
 
 

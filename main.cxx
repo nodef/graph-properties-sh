@@ -55,11 +55,12 @@ void showSpecial(const char *pre, const G& x, const H& xt) {
 }
 
 template <class G, class H>
-void showDepth(const char *pre, const G& x, const H& xt) {
-  auto [dmin, dmax, davg] = minMaxAvgDepth(x, xt);
-  printf("- %sdepth-min: %d (minimum path length from beginnings)\n", pre, dmin);
-  printf("- %sdepth-max: %d (maximum path length from beginnings)\n", pre, dmax);
-  printf("- %sdepth-avg: %f (average path length from beginnings)\n", pre, davg);
+void showLevels(const char *pre, const G& x, const H& xt) {
+  auto [lmin, lmax, lavg] = minMaxAvgDepth(x, xt);
+  printf("- %slevels:    %d (vertices in a level are independent)\n",     pre, cnum);
+  printf("- %slevel-min: %d (minimum vertices in a level)\n", pre, lmin);
+  printf("- %slevel-max: %d (maximum vertices in a level)\n", pre, lmax);
+  printf("- %slevel-avg: %f (average vertices in a level)\n", pre, lavg);
 }
 
 template <class G, class H>
@@ -73,7 +74,7 @@ void showComponents(const char *pre, const G& x, const H& xt) {
 
 template <class G, class H>
 void showInIdenticals(const char *pre, const G& x, const H& xt) {
-  auto [inum, imin, imax, iavg] = groupDetails(inIdenticals(x, xt));
+  auto [inum, imin, imax, iavg] = groupDetails(edgeIdenticals(xt));
   printf("- %sinidenticals:    %d (vertices with identical in-edges)\n", pre, inum);
   printf("- %sinidentical-min: %d (minimum in-identical size)\n", pre, imin);
   printf("- %sinidentical-max: %d (maximum in-identical size)\n", pre, imax);
@@ -82,11 +83,11 @@ void showInIdenticals(const char *pre, const G& x, const H& xt) {
 
 template <class G, class H>
 void showOutIdenticals(const char *pre, const G& x, const H& xt) {
-  auto [inum, imin, imax, iavg] = groupDetails(inIdenticals(xt, x));
-  printf("- %soutidenticals:    %d (vertices with identical out-edges)\n", pre, inum);
-  printf("- %soutidentical-min: %d (minimum out-identical size)\n", pre, imin);
-  printf("- %soutidentical-max: %d (maximum out-identical size)\n", pre, imax);
-  printf("- %soutidentical-avg: %f (average out-identical size)\n", pre, iavg);
+  auto [onum, omin, omax, oavg] = groupDetails(edgeIdenticals(x));
+  printf("- %soutidenticals:    %d (vertices with identical out-edges)\n", pre, onum);
+  printf("- %soutidentical-min: %d (minimum out-identical size)\n", pre, omin);
+  printf("- %soutidentical-max: %d (maximum out-identical size)\n", pre, omax);
+  printf("- %soutidentical-avg: %f (average out-identical size)\n", pre, oavg);
 }
 
 template <class G, class H>
@@ -108,7 +109,7 @@ void showBlockgraph(const char *pre, const G& x, const H& xt) {
   showBasics (prf, b);
   showDegree (prf, b, bt);
   showSpecial(prf, b, bt);
-  showDepth  (prf, b, bt);
+  showLevels (prf, b, bt);
 }
 
 

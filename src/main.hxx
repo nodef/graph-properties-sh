@@ -13,7 +13,7 @@
 #include "dfs.hxx"
 #include "depth.hxx"
 #include "components.hxx"
-#include "topologicalSort.hxx"
+#include "sort.hxx"
 #include "deadEnds.hxx"
 #include "selfLoop.hxx"
 #include "identicals.hxx"

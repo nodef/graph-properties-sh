@@ -60,13 +60,18 @@ size_t size3d(const vector3d<T>& x) {
 // Ref: https://stackoverflow.com/a/22183350/1413259
 
 template <class T>
-void reorder(vector<T>& x, vector<int> is) {
+void reorderDirty(vector<T>& x, vector<int>& is) {
   for(int i=0, N=x.size(); i<N; i++) {
     while(is[i] != is[is[i]]) {
       swap(x[is[i]], x[is[is[i]]]);
       swap(  is[i],    is[is[i]]);
     }
   }
+}
+
+template <class T>
+void reorder(vector<T>& x, vector<int> is) {
+  reorderDirty(x, is);
 }
 
 
@@ -121,11 +126,32 @@ void append(vector<T>& a, const J& vs) {
 
 
 
+// GROUP
+// -----
+
+template <class T, class J, class F>
+void groupIf(vector2d<T>& a, const J& x, F fn) {
+  for (const auto& v : x) {
+    auto& b = a.back();
+    if (a.empty() || !fn(b, v)) a.push_back({v});
+    else b.push_back(v);
+  }
+}
+
+template <class T, class J, class F>
+auto groupIf(const J& xs, F fn) {
+  vector2d<T> a; groupIf(a, xs, fn);
+  return a;
+}
+
+
+
+
 // JOIN
 // ----
 
-template <class T, class F>
-void joinIf(vector2d<T>& a, const vector2d<T>& xs, F fn) {
+template <class T, class J, class F>
+void joinIf(vector2d<T>& a, const J& xs, F fn) {
   for (const auto& x : xs) {
     auto& b = a.back();
     if (a.empty() || !fn(b, x)) a.push_back(x);
@@ -133,33 +159,34 @@ void joinIf(vector2d<T>& a, const vector2d<T>& xs, F fn) {
   }
 }
 
-template <class T, class F>
-auto joinIf(const vector2d<T>& xs, F fn) {
+template <class T, class J, class F>
+auto joinIf(const J& xs, F fn) {
   vector2d<T> a; joinIf(a, xs, fn);
   return a;
 }
 
 
-template <class T>
-void joinUntilSize(vector2d<T>& a, const vector2d<T>& xs, int N) {
-  joinIf(a, xs, [&](const auto& b, const auto& x) { return b.size()<N; });
+template <class T, class J>
+void joinUntilSize(vector2d<T>& a, const J& xs, int S) {
+  auto fn = [&](const auto& b, const auto& x) { return b.size()<S; };
+  joinIf(a, xs, fn);
 }
 
-template <class T>
-auto joinUntilSize(const vector2d<T>& xs, int N) {
-  vector2d<T> a; joinUntilSize(a, xs, N);
+template <class T, class J>
+auto joinUntilSize(const J& xs, int S) {
+  vector2d<T> a; joinUntilSize(a, xs, S);
   return a;
 }
 
 
-template <class T>
-void join(vector<T>& a, const vector2d<T>& xs) {
+template <class T, class J>
+void join(vector<T>& a, const J& xs) {
   for (const auto& x : xs)
     a.insert(a.end(), x.begin(), x.end());
 }
 
-template <class T>
-auto join(const vector2d<T>& xs) {
+template <class T, class J>
+auto join(const J& xs) {
   vector<T> a; join(a, xs);
   return a;
 }
@@ -186,6 +213,7 @@ auto joinAtIf(const vector2d<T>& xs, const J& is, F fn) {
 }
 
 
+
 template <class T, class J>
 void joinAtUntilSize(vector2d<T>& a, const vector2d<T>& xs, const J& is, int N) {
   joinAtIf(a, xs, is, [&](const auto& b, const auto& x) { return b.size()<N; });
@@ -207,6 +235,37 @@ void joinAt(vector<T>& a, const vector2d<T>& xs, const J& is) {
 template <class T, class J>
 auto joinAt(const vector2d<T>& xs, const J& is) {
   vector<T> a; joinAt(a, xs, is);
+  return a;
+}
+
+
+template <class T, class J>
+void joinAt2d(vector2d<T>& a, const vector2d<T>& xs, const J& ig) {
+  for (const auto& is : ig)
+    a.push_back(joinAt(xs, is));
+}
+
+template <class T, class J>
+auto joinAt2d(const vector2d<T>& xs, const J& ig) {
+  vector2d<T> a; joinAt2d(a, xs, ig);
+  return a;
+}
+
+
+
+
+// COPY-AT
+// -------
+
+template <class T, class J>
+void copyAt(vector<T>& a, const vector<T>& xs, const J& is) {
+  for (const auto& i : is)
+    a.push_back(xs[i]);
+}
+
+template <class T, class J>
+auto copyAt(const vector<T>& xs, const J& is) {
+  vector<T> a; copyAt(a, xs, is);
   return a;
 }
 
