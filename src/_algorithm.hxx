@@ -279,8 +279,7 @@ int countIf(const J& x, F fn) {
 
 template <class I, class FM>
 auto count_each(I ib, I ie, FM fm) {
-  using K = decltype(fm(*ib));
-  unordered_map<K, size_t> a;
+  using K = decltype(fm(*ib)); unordered_map<K, size_t> a;
   for_each(ib, ie, [&](const K& v) { ++a[fm(v)]; });
   return a;
 }
@@ -314,7 +313,7 @@ auto value_indices(I ib, I ie, M& a) {
 }
 template <class I>
 auto value_indices(I ib, I ie) {
-  using K = decltype(*ib); unordered_map<K, size_t> a;
+  using K = typename iterator_traits<I>::value_type; unordered_map<K, size_t> a;
   return value_indices(ib, ie, a);
 }
 template <class J, class M>
@@ -345,7 +344,7 @@ auto transformValues(const JX& x, JA& a, FM fm) {
 
 template <class I, class T, class FM>
 auto transform_append(I ib, I ie, vector<T>& a, FM fm) {
-  return transform(xb, xe, back_inserter(a), fm);
+  return transform(ib, ie, back_inserter(a), fm);
 }
 template <class J, class T, class FM>
 auto transformAppend(const J& x, vector<T>& a, FM fm) {
@@ -355,7 +354,7 @@ auto transformAppend(const J& x, vector<T>& a, FM fm) {
 
 template <class I, class FM>
 auto transform_vector(I ib, I ie, FM fm) {
-  using T = decltype(*ib); vector<T> a;
+  using T = typename iterator_traits<I>::value_type; vector<T> a;
   return transform_append(ib, ie, a, fm);
 }
 template <class J, class FM>
@@ -423,12 +422,12 @@ auto setDifferenceAppend(const JX& x, const JY& y, vector<T>& a, FE fe) {
 
 template <class IX, class IY>
 auto set_difference_vector(IX xb, IX xe, IY yb, IY ye) {
-  using T = decltype(*xb); vector<T> a;
+  using T = typename iterator_traits<IX>::value_type; vector<T> a;
   return set_difference_append(xb, xe, yb, ye, a);
 }
 template <class IX, class IY, class FE>
 auto set_difference_vector(IX xb, IX xe, IY yb, IY ye, FE fe) {
-  using T = decltype(*xb); vector<T> a;
+  using T = typename iterator_traits<IX>::value_type; vector<T> a;
   return set_difference_append(xb, xe, yb, ye, a, fe);
 }
 template <class JX, class JY>
@@ -479,7 +478,7 @@ auto copyWrite(const J& x, vector<T>& a) {
 
 template <class I>
 auto copy_vector(I ib, I ie) {
-  using T = decltype(*ib); vector<T> a;
+  using T = typename iterator_traits<I>::value_type; vector<T> a;
   copy_append(ib, ie, a);
   return a;
 }
@@ -494,26 +493,36 @@ auto copy_vector(const J& x) {
 // HASH-VALUE
 // ----------
 
-template <class I, class T>
-size_t hash_value(I ib, I ie, vector<T>& buf) {
-  size_t a = 0;
-  copy_write(ib, ie, buf);
-  sort(buf.begin(), buf.end());
-  // From boost::hash_combine.
-  for (const T& v : buf)
-    a ^= hash<T>{}(v) + 0x9e3779b9 + (a<<6) + (a>>2);
-  return a;
-}
 template <class I>
 size_t hash_value(I ib, I ie) {
-  using T = decltype(*ib); vector<T> buf;
-  return hash_value(ib, ie, buf);
-}
-template <class J, class T>
-size_t hashValue(const J& x, vector<T>& buf) {
-  return hash_value(x.begin(), x.end(), buf);
+  // From boost::hash_combine.
+  using T = typename iterator_traits<I>::value_type; size_t a = 0;
+  for (; ib != ie; ++ib)
+    a ^= hash<T>{}(*ib) + 0x9e3779b9 + (a<<6) + (a>>2);
+  return a;
 }
 template <class J>
 size_t hashValue(const J& x) {
   return hash_value(x.begin(), x.end());
+}
+
+
+template <class I, class T>
+size_t hash_unordered(I ib, I ie, vector<T>& buf) {
+  copy_write(ib, ie, buf);
+  sort(buf.begin(), buf.end());
+  return hash_value(buf.begin(), buf.end());
+}
+template <class I>
+size_t hash_unordered(I ib, I ie) {
+  using T = typename iterator_traits<I>::value_type; vector<T> buf;
+  return hash_unordered(ib, ie, buf);
+}
+template <class J, class T>
+size_t hashUnordered(const J& x, vector<T>& buf) {
+  return hash_unordered(x.begin(), x.end(), buf);
+}
+template <class J>
+size_t hashUnordered(const J& x) {
+  return hash_unordered(x.begin(), x.end());
 }

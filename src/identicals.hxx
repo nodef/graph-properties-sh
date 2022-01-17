@@ -20,7 +20,8 @@ auto edgeIdenticalsFromSize(const G& x, const J& ks, int n) {
   map<vec, vec> m; vec es;
   // Find groups of identicals.
   for (int u : ks) {
-    write(es, x.edges(u)); sort(es);
+    copyWrite(x.edges(u), es);
+    sortValues(es);
     m[es].push_back(u);
   }
   // Copy identicals from given size in sorted order.
@@ -28,7 +29,8 @@ auto edgeIdenticalsFromSize(const G& x, const J& ks, int n) {
   for (auto& p : m) {
     auto& is = p.second;
     if (is.size()<n) continue;
-    sort(is); a.push_back(move(is));
+    sortValues(is);
+    a.push_back(move(is));
   }
   return a;
 }
