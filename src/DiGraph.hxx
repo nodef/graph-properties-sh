@@ -14,48 +14,49 @@ using std::cout;
 // DI-GRAPH
 // --------
 
-template <class V=NONE, class E=NONE>
+template <class K=int, class V=NONE, class E=NONE>
 class DiGraph {
   public:
-  using TVertex = V;
-  using TEdge   = E;
+  using key_type          = K;
+  using vertex_value_type = V;
+  using edge_value_type   = E;
 
   private:
-  vector<int>   none;
-  vector<bool>  vex;
-  vector2d<int> vto;
-  vector2d<E>   edata;
-  vector<V>     vdata;
-  int N = 0, M = 0;
+  vector<K>    none;
+  vector<bool> vex;
+  vector2d<K>  vto;
+  vector<V>    vdata;
+  vector2d<E>  edata;
+  size_t N = 0, M = 0;
 
   // Cute helpers
   private:
-  int s() const { return vto.size(); }
-  int ei(int u, int v) const { return findAt(vto[u], v); }
+  size_t s() const { return vto.size(); }
+  K ei(K u, K v) const { return findAt(vto[u], v); }
 
   // Read operations
   public:
-  int span()  const { return s(); }
-  int order() const { return N; }
-  int size()  const { return M; }
+  size_t span()  const { return s(); }
+  size_t order() const { return N; }
+  size_t size()  const { return M; }
 
-  bool hasVertex(int u)      const { return u < s() && vex[u]; }
-  bool hasEdge(int u, int v) const { return u < s() && ei(u, v) >= 0; }
-  auto edges(int u)          const { return u < s()? iterable(vto[u]) : iterable(none); }
-  int degree(int u)          const { return u < s()? vto[u].size()    : 0; }
-  auto vertices()     const { return filterIterable(rangeIterable(s()), [&](int u) { return  vex[u]; }); }
-  auto nonVertices()  const { return filterIterable(rangeIterable(s()), [&](int u) { return !vex[u]; }); }
-  auto inEdges(int v) const { return filterIterable(rangeIterable(s()), [&](int u) { return ei(u, v) >= 0; }); }
-  int inDegree(int v) const { return        countIf(rangeIterable(s()), [&](int u) { return ei(u, v) >= 0; }); }
+  bool hasVertex(K u)    const { return u < s() && vex[u]; }
+  bool hasEdge(K u, K v) const { return u < s() && ei(u, v) >= 0; }
+  auto edges(K u)        const { return u < s()? iterable(vto[u]) : iterable(none); }
+  K degree(K u)          const { return u < s()? vto[u].size()    : 0; }
+  auto vertices()    const { return filterIterable(rangeIterable(s()), [&](K u) { return  vex[u]; }); }
+  auto nonVertices() const { return filterIterable(rangeIterable(s()), [&](K u) { return !vex[u]; }); }
+  auto inEdges(K v)  const { return filterIterable(rangeIterable(s()), [&](K u) { return ei(u, v) >= 0; }); }
+  K inDegree(K v)    const { return        countIf(rangeIterable(s()), [&](K u) { return ei(u, v) >= 0; }); }
 
-  V vertexData(int u)   const { return hasVertex(u)? vdata[u] : V(); }
-  void setVertexData(int u, V d) { if (hasVertex(u)) vdata[u] = d; }
-  E edgeData(int u, int v)   const { return hasEdge(u, v)? edata[u][ei(u, v)] : E(); }
-  void setEdgeData(int u, int v, E d) { if (hasEdge(u, v)) edata[u][ei(u, v)] = d; }
+  V vertexData(K u)   const { return hasVertex(u)? vdata[u] : V(); }
+  void setVertexData(K u, V d) { if (hasVertex(u)) vdata[u] = d; }
+  E edgeData(K u, K v)   const { return hasEdge(u, v)? edata[u][ei(u, v)] : E(); }
+  void setEdgeData(K u, K v, E d) { if (hasEdge(u, v)) edata[u][ei(u, v)] = d; }
 
   // Write operations
   public:
-  void addVertex(int u, V d=V()) {
+  void addVertex(K u, V d=V()) {
     if (hasVertex(u)) return;
     if (u >= s()) {
       vex.resize(u+1);
@@ -68,7 +69,7 @@ class DiGraph {
     N++;
   }
 
-  void addEdge(int u, int v, E d=E()) {
+  void addEdge(K u, K v, E d=E()) {
     if (hasEdge(u, v)) return;
     addVertex(u);
     addVertex(v);
@@ -77,28 +78,28 @@ class DiGraph {
     M++;
   }
 
-  void removeEdge(int u, int v) {
+  void removeEdge(K u, K v) {
     if (!hasEdge(u, v)) return;
-    int o = ei(u, v);
+    K o = ei(u, v);
     eraseIndex(vto[u], o);
     eraseIndex(edata[u], o);
     M--;
   }
 
-  void removeEdges(int u) {
+  void removeEdges(K u) {
     if (!hasVertex(u)) return;
     M -= degree(u);
     vto[u].clear();
     edata[u].clear();
   }
 
-  void removeInEdges(int v) {
+  void removeInEdges(K v) {
     if (!hasVertex(v)) return;
-    for (int u : inEdges(v))
+    for (K u : inEdges(v))
       removeEdge(u, v);
   }
 
-  void removeVertex(int u) {
+  void removeVertex(K u) {
     if (!hasVertex(u)) return;
     removeEdges(u);
     removeInEdges(u);
@@ -118,9 +119,9 @@ void write(ostream& a, const DiGraph<V, E>& x, bool all=false) {
   a << "order: " << x.order() << " size: " << x.size();
   if (!all) { a << " {}"; return; }
   a << " {\n";
-  for (int u : x.vertices()) {
+  for (auto u : x.vertices()) {
     a << "  " << u << " ->";
-    for (int v : x.edges(u))
+    for (auto v : x.edges(u))
       a << " " << v;
     a << "\n";
   }

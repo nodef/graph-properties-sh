@@ -9,10 +9,10 @@
 
 template <class H, class G>
 void transpose(H& a, const G& x) {
-  for (int u : x.vertices())
+  for (auto u : x.vertices())
     a.addVertex(u, x.vertexData(u));
-  for (int u : x.vertices()) {
-    for (int v : x.edges(u))
+  for (auto u : x.vertices()) {
+    for (auto v : x.edges(u))
       a.addEdge(v, u, x.edgeData(u, v));
   }
 }
@@ -31,17 +31,18 @@ auto transpose(const G& x) {
 
 template <class H, class G>
 void transposeWithDegree(H& a, const G& x) {
-  for (int u : x.vertices())
+  for (auto u : x.vertices())
     a.addVertex(u, x.degree(u));
-  for (int u : x.vertices()) {
-    for (int v : x.edges(u))
+  for (auto u : x.vertices()) {
+    for (auto v : x.edges(u))
       a.addEdge(v, u, x.edgeData(u, v));
   }
 }
 
 template <class G>
 auto transposeWithDegree(const G& x) {
-  using E = typename G::TEdge;
-  DiGraph<int, E> a; transposeWithDegree(a, x);
+  using K = typename G::key_type;
+  using E = typename G::edge_value_type;
+  DiGraph<K, int, E> a; transposeWithDegree(a, x);
   return a;
 }
