@@ -17,8 +17,8 @@ using std::equal;
 
 template <class G, class F, class D>
 auto vertices(const G& x, F fm, D fp) {
-  vector<int> a;
-  append(a, x.vertices());
+  using K = typename G::key_type; vector<K> a;
+  copyAppend(x.vertices(), a);
   auto ie = a.end(), ib = a.begin();
   fp(ib, ie); transform(ib, ie, ib, fm);
   return a;
@@ -31,7 +31,7 @@ auto vertices(const G& x, F fm) {
 
 template <class G>
 auto vertices(const G& x) {
-  return vertices(x, [](int u) { return u; });
+  return vertices(x, [](auto u) { return u; });
 }
 
 
@@ -42,10 +42,10 @@ auto vertices(const G& x) {
 
 template <class G, class J, class F, class D>
 auto vertexData(const G& x, const J& ks, F fm, D fp) {
+  using K = typename G::key_type;
   using V = decltype(fm(0));
-  vector<V> a;
-  vector<int> b;
-  append(b, ks);
+  vector<V> a; vector<K> b;
+  copyAppend(ks, b);
   auto ie = b.end(), ib = b.begin();
   fp(ib, ie); transform(ib, ie, back_inserter(a), fm);
   return a;
@@ -58,7 +58,7 @@ auto vertexData(const G& x, const J& ks, F fm) {
 
 template <class G, class J>
 auto vertexData(const G& x, const J& ks) {
-  return vertexData(x, ks, [&](int u) { return x.vertexData(u); });
+  return vertexData(x, ks, [&](auto u) { return x.vertexData(u); });
 }
 
 template <class G>
@@ -134,14 +134,14 @@ auto compressContainer(const G& x, const vector<T>& vs) {
 // VERTICES-EQUAL
 // --------------
 
-template <class G>
-bool verticesEqual(const G& x, int u, const G& y, int v) {
+template <class G, class K>
+bool verticesEqual(const G& x, K u, const G& y, K v) {
   if (x.degree(u) != y.degree(v)) return false;
   auto xe = x.edges(u), ye = y.edges(v);
   return equal(xe.begin(), xe.end(), ye.begin());
 }
 
-template <class G, class H>
-bool verticesEqual(const G& x, const H& xt, int u, const G& y, const H& yt, int v) {
+template <class G, class H, class K>
+bool verticesEqual(const G& x, const H& xt, K u, const G& y, const H& yt, K v) {
   return verticesEqual(x, u, y, u) && verticesEqual(xt, u, yt, u);
 }

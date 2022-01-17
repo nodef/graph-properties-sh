@@ -18,8 +18,8 @@ using std::getline;
 
 template <class G>
 bool readSnapTemporalLine(G& a, const string& ln, bool sym=false) {
-  int u, v, t;
-  stringstream ls(ln);
+  using K = typename G::key_type;
+  K u, v; int t; stringstream ls(ln);
   if (!(ls >> u >> v >> t)) return false;
   a.addEdge(u, v);
   if (sym) a.addEdge(v, u);
@@ -28,8 +28,8 @@ bool readSnapTemporalLine(G& a, const string& ln, bool sym=false) {
 
 
 template <class G>
-bool readSnapTemporal(G& a, istream& s, int N, bool sym=false) {
-  int i = 0;
+bool readSnapTemporal(G& a, istream& s, size_t N, bool sym=false) {
+  size_t i = 0;
   for (; i<N; i++) {
     string ln; getline(s, ln);
     if (!readSnapTemporalLine(a, ln, sym)) break;

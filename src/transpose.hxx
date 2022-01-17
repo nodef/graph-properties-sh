@@ -43,6 +43,6 @@ template <class G>
 auto transposeWithDegree(const G& x) {
   using K = typename G::key_type;
   using E = typename G::edge_value_type;
-  DiGraph<K, int, E> a; transposeWithDegree(a, x);
+  DiGraph<K, K, E> a; transposeWithDegree(a, x);
   return a;
 }

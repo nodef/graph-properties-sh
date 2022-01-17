@@ -9,11 +9,11 @@
 template <class H, class G, class FV, class FE>
 void copyTo(H& a, const G& x, FV fv, FE fe) {
   // add vertices
-  for (int u : x.vertices())
+  for (auto u : x.vertices())
     if (fv(u)) a.addVertex(u, x.vertexData(u));
   // add edges
-  for (int u : x.vertices()) {
-    if (fv(u)) for (int v : x.edges(u)) {
+  for (auto u : x.vertices()) {
+    if (fv(u)) for (auto v : x.edges(u)) {
       if (fv(v) && fe(u, v)) a.addEdge(u, v, x.edgeData(u, v));
     }
   }
@@ -21,12 +21,12 @@ void copyTo(H& a, const G& x, FV fv, FE fe) {
 
 template <class H, class G, class FV>
 void copyTo(H& a, const G& x, FV fv) {
-  copyTo(a, x, fv, [](int u, int v) { return true; });
+  copyTo(a, x, fv, [](auto u, auto v) { return true; });
 }
 
 template <class H, class G>
 void copyTo(H& a, const G& x) {
-  copyTo(a, x, [](int u) { return true; });
+  copyTo(a, x, [](auto u) { return true; });
 }
 
 template <class G, class FV, class FE>

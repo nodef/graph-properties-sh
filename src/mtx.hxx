@@ -22,6 +22,7 @@ using std::max;
 
 template <class G>
 void readMtx(G& a, istream& s) {
+  using K = typename G::key_type;
   string ln, h0, h1, h2, h3, h4;
 
   // read header
@@ -36,16 +37,16 @@ void readMtx(G& a, istream& s) {
   bool sym = h4=="symmetric" || h4=="skew-symmetric";
 
   // read rows, cols, size
-  int r, c, sz;
+  size_t r, c, sz;
   stringstream ls(ln);
   ls >> r >> c >> sz;
-  int n = max(r, c);
-  for (int u=1; u<=n; u++)
+  size_t n = max(r, c);
+  for (K u=1; u<=n; u++)
     a.addVertex(u);
 
   // read edges (from, to)
   while (getline(s, ln)) {
-    int u, v;
+    K u, v;
     ls = stringstream(ln);
     if (!(ls >> u >> v)) break;
     a.addEdge(u, v);
@@ -81,8 +82,8 @@ template <class G>
 void writeMtx(ostream& a, const G& x) {
   a << "%%MatrixMarket matrix coordinate real asymmetric\n";
   a << x.order() << " " << x.order() << " " << x.size() << "\n";
-  for (int u : x.vertices()) {
-    for (int v : x.edges(u))
+  for (auto u : x.vertices()) {
+    for (auto v : x.edges(u))
       a << u << " " << v << " " << x.edgeData(u) << "\n";
   }
 }

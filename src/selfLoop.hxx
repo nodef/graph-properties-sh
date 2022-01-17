@@ -7,8 +7,8 @@
 // HAS SELF-LOOP
 // -------------
 
-template <class G>
-bool hasSelfLoop(const G& x, int u) {
+template <class G, class K>
+bool hasSelfLoop(const G& x, K u) {
   return x.hasEdge(u, u);
 }
 
@@ -20,20 +20,22 @@ bool hasSelfLoop(const G& x, int u) {
 
 template <class G, class F>
 void selfLoopForEach(const G& x, F fn) {
-  for (int u : x.vertices())
+  for (auto u : x.vertices())
     if (x.hasEdge(u, u)) fn(u);
 }
 
 
 template <class G>
 auto selfLoops(const G& x) {
-  vector<int> a; selfLoopForEach(x, [&](int u) { a.push_back(u); });
+  using K = typename G::key_type; vector<K> a;
+  selfLoopForEach(x, [&](auto u) { a.push_back(u); });
   return a;
 }
 
 template <class G>
-int selfLoopCount(const G& x) {
-  int a = 0; selfLoopForEach(x, [&](int u) { ++a; });
+auto selfLoopCount(const G& x) {
+  using K = typename G::key_type; K a = 0;
+  selfLoopForEach(x, [&](auto u) { ++a; });
   return a;
 }
 
@@ -45,7 +47,7 @@ int selfLoopCount(const G& x) {
 
 template <class G, class F>
 void selfLoopTo(G& a, F fn) {
-  for (int u : a.vertices())
+  for (auto u : a.vertices())
     if (fn(u)) a.addEdge(u, u);
 }
 
