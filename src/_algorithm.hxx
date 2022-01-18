@@ -271,12 +271,6 @@ int countIf(const J& x, F fn) {
 }
 
 
-
-
-// COUNT-ALL
-// ---------
-// Count businesses in each sector.
-
 template <class I, class FM>
 auto count_each(I ib, I ie, FM fm) {
   using K = decltype(fm(*ib)); unordered_map<K, size_t> a;
@@ -297,6 +291,46 @@ auto countEach(const J& x) {
   return count_each(x.begin(), x.end());
 }
 
+
+
+
+
+// HASH-VALUE
+// ----------
+
+template <class I>
+size_t hash_value(I ib, I ie) {
+  // From boost::hash_combine.
+  using T = typename iterator_traits<I>::value_type; size_t a = 0;
+  for (; ib != ie; ++ib)
+    a ^= hash<T>{}(*ib) + 0x9e3779b9 + (a<<6) + (a>>2);
+  return a;
+}
+template <class J>
+size_t hashValue(const J& x) {
+  return hash_value(x.begin(), x.end());
+}
+
+
+template <class I, class T>
+size_t hash_unordered(I ib, I ie, vector<T>& buf) {
+  copy_write(ib, ie, buf);
+  sort(buf.begin(), buf.end());
+  return hash_value(buf.begin(), buf.end());
+}
+template <class I>
+size_t hash_unordered(I ib, I ie) {
+  using T = typename iterator_traits<I>::value_type; vector<T> buf;
+  return hash_unordered(ib, ie, buf);
+}
+template <class J, class T>
+size_t hashUnordered(const J& x, vector<T>& buf) {
+  return hash_unordered(x.begin(), x.end(), buf);
+}
+template <class J>
+size_t hashUnordered(const J& x) {
+  return hash_unordered(x.begin(), x.end());
+}
 
 
 
@@ -323,6 +357,54 @@ auto valueIndices(const J& x, M& a) {
 template <class J>
 auto valueIndices(const J& x) {
   return value_indices(x.begin(), x.end());
+}
+
+
+
+
+// COPY-*
+// ------
+
+template <class IX, class IA>
+auto copy_values(IX xb, IX xe, IA ab) {
+  return copy(xb, xe, ab);
+}
+template <class JX, class JA>
+auto copyValues(const JX& x, JA& a) {
+  return copy_values(x.begin(), x.end(), x.begin());
+}
+
+
+template <class I, class T>
+auto copy_append(I ib, I ie, vector<T>& a) {
+  return a.insert(a.end(), ib, ie);
+}
+template <class J, class T>
+auto copyAppend(const J& x, vector<T>& a) {
+  return copy_append(x.begin(), x.end(), a);
+}
+
+
+template <class I, class T>
+auto copy_write(I ib, I ie, vector<T>& a) {
+  a.clear();
+  return copy_append(ib, ie, a);
+}
+template <class J, class T>
+auto copyWrite(const J& x, vector<T>& a) {
+  return copy_write(x.begin(), x.end(), a);
+}
+
+
+template <class I>
+auto copy_vector(I ib, I ie) {
+  using T = typename iterator_traits<I>::value_type; vector<T> a;
+  copy_append(ib, ie, a);
+  return a;
+}
+template <class J>
+auto copy_vector(const J& x) {
+  return copy_vector(x.begin(), x.end());
 }
 
 
@@ -437,92 +519,4 @@ auto setDifferenceVector(const JX& x, const JY& y) {
 template <class JX, class JY, class FE>
 auto setDifferenceVector(const JX& x, const JY& y, FE fe) {
   return set_difference_vector(x.begin(), x.end(), y.begin(), y.end(), fe);
-}
-
-
-
-
-// COPY-*
-// ------
-
-template <class IX, class IA>
-auto copy_values(IX xb, IX xe, IA ab) {
-  return copy(xb, xe, ab);
-}
-template <class JX, class JA>
-auto copyValues(const JX& x, JA& a) {
-  return copy_values(x.begin(), x.end(), x.begin());
-}
-
-
-template <class I, class T>
-auto copy_append(I ib, I ie, vector<T>& a) {
-  return a.insert(a.end(), ib, ie);
-}
-template <class J, class T>
-auto copyAppend(const J& x, vector<T>& a) {
-  return copy_append(x.begin(), x.end(), a);
-}
-
-
-template <class I, class T>
-auto copy_write(I ib, I ie, vector<T>& a) {
-  a.clear();
-  return copy_append(ib, ie, a);
-}
-template <class J, class T>
-auto copyWrite(const J& x, vector<T>& a) {
-  return copy_write(x.begin(), x.end(), a);
-}
-
-
-template <class I>
-auto copy_vector(I ib, I ie) {
-  using T = typename iterator_traits<I>::value_type; vector<T> a;
-  copy_append(ib, ie, a);
-  return a;
-}
-template <class J>
-auto copy_vector(const J& x) {
-  return copy_vector(x.begin(), x.end());
-}
-
-
-
-
-// HASH-VALUE
-// ----------
-
-template <class I>
-size_t hash_value(I ib, I ie) {
-  // From boost::hash_combine.
-  using T = typename iterator_traits<I>::value_type; size_t a = 0;
-  for (; ib != ie; ++ib)
-    a ^= hash<T>{}(*ib) + 0x9e3779b9 + (a<<6) + (a>>2);
-  return a;
-}
-template <class J>
-size_t hashValue(const J& x) {
-  return hash_value(x.begin(), x.end());
-}
-
-
-template <class I, class T>
-size_t hash_unordered(I ib, I ie, vector<T>& buf) {
-  copy_write(ib, ie, buf);
-  sort(buf.begin(), buf.end());
-  return hash_value(buf.begin(), buf.end());
-}
-template <class I>
-size_t hash_unordered(I ib, I ie) {
-  using T = typename iterator_traits<I>::value_type; vector<T> buf;
-  return hash_unordered(ib, ie, buf);
-}
-template <class J, class T>
-size_t hashUnordered(const J& x, vector<T>& buf) {
-  return hash_unordered(x.begin(), x.end(), buf);
-}
-template <class J>
-size_t hashUnordered(const J& x) {
-  return hash_unordered(x.begin(), x.end());
 }
