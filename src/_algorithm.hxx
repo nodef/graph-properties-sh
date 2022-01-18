@@ -17,11 +17,13 @@ using std::find_if;
 using std::lower_bound;
 using std::count;
 using std::count_if;
-
-using std::transform;
-using std::set_difference;
 using std::back_inserter;
 using std::copy;
+using std::transform;
+using std::set_difference;
+using std::merge;
+using std::inplace_merge;
+
 
 
 
@@ -519,4 +521,97 @@ auto setDifferenceVector(const JX& x, const JY& y) {
 template <class JX, class JY, class FE>
 auto setDifferenceVector(const JX& x, const JY& y, FE fe) {
   return set_difference_vector(x.begin(), x.end(), y.begin(), y.end(), fe);
+}
+
+
+
+
+// MERGE-*
+// -------
+
+template <class IX, class IY, class IA>
+auto merge_values(IX xb, IX xe, IY yb, IY ye, IA ab) {
+  return merge(xb, xe, yb, ye, ab);
+}
+template <class IX, class IY, class IA, class FL>
+auto merge_values(IX xb, IX xe, IY yb, IY ye, IA ab, FL fl) {
+  return merge(xb, xe, yb, ye, ab, fl);
+}
+template <class JX, class JY, class JA>
+auto mergeValues(const JX& x, const JY& y, JA& a) {
+  return merge_values(x.begin(), x.end(), y.begin(), y.end(), a.begin());
+}
+template <class JX, class JY, class JA, class FL>
+auto mergeValues(const JX& x, const JY& y, JA& a, FL fl) {
+  return merge_values(x.begin(), x.end(), y.begin(), y.end(), a.begin(), fl);
+}
+
+
+template <class IX, class IY, class IA, class FL, class FE>
+auto merge_unique(IX xb, IX xe, IY yb, IY ye, IA ab, FL fl, FE fe) {
+  // `ab` points to the previous target value, unlike `xb` and `yb`.
+  if (xb < xe && yb < ye) *ab = fl(*yb, *xb)? *(yb++) : *(xb++);
+  else if (xb < xe) *ab = *(xb++);
+  else if (yb < ye) *ab = *(yb++);
+  else return ab;
+  for (; xb < xe && yb < ye;) {
+    if (fl(*yb, *xb)) { if (!fe(*yb, *ab)) { *(++ab) = *yb; } ++yb; }
+    else              { if (!fe(*xb, *ab)) { *(++ab) = *xb; } ++xb; }
+  }
+  for (; xb < xe; ++xb)
+    if (!fe(*xb, *ab)) *(++ab) = *xb;
+  for (; yb < ye; ++yb)
+    if (!fe(*yb, *ab)) *(++ab) = *yb;
+  return ++ab;
+}
+template <class IX, class IY, class IA>
+auto merge_unique(IX xb, IX xe, IY yb, IY ye, IA ab) {
+  auto fl = [](const auto& a, const auto& b) { return a < b; };
+  auto fe = [](const auto& a, const auto& b) { return a == b; };
+  return merge_unique(xb, xe, yb, ye, ab, fl, fe);
+}
+template <class JX, class JY, class JA, class FL, class FE>
+auto mergeUnique(const JX& x, const JY& y, JA& a, FL fl, FE fe) {
+  return merge_unique(x.begin(), x.end(), y.begin(), y.end(), fl, fe);
+}
+template <class JX, class JY, class JA>
+auto mergeUnique(const JX& x, const JY& y, JA& a) {
+  return merge_unique(x.begin(), x.end(), y.begin(), y.end(), a.begin());
+}
+
+
+template <class IX, class IY, class FL>
+auto merge_into(IX xb, IX xe, IY yb, IY ye, FL fl) {
+  IX ie = xe + (ye - yb);
+  IX ix = xe - 1;
+  IY iy = ye - 1;
+  IX it = ie - 1;
+  for (; iy >= yb; ++it) {
+    if (fl(*iy, *ix)) { *it = *ix; --ix; }
+    else              { *it = *iy; --iy; }
+  }
+  return ie;
+}
+template <class IX, class IY>
+auto merge_into(IX xb, IX xe, IY yb, IY ye) {
+  auto fl = [](const auto& a, const auto& b) { return a < b; };
+  return merge_into(xb, xe, yb, ye, fl);
+}
+template <class JX, class JY, class FL>
+auto mergeInto(JX& x, const JY& y, FL fl) {
+  return merge_into(x.begin(), x.end(), y.begin(), y.end(), fl);
+}
+template <class JX, class JY>
+auto mergeInto(JX& x, const JY& y) {
+  return merge_into(x.begin(), x.end(), y.begin(), y.end());
+}
+
+
+template <class J>
+auto inplaceMerge(const J& x, size_t m) {
+  return inplace_merge(x.begin(), x.begin()+m, x.end());
+}
+template <class J, class FL>
+auto inplaceMerge(const J& x, size_t m, FL fl) {
+  return inplace_merge(x.begin(), x.begin()+m, x.end(), fl);
 }
