@@ -743,7 +743,7 @@ inline auto rangeIterable(T v, T V, T DV=1) {
 
 template <class I>
 class InputCircularIterator {
-  using iterator = CircularIterator;
+  using iterator = InputCircularIterator;
   const I xb, xe; I it;
   public:
   ITERATOR_USING_XC(I, input_iterator_tag)

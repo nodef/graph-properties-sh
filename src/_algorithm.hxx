@@ -4,6 +4,7 @@
 #include <iterator>
 #include <algorithm>
 #include <functional>
+#include "_queue.hxx"
 
 using std::vector;
 using std::unordered_map;
@@ -582,6 +583,7 @@ auto mergeUnique(const JX& x, const JY& y, JA& a) {
 
 template <class IX, class IY, class FL>
 auto merge_into(IX xb, IX xe, IY yb, IY ye, FL fl) {
+  // `x` and `y` must be separate arrays, as `x` expands.
   IX ie = xe + (ye - yb);
   IX ix = xe - 1;
   IY iy = ye - 1;
@@ -614,4 +616,48 @@ auto inplaceMerge(const J& x, size_t m) {
 template <class J, class FL>
 auto inplaceMerge(const J& x, size_t m, FL fl) {
   return inplace_merge(x.begin(), x.begin()+m, x.end(), fl);
+}
+
+
+
+
+template <class IX, class IB, class FL, class FE>
+auto inplace_merge_unique(IX xb, IX xm, IX xe, IB bb, IB be, FL fl, FE fe) {
+  // `it` points to the previous target value, unlike `ib` and `im`.
+  IX   it = xb, ib = xb, im = xm;
+  auto bq = bounded_deque_view(bb, be);
+  if (ib < xm && im < xe) {
+    bq.push_back(*(ib++));
+    *it = fl(*im, bq.front())? *(im++) : bq.pop_front();
+  }
+  else if (ib < xm) ++ib;
+  else if (im < xe) ++im;
+  else return it;
+  for (; ib < xm && im < xe;) {
+    if (fe(*it, *ib)) { ++ib; continue; }
+    if (fe(*it, *im)) { ++im; continue; }
+    bq.push_back(*(ib++));
+    *(++it) = fl(*im, bq.front())? *(im++) : bq.pop_front();
+  }
+  for (; !bq.empty();)
+    if (!fe(*it, *bq.front())) *(++it) = bq.pop_front();
+  for (; ib < xm; ++ib)
+    if (!fe(*it, *ib)) *(++it) = *ib;
+  for (; im < xe; ++im)
+    if (!fe(*it, *im)) *(++it) = *im;
+  return ++it;
+}
+template <class IX, class IB>
+auto inplace_merge_unique(IX xb, IX xm, IX xe, IB bb, IB be) {
+  auto fl = [](const auto& a, const auto& b) { return a < b; };
+  auto fe = [](const auto& a, const auto& b) { return a == b; };
+  return inplace_merge_unique(xb, xm, xe, bb, be);
+}
+template <class JX, class JB, class FL, class FE>
+auto inplaceMergeUnique(JX& x, size_t xm, JB& b, FL fl, FE fe) {
+  return inplace_merge_unique(x.begin(), x.begin()+xm, x.end(), b.begin(), x.end(), fl, fe);
+}
+template <class JX, class JB>
+auto inplaceMergeUnique(JX& x, size_t xm, JB& b) {
+  return inplace_merge_unique(x.begin(), x.begin()+xm, x.end(), b.begin(), x.end());
 }

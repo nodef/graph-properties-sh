@@ -24,13 +24,19 @@ class BoundedDequeView {
   public:
   using value_type = typename iterator_traits<I>::value_type;
   protected:
-  using T = typename value_type;
+  using T = value_type;
+
+
+  // Size operations.
+  public:
+  inline size_t size()  const { return n; }
+  inline bool   empty() const { return n == 0; }
 
 
   // Read operations.
   public:
-  inline size_t size()  const { return n; }
-  inline bool   empty() const { return n == 0; }
+  inline auto back()  const { return ie == xb? *(xe - 1) : *(ie - 1); }
+  inline auto front() const { return *ib; }
 
 
   // Write operations.
@@ -45,13 +51,13 @@ class BoundedDequeView {
     ++n; *(--ib) = v;
   }
 
-  inline T pop_back() {
+  inline auto pop_back() {
     if (ie == xb) ie = xe;
     --n; return *(--ie);
   }
 
-  inline T pop_front() {
-    --n; T v = *(ib++);
+  inline auto pop_front() {
+    --n; auto v = *(ib++);
     if (ib == xe) ib = xb;
     return v;
   }
@@ -92,12 +98,18 @@ class PBoundedDequeView {
   public:
   using value_type = typename iterator_traits<I>::value_type;
   protected:
-  using T = typename value_type;
+  using T = value_type;
+
+
+  // Size operations.
+  public:
+  inline bool empty() const { return ib == ie; }
 
 
   // Read operations.
   public:
-  inline bool empty() const { return ib == ie; }
+  inline auto back()  const { return ie == xb? *(xe - 1) : *(ie - 1); }
+  inline auto front() const { return *ib; }
 
 
   // Write operations.
@@ -112,13 +124,13 @@ class PBoundedDequeView {
     *(--ib) = v;
   }
 
-  inline T pop_back() {
+  inline auto pop_back() {
     if (ie == xb) ie = xe;
     return *(--ie);
   }
 
-  inline T pop_front() {
-    T v = *(ib++);
+  inline auto pop_front() {
+    auto v = *(ib++);
     if (ib == xe) ib = xb;
     return v;
   }
