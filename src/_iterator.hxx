@@ -725,6 +725,63 @@ inline auto rangeIterable(T v, T V, T DV=1) {
 
 
 
+// CIRCULAR-ITERATOR
+// -----------------
+
+#ifndef CIRCULAR_ITERATOR_ACCESS
+#define CIRCULAR_ITERATOR_ACCESS(I, ib, ie, it) \
+  inline I valueBegin() const noexcept { return ib; } \
+  inline I valueEnd()   const noexcept { return ie; } \
+  inline I value()      const noexcept { return it; }
+#endif
+
+#ifndef CIRCULAR_ITERABLE_ACCESS
+#define CIRCULAR_ITERABLE_ACCESS(I, xb, xe) \
+  inline auto values() const noexcept { return Iterable<I>(xb, xe); }
+#endif
+
+
+template <class I>
+class InputCircularIterator {
+  using iterator = CircularIterator;
+  const I xb, xe; I it;
+  public:
+  ITERATOR_USING_XC(I, input_iterator_tag)
+  InputCircularIterator(I xb, I xe, I it) noexcept : xb(xb), xe(xe), it(it) {}
+  ITERATOR_DEREF_VALUE(inline, const, *it)
+  ITERATOR_INCREMENT(inline,, ++it; if (it == xe) it = xb)
+  ITERATOR_COMPARE_EQNE(inline,, l, r, l.it==r.it, l.it!=r.it)
+  CIRCULAR_ITERATOR_ACCESS(I, xb, xe, it)
+};
+
+
+template <class I>
+class InputCircularIterable {
+  const I xb, xe;
+  const I ib, ie;
+  public:
+  InputCircularIterable(I xb, I xe, I ib, I ie) noexcept : xb(xb), xe(xe), ib(ib), ie(ie) {}
+  inline auto begin() const { return InputCircularIterator<I>(xb, xe, ib); }
+  inline auto end()   const { return InputCircularIterator<I>(xb, xe, ie); }
+  CIRCULAR_ITERABLE_ACCESS(I, xb, xe)
+  ITERABLE_SIZES_DEFAULT(ib, ie)
+};
+
+template <class I>
+inline auto inputCircularIterator(I ib, I ie, I it) noexcept { return InputCircularIterator<I>(ib, ie, it); }
+
+template <class I>
+inline auto inputCircularIterable(I xb, I xe, I ib, I ie) noexcept {
+  return InputCircularIterable<I>(xb, xe, ib, ie);
+}
+template <class J, class I>
+inline auto inputCircularIterable(const J& x, I ib, I ie) noexcept {
+  return inputCircularIterable(x.begin(), x.end(), ib, ie);
+}
+
+
+
+
 // PAIR-ITERATOR
 // -------------
 
