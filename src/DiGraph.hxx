@@ -31,13 +31,13 @@ class DiGraph {
 
   // Cute helpers
   private:
-  size_t s() const { return vto.size(); }
+  K s() const { return vto.size(); }
   K ei(K u, K v) const { return findAt(vto[u], v); }
 
   // Read operations
   public:
-  size_t span()  const { return s(); }
-  size_t order() const { return N; }
+  K      span()  const { return s(); }
+  K      order() const { return N; }
   size_t size()  const { return M; }
 
   bool hasVertex(K u)    const { return u < s() && vex[u]; }
