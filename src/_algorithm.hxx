@@ -625,7 +625,7 @@ template <class IX, class IB, class FL, class FE>
 auto inplace_merge_unique(IX xb, IX xm, IX xe, IB bb, IB be, FL fl, FE fe) {
   // `it` points to the previous target value, unlike `ib` and `im`.
   IX   it = xb, ib = xb, im = xm;
-  auto bq = bounded_deque_view(bb, be);
+  auto bq  = bounded_deque_view(bb, be);
   if (ib < xm && im < xe) {
     bq.push_back(*(ib++));
     *it = fl(*im, bq.front())? *(im++) : bq.pop_front();
@@ -634,13 +634,13 @@ auto inplace_merge_unique(IX xb, IX xm, IX xe, IB bb, IB be, FL fl, FE fe) {
   else if (im < xe) ++im;
   else return it;
   for (; ib < xm && im < xe;) {
-    if (fe(*it, *ib)) { ++ib; continue; }
-    if (fe(*it, *im)) { ++im; continue; }
     bq.push_back(*(ib++));
+    if (fe(*it, bq.front())) { bq.pop_front(); continue; }
+    if (fe(*it, *im))        { ++im;           continue; }
     *(++it) = fl(*im, bq.front())? *(im++) : bq.pop_front();
   }
-  for (; !bq.empty();)
-    if (!fe(*it, *bq.front())) *(++it) = bq.pop_front();
+  for (; !bq.empty(); bq.pop_front())
+    if (!fe(*it, bq.front())) *(++it) = bq.front();
   for (; ib < xm; ++ib)
     if (!fe(*it, *ib)) *(++it) = *ib;
   for (; im < xe; ++im)
@@ -651,7 +651,7 @@ template <class IX, class IB>
 auto inplace_merge_unique(IX xb, IX xm, IX xe, IB bb, IB be) {
   auto fl = [](const auto& a, const auto& b) { return a < b; };
   auto fe = [](const auto& a, const auto& b) { return a == b; };
-  return inplace_merge_unique(xb, xm, xe, bb, be);
+  return inplace_merge_unique(xb, xm, xe, bb, be, fl, fe);
 }
 template <class JX, class JB, class FL, class FE>
 auto inplaceMergeUnique(JX& x, size_t xm, JB& b, FL fl, FE fe) {

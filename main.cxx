@@ -215,20 +215,10 @@ int old_main(int argc, char **argv) {
 
 
 int main(int argc, char **argv) {
-  vector<int> x(4);
-  auto xq = boundedDequeView(x);
-  xq.push_back(1);
-  xq.push_back(2);
-  xq.push_back(3);
-  printf("size:  %d\n", xq.size());
-  printf("front: %d\n", xq.front());
-  printf("[%d, %d, %d]\n", xq.pop_back(), xq.pop_back(), xq.pop_back());
-  xq.push_back(4);
-  xq.push_back(5);
-  xq.push_back(6);
-  printf("size:  %d\n", xq.size());
-  printf("front: %d\n", xq.front());
-  printf("[%d, %d, %d]\n", xq.pop_back(), xq.pop_back(), xq.pop_back());
+  vector<int> x {1, 1, 3, 3, 5, 2, 2, 2, 4, 6, 6, 6}, b(3);
+  auto it = inplaceMergeUnique(x, 5, b);
+  printf("size = %d\n", it-x.begin());
+  println(x);
   printf("\n");
   return 0;
 }
