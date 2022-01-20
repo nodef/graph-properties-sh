@@ -199,7 +199,7 @@ void runSnap(const Options& o) {
 // MAIN
 // ----
 
-int main(int argc, char **argv) {
+int old_main(int argc, char **argv) {
   typedef FileFormat F;
   Options o = readOptions(argc, argv);
   if (o.help)           { printf("%s\n\n", helpMessage()); return 0; }
@@ -209,6 +209,26 @@ int main(int argc, char **argv) {
     case F::FIXED_MTX:    runMtx(o);  break;
     case F::TEMPORAL_TXT: runSnap(o); break;
   }
+  printf("\n");
+  return 0;
+}
+
+
+int main(int argc, char **argv) {
+  vector<int> x(4);
+  auto xq = boundedDequeView(x);
+  xq.push_back(1);
+  xq.push_back(2);
+  xq.push_back(3);
+  printf("size:  %d\n", xq.size());
+  printf("front: %d\n", xq.front());
+  printf("[%d, %d, %d]\n", xq.pop_back(), xq.pop_back(), xq.pop_back());
+  xq.push_back(4);
+  xq.push_back(5);
+  xq.push_back(6);
+  printf("size:  %d\n", xq.size());
+  printf("front: %d\n", xq.front());
+  printf("[%d, %d, %d]\n", xq.pop_back(), xq.pop_back(), xq.pop_back());
   printf("\n");
   return 0;
 }
