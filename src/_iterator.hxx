@@ -482,20 +482,20 @@ class SizedIterable {
 };
 
 template <class I>
-inline auto sizedIterable(I ib, I ie, size_t N) noexcept {
+inline auto sized_iterable(I ib, I ie, size_t N) noexcept {
   return SizedIterable<I>(ib, ie, N);
 }
 template <class I>
-inline auto sizedIterable(I ib, I ie) {
+inline auto sized_iterable(I ib, I ie) {
   return SizedIterable<I>(ib, ie);
 }
 template <class J>
 inline auto sizedIterable(const J& x, size_t N) {
-  return sizedIterable(x.begin(), x.end(), N);
+  return sized_iterable(x.begin(), x.end(), N);
 }
 template <class J>
 inline auto sizedIterable(const J& x) {
-  return sizedIterable(x.begin(), x.end());
+  return sized_iterable(x.begin(), x.end());
 }
 
 
@@ -549,30 +549,30 @@ class PairedValueIterable {
 };
 
 
-
 template <class I>
-inline auto pairedIterable(I ib, I ie) noexcept {
+inline auto paired_iterable(I ib, I ie) noexcept {
   return PairedIterable<I>(ib, ie);
 }
-template <class J>
-inline auto pairedIterable(const J& x) {
-  return pairedIterable(x.begin(), x.end());
+template <class I>
+inline auto const_paired_iterable(I ib, I ie) noexcept {
+  return ConstPairedIterable<I>(ib, ie);
 }
 template <class I>
-inline auto constPairedIterable(I ib, I ie) noexcept {
-  return ConstPairedIterable<I>(ib, ie);
+inline auto paired_value_iterable(I ib, I ie) noexcept {
+  return PairedValueIterable<I>(ib, ie);
+}
+
+template <class J>
+inline auto pairedIterable(const J& x) {
+  return paired_iterable(x.begin(), x.end());
 }
 template <class J>
 inline auto constPairedIterable(const J& x) {
-  return constPairedIterable(x.begin(), x.end());
-}
-template <class I>
-inline auto pairedValueIterable(I ib, I ie) noexcept {
-  return PairedValueIterable<I>(ib, ie);
+  return const_paired_iterable(x.begin(), x.end());
 }
 template <class J>
 inline auto pairedValueIterable(const J& x) {
-  return pairedValueIterable(x.begin(), x.end());
+  return paired_value_iterable(x.begin(), x.end());
 }
 
 
@@ -663,9 +663,13 @@ class DefaultValueIterator {
 };
 
 template <class T>
-inline auto defaultIterator(const T& _) noexcept { return DefaultIterator<T>(); }
+inline auto default_iterator(const T& _) noexcept {
+  return DefaultIterator<T>();
+}
 template <class T>
-inline auto defaultValueIterator(const T& _) noexcept { return DefaultValueIterator<T>(); }
+inline auto default_value_iterator(const T& _) noexcept {
+  return DefaultValueIterator<T>();
+}
 
 
 
@@ -768,15 +772,17 @@ class InputCircularIterable {
 };
 
 template <class I>
-inline auto inputCircularIterator(I ib, I ie, I it) noexcept { return InputCircularIterator<I>(ib, ie, it); }
+inline auto input_circular_iterator(I ib, I ie, I it) noexcept {
+  return InputCircularIterator<I>(ib, ie, it);
+}
 
 template <class I>
-inline auto inputCircularIterable(I xb, I xe, I ib, I ie) noexcept {
+inline auto input_circular_iterable(I xb, I xe, I ib, I ie) noexcept {
   return InputCircularIterable<I>(xb, xe, ib, ie);
 }
-template <class J, class I>
-inline auto inputCircularIterable(const J& x, I ib, I ie) noexcept {
-  return inputCircularIterable(x.begin(), x.end(), ib, ie);
+template <class J>
+inline auto inputCircularIterable(const J& x, size_t i, size_t I) noexcept {
+  return input_circular_iterable(x.begin(), x.end(), x.begin()+i, x.begin()+I);
 }
 
 
@@ -880,72 +886,86 @@ class RandomAccessPairIterator {
 };
 
 template <class I0, class I1>
-inline auto inputPairIterator(I0 i0, I1 i1) noexcept { return InputPairIterator<I0, I1>(i0, i1); }
+inline auto input_pair_iterator(I0 i0, I1 i1) noexcept {
+  return InputPairIterator<I0, I1>(i0, i1);
+}
 template <class I0, class I1>
-inline auto outputPairIterator(I0 i0, I1 i1) noexcept { return OutputPairIterator<I0, I1>(i0, i1); }
+inline auto output_pair_iterator(I0 i0, I1 i1) noexcept {
+  return OutputPairIterator<I0, I1>(i0, i1);
+}
 template <class I0, class I1>
-inline auto forwardPairIterator(I0 i0, I1 i1) noexcept { return ForwardPairIterator<I0, I1>(i0, i1); }
+inline auto forward_pair_iterator(I0 i0, I1 i1) noexcept {
+  return ForwardPairIterator<I0, I1>(i0, i1);
+}
 template <class I0, class I1>
-inline auto bidirectionalPairIterator(I0 i0, I1 i1) noexcept { return BidirectionalPairIterator<I0, I1>(i0, i1); }
+inline auto bidirectional_pair_iterator(I0 i0, I1 i1) noexcept {
+  return BidirectionalPairIterator<I0, I1>(i0, i1);
+}
 template <class I0, class I1>
-inline auto randomAccessPairIterator(I0 i0, I1 i1) noexcept { return RandomAccessPairIterator<I0, I1>(i0, i1); }
+inline auto random_access_pair_iterator(I0 i0, I1 i1) noexcept {
+  return RandomAccessPairIterator<I0, I1>(i0, i1);
+}
 
 template <class I0, class I1>
-inline auto inputPairIterable(I0 i0b, I0 i0e, I1 i1b, I1 i1e) noexcept {
+inline auto input_pair_iterable(I0 i0b, I0 i0e, I1 i1b, I1 i1e) noexcept {
   InputPairIterator<I0, I1> b(i0b, i1b), e(i0e, i1e);
   return iterable(b, e);
 }
-template <class J0, class J1>
-inline auto inputPairIterable(const J0& x0, const J1& x1) {
-  return inputPairIterable(x0.begin(), x0.end(), x1.begin(), x1.end());
-}
-
 template <class I0, class I1>
-inline auto outputPairIterable(I0 i0b, I0 i0e, I1 i1b, I1 i1e) noexcept {
+inline auto output_pair_iterable(I0 i0b, I0 i0e, I1 i1b, I1 i1e) noexcept {
   OutputPairIterator<I0, I1> b(i0b, i1b), e(i0e, i1e);
   return iterable(b, e);
 }
-template <class J0, class J1>
-inline auto outputPairIterable(const J0& x0, const J1& x1) {
-  return outputPairIterable(x0.begin(), x0.end(), x1.begin(), x1.end());
-}
-
 template <class I0, class I1>
-inline auto forwardPairIterable(I0 i0b, I0 i0e, I1 i1b, I1 i1e) noexcept {
+inline auto forward_pair_iterable(I0 i0b, I0 i0e, I1 i1b, I1 i1e) noexcept {
   ForwardPairIterator<I0, I1> b(i0b, i1b), e(i0e, i1e);
   return iterable(b, e);
 }
-template <class J0, class J1>
-inline auto forwardPairIterable(const J0& x0, const J1& x1) {
-  return forwardPairIterable(x0.begin(), x0.end(), x1.begin(), x1.end());
-}
-
 template <class I0, class I1>
-inline auto bidirectionalPairIterable(I0 i0b, I0 i0e, I1 i1b, I1 i1e) noexcept {
+inline auto bidirectional_pair_iterable(I0 i0b, I0 i0e, I1 i1b, I1 i1e) noexcept {
   BidirectionalPairIterator<I0, I1> b(i0b, i1b), e(i0e, i1e);
   return iterable(b, e);
 }
-template <class J0, class J1>
-inline auto bidirectionalPairIterable(const J0& x0, const J1& x1) {
-  return bidirectionalPairIterable(x0.begin(), x0.end(), x1.begin(), x1.end());
-}
-
 template <class I0, class I1>
-inline auto randomAccessPairIterable(I0 i0b, I0 i0e, I1 i1b, I1 i1e) noexcept {
+inline auto random_access_pair_iterable(I0 i0b, I0 i0e, I1 i1b, I1 i1e) noexcept {
   RandomAccessPairIterator<I0, I1> b(i0b, i1b), e(i0e, i1e);
   return iterable(b, e);
 }
+
+template <class J0, class J1>
+inline auto inputPairIterable(const J0& x0, const J1& x1) {
+  return input_pair_iterable(x0.begin(), x0.end(), x1.begin(), x1.end());
+}
+template <class J0, class J1>
+inline auto outputPairIterable(const J0& x0, const J1& x1) {
+  return output_pair_iterable(x0.begin(), x0.end(), x1.begin(), x1.end());
+}
+template <class J0, class J1>
+inline auto forwardPairIterable(const J0& x0, const J1& x1) {
+  return forward_pair_iterable(x0.begin(), x0.end(), x1.begin(), x1.end());
+}
+template <class J0, class J1>
+inline auto bidirectionalPairIterable(const J0& x0, const J1& x1) {
+  return bidirectional_pair_iterable(x0.begin(), x0.end(), x1.begin(), x1.end());
+}
 template <class J0, class J1>
 inline auto randomAccessPairIterable(const J0& x0, const J1& x1) {
-  return randomAccessPairIterable(x0.begin(), x0.end(), x1.begin(), x1.end());
+  return random_access_pair_iterable(x0.begin(), x0.end(), x1.begin(), x1.end());
 }
 
 template <class I0, class I1>
-inline auto pairIterator(I0 i0, I1 i1) noexcept { return randomAccessPairIterator(i0, i1); }
+inline auto pair_iterator(I0 i0, I1 i1) noexcept {
+  return random_access_pair_iterator(i0, i1);
+}
+
 template <class I0, class I1>
-inline auto pairIterable(I0 i0b, I0 i0e, I1 i1b, I1 i1e) noexcept { return randomAccessPairIterable(i0b, i0e, i1b, i1e); }
+inline auto pair_iterable(I0 i0b, I0 i0e, I1 i1b, I1 i1e) noexcept {
+  return random_access_pair_iterable(i0b, i0e, i1b, i1e);
+}
 template <class J0, class J1>
-inline auto pairIterable(const J0& x0, const J1& x1) { return randomAccessPairIterable(x0, x1); }
+inline auto pairIterable(const J0& x0, const J1& x1) {
+  return pair_iterable(x0.begin(), x0.end(), x1.begin(), x1.end());
+}
 
 
 
@@ -1022,38 +1042,45 @@ class ForwardFilterIterable {
 };
 
 template <class I, class F>
-inline auto inputFilterIterator(I it, I ie, F fn) {
+inline auto input_filter_iterator(I it, I ie, F fn) {
   return InputFilterIterator<I, F>(it, ie, fn);
 }
 template <class I, class F>
-inline auto forwardFilterIterator(I it, I ie, F fn) {
+inline auto forward_filter_iterator(I it, I ie, F fn) {
   return ForwardFilterIterator<I, F>(it, ie, fn);
 }
 
 template <class I, class F>
-inline auto inputFilterIterable(I ib, I ie, F fn) {
+inline auto input_filter_iterable(I ib, I ie, F fn) {
   return InputFilterIterable<I, F>(ib, ie, fn);
 }
-template <class J, class F>
-inline auto inputFilterIterable(const J& x, F fn) {
-  return inputFilterIterable(x.begin(), x.end(), fn);
+template <class I, class F>
+inline auto forward_filter_iterable(I ib, I ie, F fn) {
+  return ForwardFilterIterable<I, F>(ib, ie, fn);
 }
 
-template <class I, class F>
-inline auto forwardFilterIterable(I ib, I ie, F fn) {
-  return ForwardFilterIterable<I, F>(ib, ie, fn);
+template <class J, class F>
+inline auto inputFilterIterable(const J& x, F fn) {
+  return input_filter_iterable(x.begin(), x.end(), fn);
 }
 template <class J, class F>
 inline auto forwardFilterIterable(const J& x, F fn) {
-  return forwardFilterIterable(x.begin(), x.end(), fn);
+  return forward_filter_iterable(x.begin(), x.end(), fn);
 }
 
 template <class I, class F>
-inline auto filterIterator(I it, I ie, F fn) { return forwardFilterIterator(it, ie, fn); }
+inline auto filter_iterator(I it, I ie, F fn) {
+  return forward_filter_iterator(it, ie, fn);
+}
+
 template <class I, class F>
-inline auto filterIterable(I ib, I ie, F fn) { return forwardFilterIterable(ib, ie, fn); }
+inline auto filter_iterable(I ib, I ie, F fn) {
+  return forward_filter_iterable(ib, ie, fn);
+}
 template <class J, class F>
-inline auto filterIterable(const J& x, F fn) { return forwardFilterIterable(x, fn); }
+inline auto filterIterable(const J& x, F fn) {
+  return filter_iterable(x.begin(), x.end(), fn);
+}
 
 
 
@@ -1130,38 +1157,45 @@ class ForwardConditionalIterable {
 };
 
 template <class I, class IC>
-inline auto inputConditionalIterator(I it, I ie, IC ic) {
+inline auto input_conditional_iterator(I it, I ie, IC ic) {
   return InputConditionalIterator<I, IC>(it, ie, ic);
 }
 template <class I, class IC>
-inline auto forwardConditionalIterator(I it, I ie, IC ic) {
+inline auto forward_conditional_iterator(I it, I ie, IC ic) {
   return ForwardConditionalIterator<I, IC>(it, ie, ic);
 }
 
 template <class I, class IC>
-inline auto inputConditionalIterable(I ib, I ie, IC ic) {
+inline auto input_conditional_iterable(I ib, I ie, IC ic) {
   return InputConditionalIterable<I, IC>(ib, ie, ic);
 }
-template <class J, class JC>
-inline auto inputConditionalIterable(const J& x, const JC& xc) {
-  return inputConditionalIterable(x.begin(), x.end(), xc.begin());
-}
-
 template <class I, class IC>
-inline auto forwardConditionalIterable(I ib, I ie, IC ic) {
+inline auto forward_conditional_iterable(I ib, I ie, IC ic) {
   return ForwardConditionalIterable<I, IC>(ib, ie, ic);
 }
+
 template <class J, class JC>
-inline auto forwardConditionalIterable(const J& x, const JC& xc) {
-  return forwardConditionalIterable(x.begin(), x.end(), xc.begin());
+inline auto inputConditionalIterable(const J& x, const JC& c) {
+  return input_conditional_iterable(x.begin(), x.end(), c.begin());
+}
+template <class J, class JC>
+inline auto forwardConditionalIterable(const J& x, const JC& c) {
+  return forward_conditional_iterable(x.begin(), x.end(), c.begin());
 }
 
 template <class I, class IC>
-inline auto conditionalIterator(I it, I ie, IC ic) { return forwardConditionalIterator(it, ie, ic); }
+inline auto conditional_iterator(I it, I ie, IC ic) {
+  return forward_conditional_iterator(it, ie, ic);
+}
+
 template <class I, class IC>
-inline auto conditionalIterable(I ib, I ie, IC ic) { return forwardConditionalIterable(ib, ie, ic); }
+inline auto conditional_iterable(I ib, I ie, IC ic) {
+  return forward_conditional_iterable(ib, ie, ic);
+}
 template <class J, class JC>
-inline auto conditionalIterable(const J& x, const JC& xc) { return forwardConditionalIterable(x, xc); }
+inline auto conditionalIterable(const J& x, const JC& c) {
+  return conditional_iterable(x.begin(), x.end(), c.begin());
+}
 
 
 
@@ -1313,67 +1347,81 @@ class RandomAccessTransformIterable {
 };
 
 template <class I, class F>
-inline auto inputTransformIterator(I it, F fn) noexcept { return InputTransformIterator<I, F>(it, fn); }
+inline auto input_transform_iterator(I it, F fn) noexcept {
+  return InputTransformIterator<I, F>(it, fn);
+}
 template <class I, class F>
-inline auto outputTransformIterator(I it, F fn) noexcept { return OutputTransformIterator<I, F>(it, fn); }
+inline auto output_transform_iterator(I it, F fn) noexcept {
+  return OutputTransformIterator<I, F>(it, fn);
+}
 template <class I, class F>
-inline auto forwardTransformIterator(I it, F fn) noexcept { return ForwardTransformIterator<I, F>(it, fn); }
+inline auto forward_transform_iterator(I it, F fn) noexcept {
+  return ForwardTransformIterator<I, F>(it, fn);
+}
 template <class I, class F>
-inline auto bidirectionalTransformIterator(I it, F fn) noexcept { return BidirectionalTransformIterator<I, F>(it, fn); }
+inline auto bidirectional_transform_iterator(I it, F fn) noexcept {
+  return BidirectionalTransformIterator<I, F>(it, fn);
+}
 template <class I, class F>
-inline auto randomAccessTransformIterator(I it, F fn) noexcept { return RandomAccessTransformIterator<I, F>(it, fn); }
+inline auto random_access_transform_iterator(I it, F fn) noexcept {
+  return RandomAccessTransformIterator<I, F>(it, fn);
+}
 
 template <class I, class F>
-inline auto inputTransformIterable(I ib, I ie, F fn) noexcept {
+inline auto input_transform_iterable(I ib, I ie, F fn) noexcept {
   return InputTransformIterable<I, F>(ib, ie, fn);
 }
-template <class J, class F>
-inline auto inputTransformIterable(const J& x, F fn) {
-  return inputTransformIterable(x.begin(), x.end(), fn);
+template <class I, class F>
+inline auto output_transform_iterable(I ib, I ie, F fn) noexcept {
+  return OutputTransformIterable<I, F>(ib, ie, fn);
+}
+template <class I, class F>
+inline auto forward_transform_iterable(I ib, I ie, F fn) noexcept {
+  return ForwardTransformIterable<I, F>(ib, ie, fn);
+}
+template <class I, class F>
+inline auto bidirectional_transform_iterable(I ib, I ie, F fn) noexcept {
+  return BidirectionalTransformIterable<I, F>(ib, ie, fn);
+}
+template <class I, class F>
+inline auto random_access_transform_iterable(I ib, I ie, F fn) noexcept {
+  return RandomAccessTransformIterable<I, F>(ib, ie, fn);
 }
 
-template <class I, class F>
-inline auto outputTransformIterable(I ib, I ie, F fn) noexcept {
-  return OutputTransformIterable<I, F>(ib, ie, fn);
+template <class J, class F>
+inline auto inputTransformIterable(const J& x, F fn) {
+  return input_transform_iterable(x.begin(), x.end(), fn);
 }
 template <class J, class F>
 inline auto outputTransformIterable(const J& x, F fn) {
-  return outputTransformIterable(x.begin(), x.end(), fn);
-}
-
-template <class I, class F>
-inline auto forwardTransformIterable(I ib, I ie, F fn) noexcept {
-  return ForwardTransformIterable<I, F>(ib, ie, fn);
+  return output_transform_iterable(x.begin(), x.end(), fn);
 }
 template <class J, class F>
 inline auto forwardTransformIterable(const J& x, F fn) {
-  return forwardTransformIterable(x.begin(), x.end(), fn);
-}
-
-template <class I, class F>
-inline auto bidirectionalTransformIterable(I ib, I ie, F fn) noexcept {
-  return BidirectionalTransformIterable<I, F>(ib, ie, fn);
+  return forward_transform_iterable(x.begin(), x.end(), fn);
 }
 template <class J, class F>
 inline auto bidirectionalTransformIterable(const J& x, F fn) {
-  return bidirectionalTransformIterable(x.begin(), x.end(), fn);
-}
-
-template <class I, class F>
-inline auto randomAccessTransformIterable(I ib, I ie, F fn) noexcept {
-  return RandomAccessTransformIterable<I, F>(ib, ie, fn);
+  return bidirectional_transform_iterable(x.begin(), x.end(), fn);
 }
 template <class J, class F>
 inline auto randomAccessTransformIterable(const J& x, F fn) {
-  return randomAccessTransformIterable(x.begin(), x.end(), fn);
+  return random_access_transform_iterable(x.begin(), x.end(), fn);
 }
 
 template <class I, class F>
-inline auto transformIterator(I it, F fn) noexcept { return randomAccessTransformIterator(it, fn); }
+inline auto transform_iterator(I it, F fn) noexcept {
+  return random_access_transform_iterator(it, fn);
+}
+
 template <class I, class F>
-inline auto transformIterable(I ib, I ie, F fn) noexcept { return randomAccessTransformIterable(ib, ie, fn); }
+inline auto transform_iterable(I ib, I ie, F fn) noexcept {
+  return random_access_transform_iterable(ib, ie, fn);
+}
 template <class J, class F>
-inline auto transformIterable(const J& x, F fn) { return randomAccessTransformIterable(x, fn); }
+inline auto transformIterable(const J& x, F fn) {
+  return transform_iterable(x.begin(), x.end(), fn);
+}
 
 
 
@@ -1459,72 +1507,86 @@ class RandomAccessStaticTransformIterator {
 };
 
 template <class I, class F>
-inline auto inputStaticTransformIterator(I it, F _) noexcept { return InputStaticTransformIterator<I, F>(it); }
+inline auto input_static_transform_iterator(I it, F _) noexcept {
+  return InputStaticTransformIterator<I, F>(it);
+}
 template <class I, class F>
-inline auto outputStaticTransformIterator(I it, F _) noexcept { return OutputStaticTransformIterator<I, F>(it); }
+inline auto output_static_transform_iterator(I it, F _) noexcept {
+  return OutputStaticTransformIterator<I, F>(it);
+}
 template <class I, class F>
-inline auto forwardStaticTransformIterator(I it, F _) noexcept { return ForwardStaticTransformIterator<I, F>(it); }
+inline auto forward_static_transform_iterator(I it, F _) noexcept {
+  return ForwardStaticTransformIterator<I, F>(it);
+}
 template <class I, class F>
-inline auto bidirectionalStaticTransformIterator(I it, F _) noexcept { return BidirectionalStaticTransformIterator<I, F>(it); }
+inline auto bidirectional_static_transform_iterator(I it, F _) noexcept {
+  return BidirectionalStaticTransformIterator<I, F>(it);
+}
 template <class I, class F>
-inline auto randomAccessStaticTransformIterator(I it, F _) noexcept { return RandomAccessStaticTransformIterator<I, F>(it); }
+inline auto random_access_static_transform_iterator(I it, F _) noexcept {
+  return RandomAccessStaticTransformIterator<I, F>(it);
+}
 
 template <class I, class F>
-inline auto inputStaticTransformIterable(I ib, I ie, F _) noexcept {
+inline auto input_static_transform_iterable(I ib, I ie, F _) noexcept {
   InputStaticTransformIterator<I, F> b(ib), e(ie);
   return iterable(b, e);
 }
-template <class J, class F>
-inline auto inputStaticTransformIterable(const J& x, F _) {
-  return inputStaticTransformIterable(x.begin(), x.end(), _);
-}
-
 template <class I, class F>
-inline auto outputStaticTransformIterable(I ib, I ie, F _) noexcept {
+inline auto output_static_transform_iterable(I ib, I ie, F _) noexcept {
   OutputStaticTransformIterator<I, F> b(ib), e(ie);
   return iterable(b, e);
 }
-template <class J, class F>
-inline auto outputStaticTransformIterable(const J& x, F _) {
-  return outputStaticTransformIterable(x.begin(), x.end(), _);
-}
-
 template <class I, class F>
-inline auto forwardStaticTransformIterable(I ib, I ie, F _) noexcept {
+inline auto forward_static_transform_iterable(I ib, I ie, F _) noexcept {
   ForwardStaticTransformIterator<I, F> b(ib), e(ie);
   return iterable(b, e);
 }
-template <class J, class F>
-inline auto forwardStaticTransformIterable(const J& x, F _) {
-  return forwardStaticTransformIterable(x.begin(), x.end(), _);
-}
-
 template <class I, class F>
-inline auto bidirectionalStaticTransformIterable(I ib, I ie, F _) noexcept {
+inline auto bidirectional_static_transform_iterable(I ib, I ie, F _) noexcept {
   BidirectionalStaticTransformIterator<I, F> b(ib), e(ie);
   return iterable(b, e);
 }
-template <class J, class F>
-inline auto bidirectionalStaticTransformIterable(const J& x, F _) {
-  return bidirectionalStaticTransformIterable(x.begin(), x.end(), _);
-}
-
 template <class I, class F>
-inline auto randomAccessStaticTransformIterable(I ib, I ie, F _) noexcept {
+inline auto random_access_static_transform_iterable(I ib, I ie, F _) noexcept {
   RandomAccessStaticTransformIterator<I, F> b(ib), e(ie);
   return iterable(b, e);
 }
+
+template <class J, class F>
+inline auto inputStaticTransformIterable(const J& x, F _) {
+  return input_static_transform_iterable(x.begin(), x.end(), _);
+}
+template <class J, class F>
+inline auto outputStaticTransformIterable(const J& x, F _) {
+  return output_static_transform_iterable(x.begin(), x.end(), _);
+}
+template <class J, class F>
+inline auto forwardStaticTransformIterable(const J& x, F _) {
+  return forward_static_transform_iterable(x.begin(), x.end(), _);
+}
+template <class J, class F>
+inline auto bidirectionalStaticTransformIterable(const J& x, F _) {
+  return bidirectional_static_transform_iterable(x.begin(), x.end(), _);
+}
 template <class J, class F>
 inline auto randomAccessStaticTransformIterable(const J& x, F _) {
-  return randomAccessStaticTransformIterable(x.begin(), x.end(), _);
+  return random_access_static_transform_iterable(x.begin(), x.end(), _);
 }
 
 template <class I, class F>
-inline auto staticTransformIterator(I it, F _) noexcept { return randomAccessStaticTransformIterator(it, _); }
+inline auto static_transform_iterator(I it, F _) noexcept {
+  return random_access_static_transform_iterator(it, _);
+}
+
 template <class I, class F>
-inline auto staticTransformIterable(I ib, I ie, F _) noexcept { return randomAccessStaticTransformIterable(ib, ie, _); }
+inline auto static_transform_iterable(I ib, I ie, F _) noexcept {
+  return random_access_static_transform_iterable(ib, ie, _);
+}
 template <class J, class F>
-inline auto staticTransformIterable(const J& x, F _) { return randomAccessStaticTransformIterable(x, _); }
+inline auto staticTransformIterable(const J& x, F _) {
+  return static_transform_iterable(x.begin(), x.end(), _);
+}
 
 
 
@@ -1628,77 +1690,91 @@ class RandomAccessTernaryIterator {
 };
 
 template <class I1, class I0>
-inline auto inputTernaryIterator(bool sel, I1 i1, I0 i0) noexcept { return InputTernaryIterator<I1, I0>(sel, i1, i0); }
+inline auto input_ternary_iterator(bool sel, I1 i1, I0 i0) noexcept {
+  return InputTernaryIterator<I1, I0>(sel, i1, i0);
+}
 template <class I1, class I0>
-inline auto outputTernaryIterator(bool sel, I1 i1, I0 i0) noexcept { return OutputTernaryIterator<I1, I0>(sel, i1, i0); }
+inline auto output_ternary_iterator(bool sel, I1 i1, I0 i0) noexcept {
+  return OutputTernaryIterator<I1, I0>(sel, i1, i0);
+}
 template <class I1, class I0>
-inline auto forwardTernaryIterator(bool sel, I1 i1, I0 i0) noexcept { return ForwardTernaryIterator<I1, I0>(sel, i1, i0); }
+inline auto forward_ternary_iterator(bool sel, I1 i1, I0 i0) noexcept {
+  return ForwardTernaryIterator<I1, I0>(sel, i1, i0);
+}
 template <class I1, class I0>
-inline auto bidirectionalTernaryIterator(bool sel, I1 i1, I0 i0) noexcept { return BidirectionalTernaryIterator<I1, I0>(sel, i1, i0); }
+inline auto bidirectional_ternary_iterator(bool sel, I1 i1, I0 i0) noexcept {
+  return BidirectionalTernaryIterator<I1, I0>(sel, i1, i0);
+}
 template <class I1, class I0>
-inline auto randomAccessTernaryIterator(bool sel, I1 i1, I0 i0) noexcept { return RandomAccessTernaryIterator<I1, I0>(sel, i1, i0); }
+inline auto random_access_ternary_iterator(bool sel, I1 i1, I0 i0) noexcept {
+  return RandomAccessTernaryIterator<I1, I0>(sel, i1, i0);
+}
 
 template <class I1, class I0>
-inline auto inputTernaryIterable(bool sel, I1 i1b, I1 i1e, I0 i0b, I0 i0e) noexcept {
+inline auto input_ternary_iterable(bool sel, I1 i1b, I1 i1e, I0 i0b, I0 i0e) noexcept {
   auto b = InputTernaryIterator<I1, I0>(sel, i1b, i0b);
   auto e = InputTernaryIterator<I1, I0>(sel, i1e, i0e);
   return iterable(b, e);
 }
-template <class J1, class J0>
-inline auto inputTernaryIterable(bool sel, const J1& x1, const J0& x0) {
-  return inputTernaryIterable(sel, x1.begin(), x1.end(), x0.begin(), x0.end());
-}
-
 template <class I1, class I0>
-inline auto outputTernaryIterable(bool sel, I1 i1b, I1 i1e, I0 i0b, I0 i0e) noexcept {
+inline auto output_ternary_iterable(bool sel, I1 i1b, I1 i1e, I0 i0b, I0 i0e) noexcept {
   auto b = OutputTernaryIterator<I1, I0>(sel, i1b, i0b);
   auto e = OutputTernaryIterator<I1, I0>(sel, i1e, i0e);
   return iterable(b, e);
 }
-template <class J1, class J0>
-inline auto outputTernaryIterable(bool sel, const J1& x1, const J0& x0) {
-  return outputTernaryIterable(sel, x1.begin(), x1.end(), x0.begin(), x0.end());
-}
-
 template <class I1, class I0>
-inline auto forwardTernaryIterable(bool sel, I1 i1b, I1 i1e, I0 i0b, I0 i0e) noexcept {
+inline auto forward_ternary_iterable(bool sel, I1 i1b, I1 i1e, I0 i0b, I0 i0e) noexcept {
   auto b = ForwardTernaryIterator<I1, I0>(sel, i1b, i0b);
   auto e = ForwardTernaryIterator<I1, I0>(sel, i1e, i0e);
   return iterable(b, e);
 }
-template <class J1, class J0>
-inline auto forwardTernaryIterable(bool sel, const J1& x1, const J0& x0) {
-  return forwardTernaryIterable(sel, x1.begin(), x1.end(), x0.begin(), x0.end());
-}
-
 template <class I1, class I0>
-inline auto bidirectionalTernaryIterable(bool sel, I1 i1b, I1 i1e, I0 i0b, I0 i0e) noexcept {
+inline auto bidirectional_ternary_iterable(bool sel, I1 i1b, I1 i1e, I0 i0b, I0 i0e) noexcept {
   auto b = BidirectionalTernaryIterator<I1, I0>(sel, i1b, i0b);
   auto e = BidirectionalTernaryIterator<I1, I0>(sel, i1e, i0e);
   return iterable(b, e);
 }
-template <class J1, class J0>
-inline auto bidirectionalTernaryIterable(bool sel, const J1& x1, const J0& x0) {
-  return bidirectionalTernaryIterable(sel, x1.begin(), x1.end(), x0.begin(), x0.end());
-}
-
 template <class I1, class I0>
-inline auto randomAccessTernaryIterable(bool sel, I1 i1b, I1 i1e, I0 i0b, I0 i0e) noexcept {
+inline auto random_access_ternary_iterable(bool sel, I1 i1b, I1 i1e, I0 i0b, I0 i0e) noexcept {
   auto b = RandomAccessTernaryIterator<I1, I0>(sel, i1b, i0b);
   auto e = RandomAccessTernaryIterator<I1, I0>(sel, i1e, i0e);
   return iterable(b, e);
 }
+
+template <class J1, class J0>
+inline auto inputTernaryIterable(bool sel, const J1& x1, const J0& x0) {
+  return input_ternary_iterable(sel, x1.begin(), x1.end(), x0.begin(), x0.end());
+}
+template <class J1, class J0>
+inline auto outputTernaryIterable(bool sel, const J1& x1, const J0& x0) {
+  return output_ternary_iterable(sel, x1.begin(), x1.end(), x0.begin(), x0.end());
+}
+template <class J1, class J0>
+inline auto forwardTernaryIterable(bool sel, const J1& x1, const J0& x0) {
+  return forward_ternary_iterable(sel, x1.begin(), x1.end(), x0.begin(), x0.end());
+}
+template <class J1, class J0>
+inline auto bidirectionalTernaryIterable(bool sel, const J1& x1, const J0& x0) {
+  return bidirectional_ternary_iterable(sel, x1.begin(), x1.end(), x0.begin(), x0.end());
+}
 template <class J1, class J0>
 inline auto randomAccessTernaryIterable(bool sel, const J1& x1, const J0& x0) {
-  return randomAccessTernaryIterable(sel, x1.begin(), x1.end(), x0.begin(), x0.end());
+  return random_access_ternary_iterable(sel, x1.begin(), x1.end(), x0.begin(), x0.end());
 }
 
 template <class I1, class I0>
-inline auto ternaryIterator(bool sel, I1 i1, I0 i0) noexcept { return randomAccessTransformIterator(sel, i1, i0); }
+inline auto ternary_iterator(bool sel, I1 i1, I0 i0) noexcept {
+  return random_access_transform_iterator(sel, i1, i0);
+}
+
 template <class I1, class I0>
-inline auto ternaryIterable(bool sel, I1 i1b, I1 i1e, I0 i0b, I0 i0e) noexcept { return randomAccessTransformIterable(sel, i1b, i1e, i0b, i0e); }
+inline auto ternary_iterable(bool sel, I1 i1b, I1 i1e, I0 i0b, I0 i0e) noexcept {
+  return random_access_transform_iterable(sel, i1b, i1e, i0b, i0e);
+}
 template <class J1, class J0>
-inline auto ternaryIterable(bool sel, const J1& x1, const J0& x0) { return randomAccessTransformIterable(sel, x1, x0); }
+inline auto ternaryIterable(bool sel, const J1& x1, const J0& x0) {
+  return ternary_iterable(sel, x1.begin(), x1.end(), x0.begin(), x0.end());
+}
 
 
 
