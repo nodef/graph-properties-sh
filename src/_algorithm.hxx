@@ -527,6 +527,29 @@ auto setDifferenceVector(const JX& x, const JY& y, FE fe) {
 
 
 
+// UNIQUE-*
+// --------
+
+template <class I>
+auto unique_values(I ib, I ie) {
+  return unique(ib, ie);
+}
+template <class I, class FE>
+auto unique_values(I ib, I ie, FE fe) {
+  return unique(ib, ie, fe);
+}
+template <class J>
+auto uniqueValues(J& x) {
+  return unique_values(x.begin(), x.end());
+}
+template <class J, class FE>
+auto uniqueValues(J& x, FE fe) {
+  return unique_values(x.begin(), x.end(), fe);
+}
+
+
+
+
 // MERGE-*
 // -------
 
@@ -625,7 +648,7 @@ template <class IX, class IB, class FL, class FE>
 auto inplace_merge_unique(IX xb, IX xm, IX xe, IB bb, IB be, FL fl, FE fe) {
   // `it` points to the previous target value, unlike `ib` and `im`.
   IX   it = xb, ib = xb, im = xm;
-  auto bq  = bounded_deque_view(bb, be);
+  auto bq = bounded_deque_view(bb, be);
   if (ib < xm && im < xe) {
     bq.push_back(*(ib++));
     *it = fl(*im, bq.front())? *(im++) : bq.pop_front();
