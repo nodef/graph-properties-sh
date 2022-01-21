@@ -361,10 +361,11 @@ using std::cout;
 #endif
 
 
-#ifndef GRAPH_EDGEDATA_NAME_DO
-#define GRAPH_EDGEDATA_NAME_DO(K, V, E, M, fn, u, e0, e1) \
-  inline bool fn() { \
+#ifndef GRAPH_CORRECT
+#define GRAPH_CORRECT(K, V, E, M, unq, buf, u, e0, e1) \
+  inline bool correct(bool unq=false) { \
     bool a = false; M = 0; \
+    vector<pair<K, E>> buf; \
     cforEachVertexKey([&](const K& u) { \
       a |= e0; \
       a |= e1; \
@@ -372,10 +373,6 @@ using std::cout;
     }); \
     return a; \
   }
-#define GRAPH_CORRECT(K, V, E, M, u, e0, e1) \
-  GRAPH_EDGEDATA_NAME_DO(K, V, E, M, correct, u, e0, e1)
-#define GRAPH_OPTIMIZE(K, V, E, M, u, e0, e1) \
-  GRAPH_EDGEDATA_NAME_DO(K, V, E, M, optimize, u, e0, e1)
 #endif
 
 
@@ -508,9 +505,7 @@ using std::cout;
 
 #ifndef GRAPH_CORRECT_FROM
 #define GRAPH_CORRECT_FROM(K, V, E, x) \
-  inline bool correct() noexcept { return x.correct(); }
-#define GRAPH_OPTIMIZE_FROM(K, V, E, x) \
-  inline bool optimize() noexcept { return x.optimize(); }
+  inline bool correct(bool unq=false) noexcept { return x.correct(unq); }
 #define GRAPH_CLEAR_FROM(K, V, E, x) \
   inline bool clear() noexcept { return x.clear(); }
 #define GRAPH_RESIZE_FROM(K, V, E, x) \
@@ -530,26 +525,14 @@ using std::cout;
 #ifndef GRAPH_WRITE
 #define GRAPH_WRITE(K, V, E, Bitset, Graph) \
   template <class K, class V, class E, tclass2 Bitset> \
-  void write(ostream& a, const Graph<K, V, E, Bitset>& x, bool detailed=false) { writeGraph(a, x, detailed); } \
+  void write(ostream& a, const Graph<K, V, E, Bitset>& x, bool det=false) { writeGraph(a, x, det); } \
   template <class K, class V, class E, tclass2 Bitset> \
-  void writeln(ostream& a, const Graph<K, V, E, Bitset>& x, bool detailed=false) { writeGraph(a, x, detailed); a << "\n"; } \
-  template <class K, class V, class E, tclass2 Bitset> \
-  ostream& operator<<(ostream& a, const Graph<K, V, E, Bitset>& x) { write(a, x); return a; } \
-  template <class K, class V, class E, tclass2 Bitset> \
-  void print(const Graph<K, V, E, Bitset>& x, bool detailed=false) { write(cout, x, detailed); } \
-  template <class K, class V, class E, tclass2 Bitset> \
-  void println(const Graph<K, V, E, Bitset>& x, bool detailed=false) { writeln(cout, x, detailed); }
+  ostream& operator<<(ostream& a, const Graph<K, V, E, Bitset>& x) { write(a, x); return a; }
 #define GRAPH_WRITE_VIEW(G, Graph) \
   template <class G> \
-  void write(ostream& a, const Graph<G>& x, bool detailed=false) { writeGraph(a, x, detailed); } \
+  void write(ostream& a, const Graph<G>& x, bool det=false) { writeGraph(a, x, det); } \
   template <class G> \
-  void writeln(ostream& a, const Graph<G>& x, bool detailed=false) { writeGraph(a, x, detailed); a << "\n"; } \
-  template <class G> \
-  ostream& operator<<(ostream& a, const Graph<G>& x) { write(a, x); return a; } \
-  template <class G> \
-  void print(const Graph<G>& x, bool detailed=false) { write(cout, x, detailed); } \
-  template <class G> \
-  void println(const Graph<G>& x, bool detailed=false) { writeln(cout, x, detailed); }
+  ostream& operator<<(ostream& a, const Graph<G>& x) { write(a, x); return a; }
 #endif
 
 
@@ -610,8 +593,7 @@ class DiGraph {
 
   // Update operations.
   public:
-  GRAPH_CORRECT(K, V, E, M, u, eto[u].correct(), efrom[u].correct())
-  GRAPH_OPTIMIZE(K, V, E, M, u, eto[u].optimize(), efrom[u].optimize())
+  GRAPH_CORRECT(K, V, E, M, unq, buf, u, eto[u].correct(unq, buf), efrom[u].correct(unq, buf))
   GRAPH_CLEAR(K, V, E, N, M, vexists, vvalues, eto, efrom)
   GRAPH_RESIZE(K, V, E, vexists, vvalues, eto, efrom)
   GRAPH_ADD_VERTEX(K, V, E, N, vexists, vvalues)
@@ -621,14 +603,15 @@ class DiGraph {
   GRAPH_REMOVE_INEDGES(K, V, E, M, eto, efrom)
   GRAPH_REMOVE_VERTEX(K, V, E, N, vexists, vvalues)
 };
+
 template <class K=int, class V=NONE, class E=NONE>
-using DiGraphUnsorted = DiGraph<K, V, E, BitsetUnsorted>;
+using UnorderedDiGraph = DiGraph<K, V, E, UnorderedBitset>;
 template <class K=int, class V=NONE, class E=NONE>
-using DiGraphSorted = DiGraph<K, V, E, BitsetSorted>;
+using OrderedDiGraph   = DiGraph<K, V, E, OrderedBitset>;
 template <class K=int, class V=NONE, class E=NONE>
-using DiGraphPsorted = DiGraph<K, V, E, BitsetPsorted>;
+using POrderedDiGraph  = DiGraph<K, V, E, POrderedBitset>;
 template <class K=int, class V=NONE, class E=NONE>
-using UDiGraphSorted = DiGraph<K, V, E, UBitsetSorted>;
+using ROrderedDiGraph  = DiGraph<K, V, E, ROrderedBitset>;
 
 
 
@@ -687,8 +670,7 @@ class OutDiGraph {
 
   // Update operations.
   public:
-  GRAPH_CORRECT(K, V, E, M, u, eto[u].correct(), false)
-  GRAPH_OPTIMIZE(K, V, E, M, u, eto[u].optimize(), false)
+  GRAPH_CORRECT(K, V, E, M, unq, buf, u, eto[u].correct(unq, buf), false)
   GRAPH_CLEAR_SEARCH(K, V, E, N, M, vexists, vvalues, eto)
   GRAPH_RESIZE_SEARCH(K, V, E, vexists, vvalues, eto)
   GRAPH_ADD_VERTEX(K, V, E, N, vexists, vvalues)
@@ -698,14 +680,15 @@ class OutDiGraph {
   GRAPH_REMOVE_INEDGES_SEARCH(K, V, E, M, eto)
   GRAPH_REMOVE_VERTEX(K, V, E, N, vexists, vvalues)
 };
+
 template <class K=int, class V=NONE, class E=NONE>
-using OutDiGraphUnsorted = OutDiGraph<K, V, E, BitsetUnsorted>;
+using UnorderedOutDiGraph = OutDiGraph<K, V, E, UnorderedBitset>;
 template <class K=int, class V=NONE, class E=NONE>
-using OutDiGraphSorted = OutDiGraph<K, V, E, BitsetSorted>;
+using OrderedOutDiGraph   = OutDiGraph<K, V, E, OrderedBitset>;
 template <class K=int, class V=NONE, class E=NONE>
-using OutDiGraphPsorted = OutDiGraph<K, V, E, BitsetPsorted>;
+using POrderedOutDiGraph  = OutDiGraph<K, V, E, POrderedBitset>;
 template <class K=int, class V=NONE, class E=NONE>
-using UOutDiGraphSorted = OutDiGraph<K, V, E, UBitsetSorted>;
+using ROrderedOutDiGraph  = OutDiGraph<K, V, E, ROrderedBitset>;
 
 
 
@@ -760,14 +743,15 @@ class Graph : public OutDiGraph<K, V, E, Bitset> {
     return removeEdges(v);
   }
 };
+
 template <class K=int, class V=NONE, class E=NONE>
-using GraphUnsorted = Graph<K, V, E, BitsetUnsorted>;
+using UnorderedGraph = Graph<K, V, E, UnorderedBitset>;
 template <class K=int, class V=NONE, class E=NONE>
-using GraphSorted = Graph<K, V, E, BitsetSorted>;
+using OrderedGraph   = Graph<K, V, E, OrderedBitset>;
 template <class K=int, class V=NONE, class E=NONE>
-using GraphPsorted = Graph<K, V, E, BitsetPsorted>;
+using POrderedGraph  = Graph<K, V, E, POrderedBitset>;
 template <class K=int, class V=NONE, class E=NONE>
-using UGraphSorted = Graph<K, V, E, UBitsetSorted>;
+using ROrderedGraph  = Graph<K, V, E, ROrderedBitset>;
 
 
 
@@ -838,6 +822,11 @@ class GraphView {
 };
 
 
+
+
+// TRANSPOSED-GRAPH-VIEW
+// ---------------------
+
 template <class G>
 class TransposedGraphView {
   // Data.
@@ -887,7 +876,6 @@ class TransposedGraphView {
   // Update operations.
   public:
   GRAPH_CORRECT_FROM(K, V, E, x)
-  GRAPH_OPTIMIZE_FROM(K, V, E, x)
   GRAPH_CLEAR_FROM(K, V, E, x)
   GRAPH_RESIZE_FROM(K, V, E, x)
   GRAPH_ADD_FROM(K, V, E, x, u, v, d, addVertex(u, d), addEdge(v, u, d))
@@ -903,8 +891,8 @@ class TransposedGraphView {
 
 
 
-// GRAPH-WTITE
-// -----------
+// WTITE
+// -----
 
 template <class G>
 void writeGraphSizes(ostream& a, const G& x) {
