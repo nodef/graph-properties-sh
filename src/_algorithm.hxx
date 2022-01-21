@@ -10,6 +10,7 @@ using std::vector;
 using std::unordered_map;
 using std::iterator_traits;
 using std::hash;
+using std::distance;
 using std::for_each;
 using std::any_of;
 using std::all_of;
@@ -269,7 +270,7 @@ size_t countValue(const J& x, const T& v) {
 
 
 template <class J, class F>
-int countIf(const J& x, F fn) {
+size_t countIf(const J& x, F fn) {
   return count_if(x.begin(), x.end(), fn);
 }
 
@@ -297,84 +298,16 @@ auto countEach(const J& x) {
 
 
 
-
-// HASH-VALUE
-// ----------
-
-template <class I>
-size_t hash_value(I ib, I ie) {
-  // From boost::hash_combine.
-  using T = typename iterator_traits<I>::value_type; size_t a = 0;
-  for (; ib != ie; ++ib)
-    a ^= hash<T>{}(*ib) + 0x9e3779b9 + (a<<6) + (a>>2);
-  return a;
-}
-template <class J>
-size_t hashValue(const J& x) {
-  return hash_value(x.begin(), x.end());
-}
-
-
-template <class I, class T>
-size_t hash_unordered(I ib, I ie, vector<T>& buf) {
-  copy_write(ib, ie, buf);
-  sort(buf.begin(), buf.end());
-  return hash_value(buf.begin(), buf.end());
-}
-template <class I>
-size_t hash_unordered(I ib, I ie) {
-  using T = typename iterator_traits<I>::value_type; vector<T> buf;
-  return hash_unordered(ib, ie, buf);
-}
-template <class J, class T>
-size_t hashUnordered(const J& x, vector<T>& buf) {
-  return hash_unordered(x.begin(), x.end(), buf);
-}
-template <class J>
-size_t hashUnordered(const J& x) {
-  return hash_unordered(x.begin(), x.end());
-}
-
-
-
-// INDICES
-// -------
-// Keep the address of each business (yellow pages).
-
-template <class I, class M>
-auto value_indices(I ib, I ie, M& a) {
-  size_t i = 0;
-  for (; ib != ie; ++ib)
-    a[*ib] = i++;
-  return a;
-}
-template <class I>
-auto value_indices(I ib, I ie) {
-  using K = typename iterator_traits<I>::value_type; unordered_map<K, size_t> a;
-  return value_indices(ib, ie, a);
-}
-template <class J, class M>
-auto valueIndices(const J& x, M& a) {
-  return value_indices(x.begin(), x.end(), a);
-}
-template <class J>
-auto valueIndices(const J& x) {
-  return value_indices(x.begin(), x.end());
-}
-
-
-
-
 // COPY-*
 // ------
 
-template <class IX, class IA>
-auto copy_values(IX xb, IX xe, IA ab) {
-  return copy(xb, xe, ab);
+template <class I, class IA>
+auto copy_values(I ib, I ie, IA ab) {
+  return copy(ib, ie, ab);
 }
-template <class JX, class JA>
-auto copyValues(const JX& x, JA& a) {
-  return copy_values(x.begin(), x.end(), x.begin());
+template <class J, class JA>
+auto copyValues(const J& x, JA& a) {
+  return copy_values(x.begin(), x.end(), a.begin());
 }
 
 
@@ -408,6 +341,72 @@ auto copy_vector(I ib, I ie) {
 template <class J>
 auto copy_vector(const J& x) {
   return copy_vector(x.begin(), x.end());
+}
+
+
+
+
+
+// HASH-VALUE
+// ----------
+
+template <class I>
+size_t hash_value(I ib, I ie) {
+  // From boost::hash_combine.
+  using T = typename iterator_traits<I>::value_type; size_t a = 0;
+  for (; ib != ie; ++ib)
+    a ^= hash<T>{}(*ib) + 0x9e3779b9 + (a<<6) + (a>>2);
+  return a;
+}
+template <class J>
+size_t hashValue(const J& x) {
+  return hash_value(x.begin(), x.end());
+}
+
+
+template <class I, class IB>
+size_t hash_unordered(I ib, I ie, IB bb) {
+  IB be = bb + distance(ib, ie);
+  copy(ib, ie, bb);
+  sort(bb, be);
+  return hash_value(bb, be);
+}
+template <class J, class JB>
+size_t hashUnordered(const J& x, JB& buf) {
+  return hash_unordered(x.begin(), x.end(), buf.begin());
+}
+template <class J, class T>
+size_t hashUnordered(const J& x, vector<T>& buf) {
+  size_t s = distance(x.begin(), x.end());
+  if (bus.size() < s) buf.resize(s);
+  return hash_unordered(x.begin(), x.end(), buf);
+}
+
+
+
+// INDICES
+// -------
+// Keep the address of each business (yellow pages).
+
+template <class I, class M>
+auto value_indices(I ib, I ie, M& a) {
+  size_t i = 0;
+  for (; ib != ie; ++ib)
+    a[*ib] = i++;
+  return a;
+}
+template <class I>
+auto value_indices(I ib, I ie) {
+  using K = typename iterator_traits<I>::value_type; unordered_map<K, size_t> a;
+  return value_indices(ib, ie, a);
+}
+template <class J, class M>
+auto valueIndices(const J& x, M& a) {
+  return value_indices(x.begin(), x.end(), a);
+}
+template <class J>
+auto valueIndices(const J& x) {
+  return value_indices(x.begin(), x.end());
 }
 
 
@@ -677,10 +676,22 @@ auto inplace_merge_unique(IX xb, IX xm, IX xe, IB bb, IB be) {
   return inplace_merge_unique(xb, xm, xe, bb, be, fl, fe);
 }
 template <class JX, class JB, class FL, class FE>
-auto inplaceMergeUnique(JX& x, size_t xm, JB& b, FL fl, FE fe) {
-  return inplace_merge_unique(x.begin(), x.begin()+xm, x.end(), b.begin(), x.end(), fl, fe);
+auto inplaceMergeUnique(JX& x, size_t m, JB& buf, FL fl, FE fe) {
+  return inplace_merge_unique(x.begin(), x.begin()+m, x.end(), buf.begin(), buf.end(), fl, fe);
 }
 template <class JX, class JB>
-auto inplaceMergeUnique(JX& x, size_t xm, JB& b) {
-  return inplace_merge_unique(x.begin(), x.begin()+xm, x.end(), b.begin(), x.end());
+auto inplaceMergeUnique(JX& x, size_t m, JB& buf) {
+  return inplace_merge_unique(x.begin(), x.begin()+m, x.end(), buf.begin(), buf.end());
+}
+template <class JX, class T, class FL, class FE>
+auto inplaceMergeUnique(JX& x, size_t m, vector<T>& buf, FL fl, FE fe) {
+  size_t s = distance(x.begin()+m, x.end());
+  if (buf.size() < s) buf.resize(s);
+  return inplace_merge_unique(x.begin(), x.begin()+m, x.end(), buf.begin(), buf.end(), fl, fe);
+}
+template <class JX, class T>
+auto inplaceMergeUnique(JX& x, size_t m, vector<T>& buf) {
+  size_t s = distance(x.begin()+m, x.end());
+  if (buf.size() < s) buf.resize(s);
+  return inplace_merge_unique(x.begin(), x.begin()+m, x.end(), buf.begin(), buf.end());
 }

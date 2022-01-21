@@ -81,13 +81,13 @@ inline auto boundedDequeView(J& x) {
 
 
 
-// PBOUNDED-DEQUE-VIEW
+// RBOUNDED-DEQUE-VIEW
 // -------------------
 // Fixed circular queue view capable of storing N-1 elements.
 // Can be much more featured!
 
 template <class I>
-class PBoundedDequeView {
+class RBoundedDequeView {
   // Data.
   protected:
   const I xb, xe;
@@ -137,16 +137,16 @@ class PBoundedDequeView {
 
 
   // Lifetime operations.
-  PBoundedDequeView(I xb, I xe) :
+  RBoundedDequeView(I xb, I xe) :
   xb(xb), xe(xe), ib(xb), ie(xb) {}
 };
 
 
 template <class I>
-inline auto pbounded_deque_view(I xb, I xe) {
-  return PBoundedDequeView<I>(xb, xe);
+inline auto rbounded_deque_view(I xb, I xe) {
+  return RBoundedDequeView<I>(xb, xe);
 }
 template <class J>
-inline auto pboundedDequeView(J& x) {
-  return pbounded_deque_view(x.begin(), x.end());
+inline auto rboundedDequeView(J& x) {
+  return rbounded_deque_view(x.begin(), x.end());
 }
