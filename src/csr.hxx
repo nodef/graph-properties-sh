@@ -15,7 +15,7 @@ using std::transform;
 template <class G, class J>
 auto sourceOffsets(const G& x, const J& ks) {
   using K = typename G::key_type;
-  K i = 0; vector<K> a;
+  size_t i = 0; vector<K> a;
   a.reserve(x.order()+1);
   for (auto u : ks) {
     a.push_back(i);

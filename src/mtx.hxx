@@ -82,10 +82,11 @@ template <class G>
 void writeMtx(ostream& a, const G& x) {
   a << "%%MatrixMarket matrix coordinate real asymmetric\n";
   a << x.order() << " " << x.order() << " " << x.size() << "\n";
-  for (auto u : x.vertexKeys()) {
-    for (auto v : x.edgeKeys(u))
-      a << u << " " << v << " " << x.edgeValue(u, v) << "\n";
-  }
+  x.forEachVertexKey([&](auto u) {
+    x.forEachEdge([&](auto v, auto w) {
+      a << u << " " << v << " " << w << "\n";
+    });
+  });
 }
 
 template <class G>

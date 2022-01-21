@@ -1,5 +1,5 @@
 #pragma once
-#include "copy.hxx"
+#include "duplicate.hxx"
 
 
 
@@ -20,8 +20,7 @@ bool hasSelfLoop(const G& x, K u) {
 
 template <class G, class F>
 void selfLoopForEach(const G& x, F fn) {
-  for (auto u : x.vertexKeys())
-    if (x.hasEdge(u, u)) fn(u);
+  x.forEachVertexKey([&](auto u) { if (x.hasEdge(u, u)) fn(u); });
 }
 
 
@@ -47,12 +46,11 @@ auto selfLoopCount(const G& x) {
 
 template <class G, class F>
 void selfLoopTo(G& a, F fn) {
-  for (auto u : a.vertexKeys())
-    if (fn(u)) a.addEdge(u, u);
+  a.forEachVertexKey([&](auto u) { if (fn(u)) a.addEdge(u, u); });
 }
 
 template <class G, class F>
 auto selfLoop(const G& x, F fn) {
-  auto a = copy(x); selfLoopTo(a, fn);
+  auto a = duplicate(x); selfLoopTo(a, fn);
   return a;
 }

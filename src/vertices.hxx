@@ -137,8 +137,7 @@ auto compressContainer(const G& x, const vector<T>& vs) {
 template <class G, class K>
 bool verticesEqual(const G& x, K u, const G& y, K v) {
   if (x.degree(u) != y.degree(v)) return false;
-  auto xe = x.edgeKeys(u), ye = y.edgeKeys(v);
-  return equal(xe.begin(), xe.end(), ye.begin());
+  return equalValues(x.edgeKeys(u), y.edgeKeys(v));
 }
 
 template <class G, class H, class K>

@@ -8,7 +8,7 @@
 #include "csr.hxx"
 #include "degree.hxx"
 #include "density.hxx"
-#include "copy.hxx"
+#include "duplicate.hxx"
 #include "transpose.hxx"
 #include "dfs.hxx"
 #include "depth.hxx"

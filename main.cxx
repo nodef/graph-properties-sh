@@ -150,7 +150,7 @@ void doTransformTo(G& a, GraphTransform o) {
 
 template <class G>
 auto doTransform(const G& x, GraphTransform o) {
-  auto a = copy(x); doTransformTo(a, o);
+  auto a = duplicate(x); doTransformTo(a, o);
   return a;
 }
 
