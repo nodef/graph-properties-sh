@@ -12,6 +12,7 @@ using namespace std;
 
 
 
+/*
 // SHOW
 // ----
 
@@ -213,19 +214,15 @@ int old_main(int argc, char **argv) {
   printf("\n");
   return 0;
 }
+*/
 
 
 int main(int argc, char **argv) {
-  vector<pair<int, NONE>> buf;
-  ROrderedBitset<> x;
+  vector<pair<int, int>> x;
   for (int i=0; i<10; ++i)
-    x.add(i*2);
-  x.correct(false, buf);
-  printf("x: "); println(x);
-  for (int i=0; i<10; ++i)
-    x.add(i);
-  x.correct(false, buf);
-  printf("x: "); println(x);
+    x.push_back({i, 2*i});
+  auto y = staticTransformIterable(x, ConstPairSecond<int, int>());
+  printf("y: "); writeValues(cout, y); printf("\n");
   println();
   return 0;
 }

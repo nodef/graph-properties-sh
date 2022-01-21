@@ -4,10 +4,12 @@
 #include <iterator>
 #include <vector>
 #include <algorithm>
+#include <type_traits>
 #include "_utility.hxx"
 
 using std::pair;
 using std::ptrdiff_t;
+using std::remove_reference_t;
 using std::input_iterator_tag;
 using std::output_iterator_tag;
 using std::forward_iterator_tag;
@@ -124,6 +126,13 @@ using std::max;
   using iterator_category = cat; \
   using difference_type   = typename X::difference_type; \
   using value_type        = val; \
+  using reference         = ref; \
+  using pointer           = ptr;
+
+#define ITERATOR_USING_XCRP(X, cat, ref, ptr) \
+  using iterator_category = cat; \
+  using difference_type   = typename X::difference_type; \
+  using value_type        = remove_reference_t<ref>; \
   using reference         = ref; \
   using pointer           = ptr;
 #endif
@@ -1221,7 +1230,7 @@ class InputTransformIterator {
   using iterator = InputTransformIterator;
   I it; const F fn;
   public:
-  ITERATOR_USING_XCVRP(I, input_iterator_tag, decltype(fn(*it)), value_type, const value_type*)
+  ITERATOR_USING_XCRP(I, input_iterator_tag, decltype(fn(*it)), const value_type*)
   InputTransformIterator(I it, F fn) noexcept : it(it), fn(fn) {}
   ITERATOR_DEREF_VALUE(inline, const, fn(*it))
   ITERATOR_INCREMENT(inline,, ++it)
@@ -1234,7 +1243,7 @@ class OutputTransformIterator {
   using iterator = OutputTransformIterator;
   I it; const F fn;
   public:
-  ITERATOR_USING_XCVRP(I, output_iterator_tag, decltype(fn(*it)), value_type, const value_type*)
+  ITERATOR_USING_XCRP(I, output_iterator_tag, decltype(fn(*it)), const value_type*)
   OutputTransformIterator(I it, F fn) noexcept : it(it), fn(fn) {}
   ITERATOR_DEREF(inline, const, fn(*it))
   ITERATOR_INCREMENT(inline,, ++it)
@@ -1246,7 +1255,7 @@ class ForwardTransformIterator {
   using iterator = ForwardTransformIterator;
   I it; const F fn;
   public:
-  ITERATOR_USING_XCVRP(I, forward_iterator_tag, decltype(fn(*it)), value_type, const value_type*)
+  ITERATOR_USING_XCRP(I, forward_iterator_tag, decltype(fn(*it)), const value_type*)
   ForwardTransformIterator(I it, F fn) noexcept : it(it), fn(fn) {}
   ITERATOR_DEREF(inline, const, fn(*it))
   ITERATOR_INCREMENT(inline,, ++it)
@@ -1259,7 +1268,7 @@ class BidirectionalTransformIterator {
   using iterator = BidirectionalTransformIterator;
   I it; const F fn;
   public:
-  ITERATOR_USING_XCVRP(I, bidirectional_iterator_tag, decltype(fn(*it)), value_type, const value_type*)
+  ITERATOR_USING_XCRP(I, bidirectional_iterator_tag, decltype(fn(*it)), const value_type*)
   BidirectionalTransformIterator(I it, F fn) noexcept : it(it), fn(fn) {}
   ITERATOR_DEREF(inline, const, fn(*it))
   ITERATOR_NEXT(inline,, ++it, --it)
@@ -1272,7 +1281,7 @@ class RandomAccessTransformIterator {
   using iterator = RandomAccessTransformIterator;
   I it; const F fn;
   public:
-  ITERATOR_USING_XCVRP(I, random_access_iterator_tag, decltype(fn(*it)), value_type, const value_type*)
+  ITERATOR_USING_XCRP(I, random_access_iterator_tag, decltype(fn(*it)), const value_type*)
   RandomAccessTransformIterator(I it, F fn) noexcept : it(it), fn(fn) {}
   ITERATOR_DEREF(inline, const, fn(*it))
   ITERATOR_LOOKUP(inline, const, i, fn(it[i]))
@@ -1441,7 +1450,7 @@ class InputStaticTransformIterator {
   using iterator = InputStaticTransformIterator;
   I it;
   public:
-  ITERATOR_USING_XCVRP(I, input_iterator_tag, decltype(F()(*it)), value_type, const value_type*)
+  ITERATOR_USING_XCRP(I, input_iterator_tag, decltype(F()(*it)), const value_type*)
   InputStaticTransformIterator(I it) noexcept : it(it) {}
   ITERATOR_DEREF_VALUE(inline, const, F()(*it))
   ITERATOR_INCREMENT(inline,, ++it)
@@ -1454,7 +1463,7 @@ class OutputStaticTransformIterator {
   using iterator = OutputStaticTransformIterator;
   I it;
   public:
-  ITERATOR_USING_XCVRP(I, output_iterator_tag, decltype(F()(*it)), value_type, const value_type*)
+  ITERATOR_USING_XCRP(I, output_iterator_tag, decltype(F()(*it)), const value_type*)
   OutputStaticTransformIterator(I it) noexcept : it(it) {}
   ITERATOR_DEREF(inline, const, F()(*it))
   ITERATOR_INCREMENT(inline,, ++it)
@@ -1466,7 +1475,7 @@ class ForwardStaticTransformIterator {
   using iterator = ForwardStaticTransformIterator;
   I it;
   public:
-  ITERATOR_USING_XCVRP(I, forward_iterator_tag, decltype(F()(*it)), value_type, const value_type*)
+  ITERATOR_USING_XCRP(I, forward_iterator_tag, decltype(F()(*it)), const value_type*)
   ForwardStaticTransformIterator(I it) noexcept : it(it) {}
   ITERATOR_DEREF(inline, const, F()(*it))
   ITERATOR_INCREMENT(inline,, ++it)
@@ -1479,7 +1488,7 @@ class BidirectionalStaticTransformIterator {
   using iterator = BidirectionalStaticTransformIterator;
   I it;
   public:
-  ITERATOR_USING_XCVRP(I, bidirectional_iterator_tag, decltype(F()(*it)), value_type, const value_type*)
+  ITERATOR_USING_XCRP(I, bidirectional_iterator_tag, decltype(F()(*it)), const value_type*)
   BidirectionalStaticTransformIterator(I it) noexcept : it(it) {}
   ITERATOR_DEREF(inline, const, F()(*it))
   ITERATOR_NEXT(inline,, ++it, --it)
@@ -1492,7 +1501,7 @@ class RandomAccessStaticTransformIterator {
   using iterator = RandomAccessStaticTransformIterator;
   I it;
   public:
-  ITERATOR_USING_XCVRP(I, random_access_iterator_tag, decltype(F()(*it)), value_type, const value_type*)
+  ITERATOR_USING_XCRP(I, random_access_iterator_tag, decltype(F()(*it)), const value_type*)
   RandomAccessStaticTransformIterator(I it) noexcept : it(it) {}
   ITERATOR_DEREF(inline, const, F()(*it))
   ITERATOR_LOOKUP(inline, const, i, F()(it[i]))
