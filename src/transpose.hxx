@@ -1,5 +1,5 @@
 #pragma once
-#include "DiGraph.hxx"
+#include "Graph.hxx"
 
 
 

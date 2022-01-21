@@ -1,6 +1,6 @@
 #pragma once
 #include "_main.hxx"
-#include "DiGraph.hxx"
+#include "Graph.hxx"
 #include "mtx.hxx"
 #include "snap.hxx"
 #include "vertices.hxx"

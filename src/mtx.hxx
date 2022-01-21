@@ -5,7 +5,7 @@
 #include <fstream>
 #include <algorithm>
 #include "_main.hxx"
-#include "DiGraph.hxx"
+#include "Graph.hxx"
 
 using std::string;
 using std::istream;
