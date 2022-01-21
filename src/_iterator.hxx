@@ -735,6 +735,17 @@ inline auto rangeIterable(T v, T V, T DV=1) {
   return transformIterable(x, [=](size_t n) { return v+DV*n; });
 }
 
+template <class T>
+inline auto rangeVector(T V) noexcept {
+  auto x = rangeIterable(V);
+  return vector<T>(x.begin(), x.end());
+}
+template <class T>
+inline auto rangeIterable(T v, T V, T DV=1) {
+  auto x = rangeIterable(v, V, DV);
+  return vector<T>(x.begin(), x.end());
+}
+
 
 
 
