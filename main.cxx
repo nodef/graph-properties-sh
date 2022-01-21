@@ -216,36 +216,16 @@ int old_main(int argc, char **argv) {
 
 
 int main(int argc, char **argv) {
-  vector<int> x(1000000), y;
-  vector<int> b(1000000);
-  for (int i=0; i<x.size(); ++i)
-    x[i] = rand() % 1000;
-  y = x;
-  auto xb = x.begin();
-  auto yb = y.begin();
-  auto xm = x.begin() + x.size()/2;
-  auto ym = y.begin() + y.size()/2;
-  auto xe = x.end();
-  auto ye = y.end();
-  sort(xb, xm);
-  sort(xm, xe);
-  sort(yb, ym);
-  sort(ym, ye);
-  float t1 = measureDuration([&]() {
-    vector<int> a(1000000);
-    auto ab = a.begin();
-    auto ae = merge_values(xb, xm, xm, xe, ab);
-    auto in = unique_values(ab, ae);
-  });
-  printf("t1=%f\n", t1);
-  float t2 = measureDuration([&]() {
-    inplace_merge(xb, xm, xe);
-    auto in = unique_values(xb, xe);
-  });
-  printf("t2=%f\n", t2);
-  float t3 = measureDuration([&]() {
-    auto in = inplace_merge_unique(yb, ym, ye, b.begin(), b.end());
-  });
-  printf("t3=%f\n\n", t3);
+  vector<pair<int, NONE>> buf;
+  ROrderedBitset<> x;
+  for (int i=0; i<10; ++i)
+    x.add(i*2);
+  x.correct(false, buf);
+  printf("x: "); println(x);
+  for (int i=0; i<10; ++i)
+    x.add(i);
+  x.correct(false, buf);
+  printf("x: "); println(x);
+  println();
   return 0;
 }

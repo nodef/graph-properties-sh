@@ -379,7 +379,7 @@ auto orderedBitset(K _k=K(), V _v=V()) {
 
 
 template <class K=int, class V=NONE, size_t LIMIT=64>
-class PorderedBitset {
+class POrderedBitset {
   // Data.
   protected:
   vector<pair<K, V>> data;
@@ -470,7 +470,7 @@ class PorderedBitset {
 
 template <class K=int, class V=NONE>
 auto porderedBitset(K _k=K(), V _v=V()) {
-  return PorderedBitset<K, V, 64>();
+  return POrderedBitset<K, V, 64>();
 }
 
 
@@ -579,3 +579,27 @@ template <class K=int, class V=NONE>
 auto rorderedBitset(K _k=K(), V _v=V()) {
   return ROrderedBitset<K, V>();
 }
+
+
+
+
+// WRITE
+// -----
+
+template <class K, class V>
+void write(ostream& a, const UnorderedBitset<K, V>& x)   { writeValues(a, x); }
+template <class K, class V>
+void write(ostream& a, const OrderedBitset<K, V>& x)     { writeValues(a, x); }
+template <class K, class V, size_t N>
+void write(ostream& a, const POrderedBitset<K, V, N>& x) { writeValues(a, x); }
+template <class K, class V>
+void write(ostream& a, const ROrderedBitset<K, V>& x)    { writeValues(a, x); }
+
+template <class K, class V>
+ostream& operator<<(ostream& a, const UnorderedBitset<K, V>& x)   { write(a, x); return a; }
+template <class K, class V>
+ostream& operator<<(ostream& a, const OrderedBitset<K, V>& x)     { write(a, x); return a; }
+template <class K, class V, size_t N>
+ostream& operator<<(ostream& a, const POrderedBitset<K, V, N>& x) { write(a, x); return a; }
+template <class K, class V>
+ostream& operator<<(ostream& a, const ROrderedBitset<K, V>& x)    { write(a, x); return a; }
