@@ -17,7 +17,7 @@ template <class G, class K, class F>
 void dfsDoLoop(vector<bool>& vis, const G& x, K u, F fn) {
   if (vis[u]) return;  // dont visit if done already!
   vis[u] = true; fn(u);
-  for (auto v : x.edges(u))
+  for (auto v : x.edgeKeys(u))
     if (!vis[v]) dfsDoLoop(vis, x, v, fn);
 }
 
@@ -52,7 +52,7 @@ template <class G, class K, class F>
 void dfsEndDoLoop(vector<bool>& vis, const G& x, K u, F fn) {
   if (vis[u]) return;  // dont visit if done already!
   vis[u] = true;
-  for (auto v : x.edges(u))
+  for (auto v : x.edgeKeys(u))
     if (!vis[v]) dfsEndDoLoop(vis, x, v, fn);
   fn(u);
 }
@@ -88,7 +88,7 @@ template <class G, class K, class F>
 void dfsDepthDoLoop(vector<bool>& vis, const G& x, K u, K d, F fn) {
   if (vis[u]) return;  // dont visit if done already!
   vis[u] = true; fn(u, d++);
-  for (auto v : x.edges(u))
+  for (auto v : x.edgeKeys(u))
     if (!vis[v]) dfsDepthDoLoop(vis, x, v, d, fn);
 }
 

@@ -26,7 +26,7 @@ template <class G>
 auto topologicalSort(const G& x) {
   using K = typename G::key_type; vector<K> a;
   auto vis = createContainer(x, bool());
-  for (auto u : x.vertices())
+  for (auto u : x.vertexKeys())
     if (!vis[u]) dfsEndLoop(a, vis, x, u);
   reverse(a.begin(), a.end());
   return a;
@@ -42,7 +42,7 @@ auto topologicalSort(const G& x) {
 
 template <class H, class F>
 void levelwiseSortDo(vector<bool>& visx, vector<bool>& vis, const H& xt, F fn) {
-  for (auto u : xt.vertices()) {
+  for (auto u : xt.vertexKeys()) {
     if (vis[u] || allEdgesVisited(xt, u, vis)) visx[u] = true;
     if (vis[u] != visx[u]) fn(u);
   }

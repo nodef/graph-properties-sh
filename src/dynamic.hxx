@@ -46,13 +46,13 @@ auto adjustRanks(size_t N, const vector<T>& r, const J& ks0, const J& ks1, T rad
 
 template <class G, class F>
 void changedVerticesForEach(const G& x, const G& y, F fn) {
-  for (auto u : y.vertices())
+  for (auto u : y.vertexKeys())
     if (!x.hasVertex(u) || !verticesEqual(x, u, y, u)) fn(u);
 }
 
 template <class G, class H, class F>
 void changedVerticesForEach(const G& x, const H& xt, const G& y, const H& yt, F fn) {
-  for (auto u : y.vertices())
+  for (auto u : y.vertexKeys())
     if (!x.hasVertex(u) || !verticesEqual(x, xt, u, y, yt, u)) fn(u);  // both ways
 }
 
@@ -118,7 +118,7 @@ auto dynamicVerticesBy(const G& y, FA fa) {
   using K = typename G::key_type;
   vector<K> a; unordered_set<K> aff;
   fa([&](auto u) { a.push_back(u); aff.insert(u); });
-  for (auto u : y.vertices())
+  for (auto u : y.vertexKeys())
     if (aff.count(u)==0) a.push_back(u);
   return make_pair(a, aff.size());
 }

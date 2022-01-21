@@ -21,7 +21,7 @@ auto edgeIdenticalsFromSize(const G& x, const J& ks, size_t n) {
   map<vec, vec> m; vec es;
   // Find groups of identicals.
   for (auto u : ks) {
-    copyWrite(x.edges(u), es);
+    copyWrite(x.edgeKeys(u), es);
     sortValues(es);
     m[es].push_back(u);
   }
@@ -38,7 +38,7 @@ auto edgeIdenticalsFromSize(const G& x, const J& ks, size_t n) {
 
 template <class G>
 auto edgeIdenticalsFromSize(const G& x, size_t n) {
-  return edgeIdenticalsFromSize(x, x.vertices(), n);
+  return edgeIdenticalsFromSize(x, x.vertexKeys(), n);
 }
 
 template <class G, class J>
@@ -48,5 +48,5 @@ auto edgeIdenticals(const G& x, const J& ks) {
 
 template <class G>
 auto edgeIdenticals(const G& x) {
-  return edgeIdenticals(x, x.vertices());
+  return edgeIdenticals(x, x.vertexKeys());
 }

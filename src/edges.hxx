@@ -17,7 +17,7 @@ using std::back_inserter;
 template <class G, class K, class F, class D>
 auto edges(const G& x, K u, F fm, D fp) {
   vector<K> a;
-  copyAppend(x.edges(u), a);
+  copyAppend(x.edgeKeys(u), a);
   auto ie = a.end(), ib = a.begin();
   fp(ib, ie); transform(ib, ie, ib, fm);
   return a;
@@ -41,7 +41,7 @@ auto edges(const G& x, K u) {
 
 template <class G, class K, class F>
 auto edge(const G& x, K u, F fm) {
-  for (auto v : x.edges(u))
+  for (auto v : x.edgeKeys(u))
     return fm(v);
   return K(-1);
 }
@@ -63,7 +63,7 @@ auto edgeData(const G& x, const J& ks, F fm, D fp) {
   using E = decltype(fm(0, 0));
   vector<E> a; vector<K> b;
   for (auto u : ks) {
-    copyWrite(x.edges(u), b);
+    copyWrite(x.edgeKeys(u), b);
     auto ie = b.end(), ib = b.begin();
     fp(ib, ie); transform(ib, ie, back_inserter(a), [&](auto v) { return fm(u, v); });
   }
@@ -82,7 +82,7 @@ auto edgeData(const G& x, const J& ks) {
 
 template <class G>
 auto edgeData(const G& x) {
-  return edgeData(x, x.vertices());
+  return edgeData(x, x.vertexKeys());
 }
 
 
@@ -93,14 +93,14 @@ auto edgeData(const G& x) {
 
 template <class G, class K>
 bool allEdgesVisited(const G& x, K u, const vector<bool>& vis) {
-  for (auto v : x.edges(u))
+  for (auto v : x.edgeKeys(u))
     if (!vis[v]) return false;
   return true;
 }
 
 template <class G, class K>
 bool someEdgesVisited(const G& x, K u, const vector<bool>& vis) {
-  for (auto v : x.edges(u))
+  for (auto v : x.edgeKeys(u))
     if (vis[v]) return true;
   return false;
 }

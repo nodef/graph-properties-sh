@@ -808,7 +808,6 @@ class GraphView {
   // Update operations.
   public:
   GRAPH_CORRECT_FROM(K, V, E, x)
-  GRAPH_OPTIMIZE_FROM(K, V, E, x)
   GRAPH_CLEAR_FROM(K, V, E, x)
   GRAPH_RESIZE_FROM(K, V, E, x)
   GRAPH_ADD_FROM(K, V, E, x, u, v, d, addVertex(u, d), addEdge(u, v, d))
@@ -904,9 +903,9 @@ template <class G>
 void writeGraphDetailed(ostream& a, const G& x) {
   a << "order: " << x.order() << " size: " << x.size();
   a << (x.directed()? " [directed]" : " [undirected]") << " {\n";
-  for (auto [u, d] : x.vertices()) {
+  for (auto [u, d] : x.vertexKeys()) {
     a << u << ":" << d << " ->";
-    for (auto [v, w] : x.edges(u))
+    for (auto [v, w] : x.edgeKeys(u))
       a << " " << v << ":" << w;
     a << "\n";
   }
