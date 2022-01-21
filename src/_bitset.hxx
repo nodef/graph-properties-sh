@@ -49,6 +49,15 @@ using std::inplace_merge;
 #endif
 
 
+#ifndef BITSET_FCOMPARE
+#define BITSET_FCOMPARE(K, V, fn, op) \
+  auto fn = [](const pair<K, V>& p, const pair<K, V>& q) { return p.first op q.first; };
+#define BITSET_FCOMPARES(K, V) \
+  BITSET_FCOMPARE(K, V, fl, <) \
+  BITSET_FCOMPARE(K, V, fe, ==)
+#endif
+
+
 #ifndef BITSET_FIND
 #define BITSET_FIND(K, V, data) \
   inline auto find(const K& k)        noexcept { return locateMatch(k); } \
@@ -161,14 +170,23 @@ using std::inplace_merge;
 #endif
 
 
+#define BITSET_CORRECT_NONE(K, V) \
+  inline bool correct(bool unq, vector<pair<K, V>>& buf) { \
+    return false; \
+  } \
+  inline bool correct(bool unq=false) { \
+    return false; \
+  }
 
 
-// BITSET (UNSORTED)
-// -----------------
+
+
+// UNOREDERD-BITSET
+// ----------------
 // An integer set that constantly checks duplicates.
 // It maintains integers in insertion order.
 
-#define BITSET_UNSORTED_LOCATE(K, V, f0, f1) \
+#define UNORDERED_BITSET_LOCATE(K, V, f0, f1) \
   f0 auto locateMatch(const K& k) f1 { \
     auto fe = [&](const pair<K, V>& p) { return p.first == k; }; \
     return find_if(begin(), end(), fe); \
@@ -176,7 +194,7 @@ using std::inplace_merge;
 
 
 template <class K=int, class V=NONE>
-class BitsetUnsorted {
+class UnorderedBitset {
   // Data.
   protected:
   vector<pair<K, V>> data;
@@ -200,8 +218,8 @@ class BitsetUnsorted {
 
   // Search operations.
   protected:
-  BITSET_UNSORTED_LOCATE(K, V, inline, noexcept)
-  BITSET_UNSORTED_LOCATE(K, V, inline, const noexcept)
+  UNORDERED_BITSET_LOCATE(K, V, inline, noexcept)
+  UNORDERED_BITSET_LOCATE(K, V, inline, const noexcept)
   public:
   BITSET_FIND(K, V, data)
 
@@ -219,9 +237,7 @@ class BitsetUnsorted {
 
   // Update operations.
   public:
-  inline bool correct()  { return false; }
-  inline bool optimize() { return correct(); }
-
+  BITSET_CORRECT_NONE(K, V)
   inline bool clear() noexcept {
     if (empty()) return false;
     data.clear();
@@ -243,6 +259,11 @@ class BitsetUnsorted {
   }
 };
 
+template <class K=int, class V=NONE>
+auto unorderedBitset(K _k=K(), V _v=V()) {
+  return UnorderedBitset<K, V>();
+}
+
 
 
 
@@ -251,7 +272,7 @@ class BitsetUnsorted {
 // An integer set that constantly checks duplicates.
 // It maintains integers in ascending value order.
 
-#define BITSET_SORTED_LOCATE(K, V, f0, f1) \
+#define ORDERED_BITSET_LOCATE(K, V, f0, f1) \
   f0 auto locateSpot(const K& k) f1 { \
     auto fl = [](const pair<K, V>& p, const K& k) { return p.first < k; }; \
     return lower_bound(begin(), end(), k, fl); \
@@ -263,7 +284,7 @@ class BitsetUnsorted {
 
 
 template <class K=int, class V=NONE>
-class BitsetSorted {
+class OrderedBitset {
   // Data.
   protected:
   vector<pair<K, V>> data;
@@ -287,8 +308,8 @@ class BitsetSorted {
 
   // Search operations.
   protected:
-  BITSET_SORTED_LOCATE(K, V, inline, noexcept)
-  BITSET_SORTED_LOCATE(K, V, inline, const noexcept)
+  ORDERED_BITSET_LOCATE(K, V, inline, noexcept)
+  ORDERED_BITSET_LOCATE(K, V, inline, const noexcept)
   public:
   BITSET_FIND(K, V, data)
 
@@ -306,9 +327,7 @@ class BitsetSorted {
 
   // Update operations.
   public:
-  inline bool correct()  { return false; }
-  inline bool optimize() { return correct(); }
-
+  BITSET_CORRECT_NONE(K, V)
   inline bool clear() noexcept {
     if (empty()) return false;
     data.clear();
@@ -330,36 +349,41 @@ class BitsetSorted {
   }
 };
 
+template <class K=int, class V=NONE>
+auto orderedBitset(K _k=K(), V _v=V()) {
+  return OrderedBitset<K, V>();
+}
 
 
 
-// BITSET (PARTIALLY-SORTED)
-// -------------------------
+
+// PORDERED-BITSET (PARTIALLY-SORTED)
+// ----------------------------------
 // An integer set that constantly checks duplicates.
 // It maintains a portion of integers in ascending value order.
 
-#define BITSET_PSORTED_LOCATE(K, V, f0, f1) \
-  f0 auto locateMatchSorted(const K& k) f1 { \
+#define PORDERED_BITSET_LOCATE(K, V, f0, f1) \
+  f0 auto locateMatchOrdered(const K& k) f1 { \
     auto fl = [](const pair<K, V>& p, const K& k) { return p.first < k; }; \
     auto it = lower_bound(begin(), middle(), k, fl); \
     return it == middle() || (*it).first != k? end() : it; \
   } \
-  f0 auto locateMatchUnsorted(const K& k) f1 { \
+  f0 auto locateMatchUnordered(const K& k) f1 { \
     auto fe = [&](const pair<K, V>& p) { return p.first == k; }; \
     return find_if(middle(), end(), fe); \
   } \
   f0 auto locateMatch(const K& k) f1 { \
-    auto it = locateMatchSorted(k); \
-    return it != end()? it : locateMatchUnsorted(k); \
+    auto it = locateMatchOrdered(k); \
+    return it != end()? it : locateMatchUnordered(k); \
   }
 
 
 template <class K=int, class V=NONE, size_t LIMIT=64>
-class BitsetPsorted {
+class PorderedBitset {
   // Data.
   protected:
   vector<pair<K, V>> data;
-  size_t sorted = 0;
+  size_t ordered = 0;
 
   // Types.
   public:
@@ -371,7 +395,7 @@ class BitsetPsorted {
   BITSET_ITERATOR(K, V, data)
   BITSET_CITERATOR(K, V, data)
   protected:
-  ITERABLE_NAMES(inline, noexcept, middle, begin() + sorted)
+  ITERABLE_NAMES(inline, noexcept, middle, begin() + ordered)
 
 
   // Size operations.
@@ -379,13 +403,13 @@ class BitsetPsorted {
   BITSET_SIZE(K, V, data)
   BITSET_EMPTY(K, V)
   protected:
-  inline size_t unsorted() const noexcept { return size() - sorted; }
+  inline size_t unordered() const noexcept { return size() - ordered; }
 
 
   // Search operations.
   protected:
-  BITSET_PSORTED_LOCATE(K, V, inline, noexcept)
-  BITSET_PSORTED_LOCATE(K, V, inline, const noexcept)
+  PORDERED_BITSET_LOCATE(K, V, inline, noexcept)
+  PORDERED_BITSET_LOCATE(K, V, inline, const noexcept)
   public:
   BITSET_FIND(K, V, data)
 
@@ -393,10 +417,10 @@ class BitsetPsorted {
   // Ordering opertions.
   protected:
   inline void mergePartitions() {
-    auto fl = [](const pair<K, V>& p, const pair<K, V>& q) { return p.first < q.first; };
+    BITSET_FCOMPARE(K, V, fl, <)
     sort(middle(), end(), fl);
     inplace_merge(begin(), middle(), end(), fl);
-    sorted = size();
+    ordered = size();
   }
 
 
@@ -413,19 +437,17 @@ class BitsetPsorted {
 
   // Update operations.
   public:
-  inline bool correct()  { return false; }
-
-  inline bool optimize() {
-    bool c = correct();
-    if (unsorted() == 0) return c;
+  inline bool correct(bool unq=false) {
+    if (unordered() == 0) return false;
     mergePartitions();
     return true;
   }
+  inline bool correct(bool unq, vector<pair<K, V>>& buf) { return correct(); }
 
   inline bool clear() noexcept {
     if (empty()) return false;
     data.clear();
-    sorted = 0;
+    ordered = 0;
     return true;
   }
 
@@ -433,38 +455,43 @@ class BitsetPsorted {
     auto it = locateMatch(k);
     if (it != end()) return false;
     data.push_back({k, v});
-    if (unsorted() <= LIMIT) mergePartitions();
+    if (unordered() <= LIMIT) mergePartitions();
     return true;
   }
 
   inline bool remove(const K& k) {
     auto it = locateMatch(k);
     if (it == end()) return false;
-    if (it < middle()) --sorted;
+    if (it < middle()) --ordered;
     data.erase(it);
     return true;
   }
 };
 
+template <class K=int, class V=NONE>
+auto porderedBitset(K _k=K(), V _v=V()) {
+  return PorderedBitset<K, V, 64>();
+}
 
 
 
-// UNCHECKED-BITSET (SORTED)
-// -------------------------
+
+// RORDERED-BITSET (RISKY!)
+// ------------------------
 // An integer set that does not check duplicates.
 // Removing duplicates can be done manually, with correct().
 // It maintains integers in ascending value order (after correct()).
 
-#define UBITSET_SORTED_LOCATE(K, V, f0, f1) \
-  BITSET_PSORTED_LOCATE(K, V, f0, f1)
+#define RORDERED_BITSET_LOCATE(K, V, f0, f1) \
+  PORDERED_BITSET_LOCATE(K, V, f0, f1)
 
 
 template <class K=int, class V=NONE>
-class UBitsetSorted {
+class ROrderedBitset {
   // Data.
   protected:
   vector<pair<K, V>> data;
-  size_t sorted = 0;
+  size_t ordered = 0;
 
   // Types.
   public:
@@ -476,7 +503,7 @@ class UBitsetSorted {
   BITSET_ITERATOR(K, V, data)
   BITSET_CITERATOR(K, V, data)
   protected:
-  ITERABLE_NAMES(inline, noexcept, middle, begin() + sorted)
+  ITERABLE_NAMES(inline, noexcept, middle, begin() + ordered)
 
 
   // Size operations.
@@ -487,8 +514,8 @@ class UBitsetSorted {
 
   // Search operations.
   protected:
-  UBITSET_SORTED_LOCATE(K, V, inline, noexcept)
-  UBITSET_SORTED_LOCATE(K, V, inline, const noexcept)
+  RORDERED_BITSET_LOCATE(K, V, inline, noexcept)
+  RORDERED_BITSET_LOCATE(K, V, inline, const noexcept)
   public:
   BITSET_FIND(K, V, data)
 
@@ -506,24 +533,31 @@ class UBitsetSorted {
 
   // Update operations.
   public:
-  inline bool correct() {
-    auto fl = [](const pair<K, V>& a, const pair<K, V>& b) { return a.first <  b.first; };
-    auto fe = [](const pair<K, V>& a, const pair<K, V>& b) { return a.first == b.first; };
-    if (sorted == size()) return false;
-    if (sorted <= size()/2) sort(begin(), end(), fl);
-    else { sort(middle(), end(), fl); inplace_merge(begin(), middle(), end(), fl); }
-    auto it = unique(begin(), end(), fe);  // TODO: optimize
+  inline bool correct(bool unq, vector<pair<K, V>>& buf) {
+    BITSET_FCOMPARES(K, V)
+    auto it = begin();
+    if (unq) ordered = size();
+    if (ordered == size()) return false;
+    if (ordered <= size()/2) it = sortedUnique(data, fl, fe);
+    else it = inplaceMergeUnique(data, ordered, buf, fl, fe);
     data.resize(it - begin());
-    sorted = size();
+    ordered = size();
     return true;
   }
-
-  inline bool optimize() { return correct(); }
+  inline bool correct(bool unq=false) {
+    BITSET_FCOMPARES(K, V)
+    if (unq) ordered = size();
+    if (ordered == size()) return false;
+    auto it = sortedUnique(data, fl, fe);
+    data.resize(it - begin());
+    ordered = size();
+    return true;
+  }
 
   inline bool clear() noexcept {
     if (empty()) return false;
     data.clear();
-    sorted = 0;
+    ordered = 0;
     return true;
   }
 
@@ -535,8 +569,13 @@ class UBitsetSorted {
   inline bool remove(const K& k) {
     auto it = locateMatch(k);
     if (it == end()) return false;
-    if (it < middle()) --sorted;
+    if (it < middle()) --ordered;
     data.erase(it);
     return true;
   }
 };
+
+template <class K=int, class V=NONE>
+auto rorderedBitset(K _k=K(), V _v=V()) {
+  return ROrderedBitset<K, V>();
+}

@@ -378,7 +378,7 @@ size_t hashUnordered(const J& x, JB& buf) {
 template <class J, class T>
 size_t hashUnordered(const J& x, vector<T>& buf) {
   size_t s = distance(x.begin(), x.end());
-  if (bus.size() < s) buf.resize(s);
+  if (buf.size() < s) buf.resize(s);
   return hash_unordered(x.begin(), x.end(), buf);
 }
 
@@ -544,6 +544,26 @@ auto uniqueValues(J& x) {
 template <class J, class FE>
 auto uniqueValues(J& x, FE fe) {
   return unique_values(x.begin(), x.end(), fe);
+}
+
+
+template <class I>
+auto sorted_unique(I ib, I ie) {
+  sort(ib, ie);
+  return unique(ib, ie);
+}
+template <class I, class FL, class FE>
+auto sorted_unique(I ib, I ie, FL fl, FE fe) {
+  sort(ib, ie, fl);
+  return unique(ib, ie, fe);
+}
+template <class J>
+auto sortedUnique(J& x) {
+  return sorted_unique(x.begin(), x.end());
+}
+template <class J, class FL, class FE>
+auto sortedUnique(J& x, FL fl, FE fe) {
+  return sorted_unique(x.begin(), x.end(), fl, fe);
 }
 
 
