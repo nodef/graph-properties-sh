@@ -10,11 +10,11 @@ template <class H, class G, class FV, class FE>
 void copyTo(H& a, const G& x, FV fv, FE fe) {
   // add vertices
   for (auto u : x.vertexKeys())
-    if (fv(u)) a.addVertex(u, x.vertexData(u));
+    if (fv(u)) a.addVertex(u, x.vertexValue(u));
   // add edges
   for (auto u : x.vertexKeys()) {
     if (fv(u)) for (auto v : x.edgeKeys(u)) {
-      if (fv(v) && fe(u, v)) a.addEdge(u, v, x.edgeData(u, v));
+      if (fv(v) && fe(u, v)) a.addEdge(u, v, x.edgeValue(u, v));
     }
   }
 }

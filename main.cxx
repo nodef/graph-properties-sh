@@ -12,7 +12,6 @@ using namespace std;
 
 
 
-/*
 // SHOW
 // ----
 
@@ -214,7 +213,6 @@ int old_main(int argc, char **argv) {
   printf("\n");
   return 0;
 }
-*/
 
 
 int main(int argc, char **argv) {

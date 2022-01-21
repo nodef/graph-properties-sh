@@ -84,7 +84,7 @@ void writeMtx(ostream& a, const G& x) {
   a << x.order() << " " << x.order() << " " << x.size() << "\n";
   for (auto u : x.vertexKeys()) {
     for (auto v : x.edgeKeys(u))
-      a << u << " " << v << " " << x.edgeData(u) << "\n";
+      a << u << " " << v << " " << x.edgeValue(u, v) << "\n";
   }
 }
 

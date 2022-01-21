@@ -35,13 +35,13 @@ using std::cout;
 
 #ifndef GRAPH_SIZE
 #define GRAPH_SIZE(K, V, E, N, M, vexists)  \
-  inline size_t span()  const noexcept { return vexists.size(); } \
-  inline size_t order() const noexcept { return N; } \
-  inline size_t size()  const noexcept { return M; }
+  inline K span()  const noexcept { return vexists.size(); } \
+  inline K order() const noexcept { return N; } \
+  inline size_t size() const noexcept { return M; }
 #define GRAPH_SIZE_FROM(K, V, E, x) \
-  inline size_t span()  const noexcept { return x.span(); } \
-  inline size_t order() const noexcept { return x.order(); } \
-  inline size_t size()  const noexcept { return x.size(); }
+  inline K span()  const noexcept { return x.span(); } \
+  inline K order() const noexcept { return x.order(); } \
+  inline size_t size() const noexcept { return x.size(); }
 #define GRAPH_EMPTY(K, V, E) \
   inline bool empty()   const noexcept { return order() == 0; }
 #define GRAPH_SIZES(K, V, E, N, M, vexists) \
@@ -278,11 +278,11 @@ using std::cout;
 
 #ifndef GRAPH_DEGREES
 #define GRAPH_XDEGREE(K, V, E, name, eto) \
-  inline size_t name(const K& u) const noexcept { \
+  inline K name(const K& u) const noexcept { \
     return u < span()? eto[u].size() : 0; \
   }
 #define GRAPH_INDEGREE_SEARCH(K, V, E, eto) \
-  inline size_t inDegree(const K& v) const noexcept { \
+  inline K inDegree(const K& v) const noexcept { \
     auto fedge = [&](const K& u) { return eto[u].has(v); }; \
     return countIf(rangeIterable(span()), fedge); \
   }
@@ -299,8 +299,8 @@ using std::cout;
   GRAPH_INDEGREE_SEARCH(K, V, E, eto)
 
 #define GRAPH_DEGREES_FROM(K, V, E, x, u, v, de, ie) \
-  inline size_t degree(const K& u)   const noexcept { return x.de; } \
-  inline size_t inDegree(const K& v) const noexcept { return x.ie; }
+  inline K degree(const K& u)   const noexcept { return x.de; } \
+  inline K inDegree(const K& v) const noexcept { return x.ie; }
 #endif
 
 
@@ -903,9 +903,9 @@ template <class G>
 void writeGraphDetailed(ostream& a, const G& x) {
   a << "order: " << x.order() << " size: " << x.size();
   a << (x.directed()? " [directed]" : " [undirected]") << " {\n";
-  for (auto [u, d] : x.vertexKeys()) {
+  for (auto [u, d] : x.vertices()) {
     a << u << ":" << d << " ->";
-    for (auto [v, w] : x.edgeKeys(u))
+    for (auto [v, w] : x.edges(u))
       a << " " << v << ":" << w;
     a << "\n";
   }

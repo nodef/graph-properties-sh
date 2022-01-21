@@ -77,7 +77,7 @@ auto edgeData(const G& x, const J& ks, F fm) {
 
 template <class G, class J>
 auto edgeData(const G& x, const J& ks) {
-  return edgeData(x, ks, [&](auto u, auto v) { return x.edgeData(u, v); });
+  return edgeData(x, ks, [&](auto u, auto v) { return x.edgeValue(u, v); });
 }
 
 template <class G>
