@@ -1,14 +1,16 @@
 #pragma once
-#include <vector>
-#include <unordered_map>
+#include <type_traits>
 #include <iterator>
 #include <algorithm>
 #include <functional>
+#include <vector>
+#include <unordered_map>
 #include "_queue.hxx"
 
+using std::remove_reference_t;
+using std::iterator_traits;
 using std::vector;
 using std::unordered_map;
-using std::iterator_traits;
 using std::hash;
 using std::distance;
 using std::for_each;
@@ -54,8 +56,9 @@ inline void cforEach(const J& x, F fn) {
 // Is anything useful there?
 
 template <class J, class F>
-inline auto anyOf(const J& x, F fn) {
-  return any_of(x.begin(), x.end(), fn);
+inline size_t anyOf(const J& x, F fn) {
+  auto   it = any_of(x.begin(), x.end(), fn);
+  return it - x.begin();
 }
 
 
@@ -66,8 +69,9 @@ inline auto anyOf(const J& x, F fn) {
 // Is everything there?
 
 template <class J, class F>
-inline auto allOf(const J& x, F fn) {
-  return all_of(x.begin(), x.end(), fn);
+inline size_t allOf(const J& x, F fn) {
+  auto   it = all_of(x.begin(), x.end(), fn);
+  return it - x.begin();
 }
 
 
@@ -82,56 +86,26 @@ inline auto find_value(I ib, I ie, const T& v) {
   return find(ib, ie, v);
 }
 template <class J, class T>
-inline auto findValue(const J& x, const T& v) {
-  return find_value(x.begin(), x.end(), v);
-}
-
-
-template <class I, class T>
-inline size_t find_index(I ib, I ie, const T& v) {
-  return find(ib, ie, v) - ib;
+inline size_t findValue(const J& x, const T& v) {
+  auto   it = find_value(x.begin(), x.end(), v);
+  return it - x.begin();
 }
 template <class J, class T>
-inline size_t find_index(const J& x, const T& v) {
-  return find_index(x.begin(), x.end(), v);
-}
-
-
-template <class I, class T>
-inline size_t find_at(I ib, I ie, const T& v) {
-  auto it = find(ib, ie, v);
-  return it != ie? it - ib : size_t(-1);
-}
-template <class J, class T>
-inline size_t findAt(const J& x, const T& v) {
-  return find_at(x.begin(), x.end(), v);
+inline size_t findValueAt(const J& x, const T& v) {
+  auto   it = find_value(x.begin(), x.end(), v);
+  return it != x.end()? it - x.begin() : size_t(-1);
 }
 
 
 template <class J, class F>
-inline auto findIf(const J& x, F fn) {
-  return find_if(x.begin(), x.end(), fn);
-}
-
-
-template <class I, class F>
-inline size_t find_if_index(I ib, I ie, F fn) {
-  return find_if(ib, ie, fn) - ib;
-}
-template <class J, class F>
-inline size_t findIfIndex(const J& x, F fn) {
-  return find_if_index(x.begin(), x.end(), fn);
-}
-
-
-template <class I, class F>
-inline size_t find_if_at(I ib, I ie, F fn) {
-  auto it = find_if(ib, ie, fn);
-  return it != ie? it - ib : size_t(-1);
+inline size_t findIf(const J& x, F fn) {
+  auto   it = find_if(x.begin(), x.end(), fn);
+  return it - x.begin();
 }
 template <class J, class F>
 inline size_t findIfAt(const J& x, F fn) {
-  return find_if_at(x.begin(), x.end(), fn);
+  auto   it = find_if(x.begin(), x.end(), fn);
+  return it != x.end()? it - x.begin() : size_t(-1);
 }
 
 
@@ -142,114 +116,46 @@ inline size_t findIfAt(const J& x, F fn) {
 // Find closest business, or its address.
 
 template <class J, class T>
-inline auto lowerBound(const J& x, const T& v) {
-  return lower_bound(x.begin(), x.end(), v);
+inline size_t lowerBound(const J& x, const T& v) {
+  auto   it = lower_bound(x.begin(), x.end(), v);
+  return it - x.begin();
 }
 template <class J, class T, class FL>
-inline auto lowerBound(const J& x, const T& v, FL fl) {
-  return lower_bound(x.begin(), x.end(), v, fl);
-}
-
-
-template <class I, class T>
-inline size_t lower_bound_index(I ib, I ie, const T& v) {
-  return lower_bound(ib, ie, v) - ib;
-}
-template <class I, class T, class FL>
-inline size_t lower_bound_index(I ib, I ie, const T& v, FL fl) {
-  return lower_bound(ib, ie, v, fl) - ib;
-}
-template <class J, class T>
-inline size_t lowerBoundIndex(const J& x, const T& v) {
-  return lower_bound_index(x.begin(), x.end(), v);
-}
-template <class J, class T, class FL>
-inline size_t lowerBoundIndex(const J& x, const T& v, FL fl) {
-  return lower_bound_index(x.begin(), x.end(), v, fl);
+inline size_t lowerBound(const J& x, const T& v, FL fl) {
+  auto   it = lower_bound(x.begin(), x.end(), v, fl);
+  return it - x.begin();
 }
 
 
 template <class I, class T>
 inline auto lower_find(I ib, I ie, const T& v) {
-  auto it = lower_bound(ib, ie, v);
-  return it != ie && *it == v? it : ie;
-}
-template <class I, class T, class FL>
-inline auto lower_find(I ib, I ie, const T& v, FL fl) {
-  auto it = lower_bound(ib, ie, v, fl);
+  auto   it = lower_bound(ib, ie, v);
   return it != ie && *it == v? it : ie;
 }
 template <class I, class T, class FL, class FE>
 inline auto lower_find(I ib, I ie, const T& v, FL fl, FE fe) {
-  auto it = lower_bound(ib, ie, v, fl);
+  auto   it = lower_bound(ib, ie, v, fl);
   return it != ie && fe(*it, v)? it : ie;
 }
 template <class J, class T>
-inline auto lowerFind(const J& x, const T& v) {
-  return lower_find(x.begin(), x.end(), v);
-}
-template <class J, class T, class FL>
-inline auto lowerFind(const J& x, const T& v, FL fl) {
-  return lower_find(x.begin(), x.end(), v, fl);
+inline size_t lowerFind(const J& x, const T& v) {
+  auto   it = lower_find(x.begin(), x.end(), v);
+  return it - x.begin();
 }
 template <class J, class T, class FL, class FE>
-inline auto lowerFind(const J& x, const T& v, FL fl, FE fe) {
-  return lower_find(x.begin(), x.end(), v, fl, fe);
-}
-
-
-template <class I, class T>
-inline size_t lower_find_index(I ib, I ie, const T& v) {
-  return lower_find(ib, ie, v) - ib;
-}
-template <class I, class T, class FL>
-inline size_t lower_find_index(I ib, I ie, const T& v, FL fl) {
-  return lower_find(ib, ie, v, fl) - ib;
-}
-template <class I, class T, class FL, class FE>
-inline size_t lower_find_index(I ib, I ie, const T& v, FL fl, FE fe) {
-  return lower_find(ib, ie, v, fl, fe) - ib;
-}
-template <class J, class T>
-inline size_t lowerFindIndex(const J& x, const T& v) {
-  return lower_find_index(x.begin(), x.end(), v);
-}
-template <class J, class T, class FL>
-inline size_t lowerFindIndex(const J& x, const T& v, FL fl) {
-  return lower_find_index(x.begin(), x.end(), v, fl);
-}
-template <class J, class T, class FL, class FE>
-inline size_t lowerFindIndex(const J& x, const T& v, FL fl, FE fe) {
-  return lower_find_index(x.begin(), x.end(), v, fl, fe);
-}
-
-
-template <class I, class T>
-inline size_t lower_find_at(I ib, I ie, const T& v) {
-  auto it = lower_find(ib, ie, v);
-  return it != ie? it - ib : size_t(-1);
-}
-template <class I, class T, class FL>
-inline size_t lower_find_at(I ib, I ie, const T& v, FL fl) {
-  auto it = lower_find(ib, ie, v, fl);
-  return it != ie? it - ib : size_t(-1);
-}
-template <class I, class T, class FL, class FE>
-inline size_t lower_find_at(I ib, I ie, const T& v, FL fl, FE fe) {
-  auto it = lower_find(ib, ie, v, fl, fe);
-  return it != ie? it - ib : size_t(-1);
+inline size_t lowerFind(const J& x, const T& v, FL fl, FE fe) {
+  auto   it = lower_find(x.begin(), x.end(), v, fl, fe);
+  return it - x.begin();
 }
 template <class J, class T>
 inline size_t lowerFindAt(const J& x, const T& v) {
-  return lower_find_at(x.begin(), x.end(), v);
-}
-template <class J, class T, class FL>
-inline size_t lowerFindAt(const J& x, const T& v, FL fl) {
-  return lower_find_at(x.begin(), x.end(), v, fl);
+  auto   it = lower_find(x.begin(), x.end(), v) - x.begin();
+  return it != x.end()? it - x.begin() : size_t(-1);
 }
 template <class J, class T, class FL, class FE>
 inline size_t lowerFindAt(const J& x, const T& v, FL fl, FE fe) {
-  return lower_find_at(x.begin(), x.end(), v, fl, fe);
+  auto   it = lower_find(x.begin(), x.end(), v, fl, fe) - x.begin();
+  return it != x.end()? it - x.begin() : size_t(-1);
 }
 
 
@@ -307,24 +213,44 @@ inline size_t countIf(const J& x, F fn) {
 }
 
 
-template <class I, class FM>
-inline auto count_each(I ib, I ie, FM fm) {
-  using K = decltype(fm(*ib)); unordered_map<K, size_t> a;
+template <class I, class M, class FM>
+inline auto count_each(I ib, I ie, M& a, FM fm) {
   for_each(ib, ie, [&](const K& v) { ++a[fm(v)]; });
   return a;
 }
-template <class I>
-inline auto count_each(I ib, I ie) {
+template <class I, class M>
+inline auto count_each(I ib, I ie, M& a) {
   auto fm = [](const auto& v) { return v; };
-  return count_each(ib, ie, fm);
+  return count_each(ib, ie, a, fm);
+}
+template <class J, class M, class FM>
+inline auto countEach(const J& x, M& a, FM fm) {
+  return count_each(x.begin(), x.end(), a, fm);
+}
+template <class J, class M>
+inline auto countEach(const J& x, M& a) {
+  return count_each(x.begin(), x.end(), a);
+}
+
+
+template <class I, class FM>
+inline auto count_each_unordered_map(I ib, I ie, FM fm) {
+  using K = remove_reference_t<decltype(fm(*ib))>;
+  unordered_map<K, size_t> a;
+  return count_each(ib, ie, a, fm);
+}
+template <class I>
+inline auto count_each_unordered_map(I ib, I ie) {
+  auto fm = [](const auto& v) { return v; };
+  return count_each_unordered_map(ib, ie, fm);
 }
 template <class J, class FM>
-inline auto countEach(const J& x, FM fm) {
-  return count_each(x.begin(), x.end(), fm);
+inline auto countEachUnorderedMap(const J& x, FM fm) {
+  return count_each_unordered_map(x.begin(), x.end(), fm);
 }
 template <class J>
-inline auto countEach(const J& x) {
-  return count_each(x.begin(), x.end());
+inline auto countEachUnorderedMap(const J& x) {
+  return count_each_unordered_map(x.begin(), x.end());
 }
 
 
@@ -338,8 +264,9 @@ inline auto copy_values(I ib, I ie, IA ab) {
   return copy(ib, ie, ab);
 }
 template <class J, class JA>
-inline auto copyValues(const J& x, JA& a) {
-  return copy_values(x.begin(), x.end(), a.begin());
+inline size_t copyValues(const J& x, JA& a) {
+  auto   it = copy_values(x.begin(), x.end(), a.begin());
+  return it - a.begin();
 }
 
 
@@ -348,8 +275,9 @@ inline auto copy_append(I ib, I ie, vector<T>& a) {
   return a.insert(a.end(), ib, ie);
 }
 template <class J, class T>
-inline auto copyAppend(const J& x, vector<T>& a) {
-  return copy_append(x.begin(), x.end(), a);
+inline size_t copyAppend(const J& x, vector<T>& a) {
+  auto   it = copy_append(x.begin(), x.end(), a);
+  return it - a.begin();
 }
 
 
@@ -359,8 +287,9 @@ inline auto copy_write(I ib, I ie, vector<T>& a) {
   return copy_append(ib, ie, a);
 }
 template <class J, class T>
-inline auto copyWrite(const J& x, vector<T>& a) {
-  return copy_write(x.begin(), x.end(), a);
+inline size_t copyWrite(const J& x, vector<T>& a) {
+  auto   it = copy_write(x.begin(), x.end(), a);
+  return it - a.begin();
 }
 
 
@@ -374,7 +303,6 @@ template <class J>
 inline auto copy_vector(const J& x) {
   return copy_vector(x.begin(), x.end());
 }
-
 
 
 
@@ -398,9 +326,7 @@ inline size_t hashValue(const J& x) {
 
 template <class I, class IB>
 inline size_t hash_unordered(I ib, I ie, IB bb) {
-  IB be = bb + distance(ib, ie);
-  copy(ib, ie, bb);
-  sort(bb, be);
+  IB be = copy(ib, ie, bb); sort(bb, be);
   return hash_value(bb, be);
 }
 template <class J, class JB>
@@ -411,8 +337,9 @@ template <class J, class T>
 inline size_t hashUnordered(const J& x, vector<T>& buf) {
   size_t s = distance(x.begin(), x.end());
   if (buf.size() < s) buf.resize(s);
-  return hash_unordered(x.begin(), x.end(), buf);
+  return hash_unordered(x.begin(), x.end(), buf.begin());
 }
+
 
 
 
@@ -427,18 +354,20 @@ auto value_indices(I ib, I ie, M& a) {
     a[*ib] = i++;
   return a;
 }
-template <class I>
-inline auto value_indices(I ib, I ie) {
-  using K = typename iterator_traits<I>::value_type; unordered_map<K, size_t> a;
-  return value_indices(ib, ie, a);
-}
 template <class J, class M>
 inline auto valueIndices(const J& x, M& a) {
   return value_indices(x.begin(), x.end(), a);
 }
+
+template <class I>
+inline auto value_indices_unordered_map(I ib, I ie) {
+  using K = typename iterator_traits<I>::value_type;
+  unordered_map<K, size_t> a;
+  return value_indices(ib, ie, a);
+}
 template <class J>
-inline auto valueIndices(const J& x) {
-  return value_indices(x.begin(), x.end());
+inline auto valueIndicesUnorderedMap(const J& x) {
+  return value_indices_unordered_map(x.begin(), x.end());
 }
 
 
@@ -453,8 +382,9 @@ inline auto transform_values(IX xb, IX xe, IA ab, FM fm) {
   return transform(xb, xe, ab, fm);
 }
 template <class JX, class JA, class FM>
-inline auto transformValues(const JX& x, JA& a, FM fm) {
-  return transform(x.begin(), x.end(), a.begin(), fm);
+inline size_t transformValues(const JX& x, JA& a, FM fm) {
+  auto   it = transform(x.begin(), x.end(), a.begin(), fm);
+  return it - a.begin();
 }
 
 
@@ -463,15 +393,17 @@ inline auto transform_append(I ib, I ie, vector<T>& a, FM fm) {
   return transform(ib, ie, back_inserter(a), fm);
 }
 template <class J, class T, class FM>
-inline auto transformAppend(const J& x, vector<T>& a, FM fm) {
-  return transform_append(x.begin(), x.end(), a, fm);
+inline size_t transformAppend(const J& x, vector<T>& a, FM fm) {
+  auto   it = transform_append(x.begin(), x.end(), a, fm);
+  return it - a.begin();
 }
 
 
 template <class I, class FM>
 inline auto transform_vector(I ib, I ie, FM fm) {
   using T = typename iterator_traits<I>::value_type; vector<T> a;
-  return transform_append(ib, ie, a, fm);
+  transform_append(ib, ie, a, fm);
+  return a;
 }
 template <class J, class FM>
 inline auto transformVector(const J& x, FM fm) {
@@ -509,12 +441,14 @@ inline void sortValues(J& x, FL fl) {
 // ----------------
 
 template <class JX, class JY, class JA>
-inline auto setDifference(const JX& x, const JY& y, JA& a) {
-  return set_difference(x.begin(), x.end(), y.begin(), y.end(), a.begin());
+inline size_t setDifference(const JX& x, const JY& y, JA& a) {
+  auto   it = set_difference(x.begin(), x.end(), y.begin(), y.end(), a.begin());
+  return it - a.begin();
 }
 template <class JX, class JY, class JA, class FE>
-inline auto setDifference(const JX& x, const JY& y, JA& a, FE fe) {
-  return set_difference(x.begin(), x.end(), y.begin(), y.end(), a.begin(), fe);
+inline size_t setDifference(const JX& x, const JY& y, JA& a, FE fe) {
+  auto   it = set_difference(x.begin(), x.end(), y.begin(), y.end(), a.begin(), fe);
+  return it - a.begin();
 }
 
 
@@ -527,24 +461,28 @@ inline auto set_difference_append(IX xb, IX xe, IY yb, IY ye, vector<T>& a, FE f
   return set_difference(xb, xe, yb, ye, back_inserter(a), fe);
 }
 template <class JX, class JY, class T>
-inline auto setDifferenceAppend(const JX& x, const JY& y, vector<T>& a) {
-  return set_difference_append(x.begin(), x.end(), y.begin(), y.end(), a);
+inline size_t setDifferenceAppend(const JX& x, const JY& y, vector<T>& a) {
+  auto   it = set_difference_append(x.begin(), x.end(), y.begin(), y.end(), a);
+  return it - a.begin();
 }
 template <class JX, class JY, class T, class FE>
-inline auto setDifferenceAppend(const JX& x, const JY& y, vector<T>& a, FE fe) {
-  return set_difference_append(x.begin(), x.end(), y.begin(), y.end(), a, fe);
+inline size_t setDifferenceAppend(const JX& x, const JY& y, vector<T>& a, FE fe) {
+  auto   it = set_difference_append(x.begin(), x.end(), y.begin(), y.end(), a, fe);
+  return it - a.begin();
 }
 
 
 template <class IX, class IY>
 inline auto set_difference_vector(IX xb, IX xe, IY yb, IY ye) {
   using T = typename iterator_traits<IX>::value_type; vector<T> a;
-  return set_difference_append(xb, xe, yb, ye, a);
+  set_difference_append(xb, xe, yb, ye, a);
+  return a;
 }
 template <class IX, class IY, class FE>
 inline auto set_difference_vector(IX xb, IX xe, IY yb, IY ye, FE fe) {
   using T = typename iterator_traits<IX>::value_type; vector<T> a;
-  return set_difference_append(xb, xe, yb, ye, a, fe);
+  set_difference_append(xb, xe, yb, ye, a, fe);
+  return a;
 }
 template <class JX, class JY>
 inline auto setDifferenceVector(const JX& x, const JY& y) {
@@ -570,12 +508,14 @@ inline auto unique_values(I ib, I ie, FE fe) {
   return unique(ib, ie, fe);
 }
 template <class J>
-inline auto uniqueValues(J& x) {
-  return unique_values(x.begin(), x.end());
+inline size_t uniqueValues(J& x) {
+  auto   it = unique_values(x.begin(), x.end());
+  return it - x.begin();
 }
 template <class J, class FE>
-inline auto uniqueValues(J& x, FE fe) {
-  return unique_values(x.begin(), x.end(), fe);
+inline size_t uniqueValues(J& x, FE fe) {
+  auto   it = unique_values(x.begin(), x.end(), fe);
+  return it - x.begin();
 }
 
 
@@ -590,12 +530,14 @@ inline auto sorted_unique(I ib, I ie, FL fl, FE fe) {
   return unique(ib, ie, fe);
 }
 template <class J>
-inline auto sortedUnique(J& x) {
-  return sorted_unique(x.begin(), x.end());
+inline size_t sortedUnique(J& x) {
+  auto   it = sorted_unique(x.begin(), x.end());
+  return it - x.begin();
 }
 template <class J, class FL, class FE>
-inline auto sortedUnique(J& x, FL fl, FE fe) {
-  return sorted_unique(x.begin(), x.end(), fl, fe);
+inline size_t sortedUnique(J& x, FL fl, FE fe) {
+  auto   it = sorted_unique(x.begin(), x.end(), fl, fe);
+  return it - x.begin();
 }
 
 
@@ -613,12 +555,14 @@ inline auto merge_values(IX xb, IX xe, IY yb, IY ye, IA ab, FL fl) {
   return merge(xb, xe, yb, ye, ab, fl);
 }
 template <class JX, class JY, class JA>
-inline auto mergeValues(const JX& x, const JY& y, JA& a) {
-  return merge_values(x.begin(), x.end(), y.begin(), y.end(), a.begin());
+inline size_t mergeValues(const JX& x, const JY& y, JA& a) {
+  auto   it = merge_values(x.begin(), x.end(), y.begin(), y.end(), a.begin());
+  return it = a.begin();
 }
 template <class JX, class JY, class JA, class FL>
 inline auto mergeValues(const JX& x, const JY& y, JA& a, FL fl) {
-  return merge_values(x.begin(), x.end(), y.begin(), y.end(), a.begin(), fl);
+  auto   it = merge_values(x.begin(), x.end(), y.begin(), y.end(), a.begin(), fl);
+  return it - a.begin();
 }
 
 
@@ -646,12 +590,14 @@ inline auto merge_unique(IX xb, IX xe, IY yb, IY ye, IA ab) {
   return merge_unique(xb, xe, yb, ye, ab, fl, fe);
 }
 template <class JX, class JY, class JA, class FL, class FE>
-inline auto mergeUnique(const JX& x, const JY& y, JA& a, FL fl, FE fe) {
-  return merge_unique(x.begin(), x.end(), y.begin(), y.end(), fl, fe);
+inline size_t mergeUnique(const JX& x, const JY& y, JA& a, FL fl, FE fe) {
+  auto   it = merge_unique(x.begin(), x.end(), y.begin(), y.end(), fl, fe);
+  return it - a.begin();
 }
 template <class JX, class JY, class JA>
-inline auto mergeUnique(const JX& x, const JY& y, JA& a) {
-  return merge_unique(x.begin(), x.end(), y.begin(), y.end(), a.begin());
+inline size_t mergeUnique(const JX& x, const JY& y, JA& a) {
+  auto   it = merge_unique(x.begin(), x.end(), y.begin(), y.end(), a.begin());
+  return it - a.begin();
 }
 
 
@@ -662,7 +608,7 @@ auto merge_into(IX xb, IX xe, IY yb, IY ye, FL fl) {
   IX ix = xe - 1;
   IY iy = ye - 1;
   IX it = ie - 1;
-  for (; iy >= yb; ++it) {
+  for (; iy >= yb; --it) {
     if (fl(*iy, *ix)) { *it = *ix; --ix; }
     else              { *it = *iy; --iy; }
   }
@@ -674,22 +620,24 @@ inline auto merge_into(IX xb, IX xe, IY yb, IY ye) {
   return merge_into(xb, xe, yb, ye, fl);
 }
 template <class JX, class JY, class FL>
-inline auto mergeInto(JX& x, const JY& y, FL fl) {
-  return merge_into(x.begin(), x.end(), y.begin(), y.end(), fl);
+inline size_t mergeInto(JX& x, const JY& y, FL fl) {
+  auto   it = merge_into(x.begin(), x.end(), y.begin(), y.end(), fl);
+  return it - x.begin();
 }
 template <class JX, class JY>
-inline auto mergeInto(JX& x, const JY& y) {
-  return merge_into(x.begin(), x.end(), y.begin(), y.end());
+inline size_t mergeInto(JX& x, const JY& y) {
+  auto   it = merge_into(x.begin(), x.end(), y.begin(), y.end());
+  return it - x.begin();
 }
 
 
 template <class J>
-inline auto inplaceMerge(const J& x, size_t m) {
-  return inplace_merge(x.begin(), x.begin()+m, x.end());
+inline void inplaceMerge(const J& x, size_t m) {
+  inplace_merge(x.begin(), x.begin()+m, x.end());
 }
 template <class J, class FL>
-inline auto inplaceMerge(const J& x, size_t m, FL fl) {
-  return inplace_merge(x.begin(), x.begin()+m, x.end(), fl);
+inline void inplaceMerge(const J& x, size_t m, FL fl) {
+  inplace_merge(x.begin(), x.begin()+m, x.end(), fl);
 }
 
 
@@ -729,22 +677,26 @@ inline auto inplace_merge_unique(IX xb, IX xm, IX xe, IB bb, IB be) {
   return inplace_merge_unique(xb, xm, xe, bb, be, fl, fe);
 }
 template <class JX, class JB, class FL, class FE>
-inline auto inplaceMergeUnique(JX& x, size_t m, JB& buf, FL fl, FE fe) {
-  return inplace_merge_unique(x.begin(), x.begin()+m, x.end(), buf.begin(), buf.end(), fl, fe);
+inline size_t inplaceMergeUnique(JX& x, size_t m, JB& b, FL fl, FE fe) {
+  auto   it = inplace_merge_unique(x.begin(), x.begin()+m, x.end(), b.begin(), b.end(), fl, fe);
+  return it - x.begin();
 }
 template <class JX, class JB>
-inline auto inplaceMergeUnique(JX& x, size_t m, JB& buf) {
-  return inplace_merge_unique(x.begin(), x.begin()+m, x.end(), buf.begin(), buf.end());
+inline size_t inplaceMergeUnique(JX& x, size_t m, JB& b) {
+  auto   it = inplace_merge_unique(x.begin(), x.begin()+m, x.end(), b.begin(), b.end());
+  return it - x.begin();
 }
 template <class JX, class T, class FL, class FE>
-inline auto inplaceMergeUnique(JX& x, size_t m, vector<T>& buf, FL fl, FE fe) {
+inline size_t inplaceMergeUnique(JX& x, size_t m, vector<T>& buf, FL fl, FE fe) {
   size_t s = distance(x.begin()+m, x.end());
   if (buf.size() < s) buf.resize(s);
-  return inplace_merge_unique(x.begin(), x.begin()+m, x.end(), buf.begin(), buf.end(), fl, fe);
+  auto   it = inplace_merge_unique(x.begin(), x.begin()+m, x.end(), buf.begin(), buf.end(), fl, fe);
+  return it - x.begin();
 }
 template <class JX, class T>
 inline auto inplaceMergeUnique(JX& x, size_t m, vector<T>& buf) {
   size_t s = distance(x.begin()+m, x.end());
   if (buf.size() < s) buf.resize(s);
-  return inplace_merge_unique(x.begin(), x.begin()+m, x.end(), buf.begin(), buf.end());
+  auto   it = inplace_merge_unique(x.begin(), x.begin()+m, x.end(), buf.begin(), buf.end());
+  return it - x.begin();
 }
