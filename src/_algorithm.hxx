@@ -707,8 +707,9 @@ auto inplace_merge_unique(IX xb, IX xm, IX xe, IB bb, IB be, FL fl, FE fe) {
   else if (ib < xm) ++ib;
   else if (im < xe) ++im;
   else return it;
-  for (; ib < xm && im < xe;) {
-    bq.push_back(*(ib++));
+  for (; im < xe;) {
+    if (ib < xm) bq.push_back(*(ib++));
+    if (bq.empty()) break;
     if (fe(*it, bq.front())) { bq.pop_front(); continue; }
     if (fe(*it, *im))        { ++im;           continue; }
     *(++it) = fl(*im, bq.front())? *(im++) : bq.pop_front();

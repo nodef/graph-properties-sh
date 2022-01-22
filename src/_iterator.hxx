@@ -741,7 +741,7 @@ inline auto rangeVector(T V) noexcept {
   return vector<T>(x.begin(), x.end());
 }
 template <class T>
-inline auto rangeIterable(T v, T V, T DV=1) {
+inline auto rangeVector(T v, T V, T DV=1) {
   auto x = rangeIterable(v, V, DV);
   return vector<T>(x.begin(), x.end());
 }

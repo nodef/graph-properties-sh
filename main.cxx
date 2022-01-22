@@ -216,11 +216,10 @@ int old_main(int argc, char **argv) {
 
 
 int main(int argc, char **argv) {
-  vector<pair<int, int>> x;
-  for (int i=0; i<10; ++i)
-    x.push_back({i, 2*i});
-  auto y = staticTransformIterable(x, ConstPairSecond<int, int>());
-  printf("y: "); writeValues(cout, y); printf("\n");
+  vector<int> x {2, 4, 6, 8, 5, 7};
+  vector<int> buf;
+  inplaceMergeUnique(x, 4, buf);
+  printf("x: "); println(x);
   println();
   return 0;
 }
