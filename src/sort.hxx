@@ -6,6 +6,7 @@
 #include "_main.hxx"
 #include "vertices.hxx"
 #include "edges.hxx"
+#include "degree.hxx"
 #include "dfs.hxx"
 #include "components.hxx"
 
@@ -49,6 +50,7 @@ void levelwiseSortDo(vector<bool>& visx, vector<bool>& vis, const H& xt, F fn) {
   });
   swap(visx, vis);
 }
+
 template <class H>
 auto levelwiseSort(const H& xt) {
   using K = typename H::key_type; vector<K> a;
@@ -57,6 +59,36 @@ auto levelwiseSort(const H& xt) {
   auto visx = createContainer(xt, bool());
   while (a.size() < xt.order())
     levelwiseSortDo(visx, vis, xt, fn);
+  return a;
+}
+
+
+template <class G, class K, class F>
+void levelwiseFrontierDo(const G& x, const vector<K>& frnt, vector<K>& ideg, F fn) {
+  for (auto u : frnt)
+    x.forEachEdgeKey(u, [&](auto v) { if (--ideg[v] == 0) fn(v); });
+}
+
+template <class G, class H, class F>
+void levelwiseFrontiersDo(const G& x, const H& xt, F fn) {
+  using  K = typename G::key_type;
+  vector<K> frnt, frnu, a;
+  auto ideg = degreesDo(xt, [&](auto u, auto d) {
+    if (d == 0) frnt.push_back(u);
+  });
+  fn(frnt);
+  while (!frnt.empty()) {
+    frnu.clear();
+    levelwiseFrontierDo(x, frnt, ideg, [&](auto v) { frnu.push_back(v); });
+    fn(frnu);
+    swap(frnu, frnt);
+  }
+}
+
+template <class G, class H>
+auto levelwiseSortFrontier(const G& x, const H& xt) {
+  using K = typename G::key_type; vector<K> a;
+  levelwiseFrontiersDo(x, xt, [&](const auto& frnt) { copyAppend(frnt, a); });
   return a;
 }
 
@@ -83,16 +115,33 @@ auto levelwiseGroups(const H& xt) {
   return a;
 }
 
-
 template <class H>
 auto levelwiseGroupIndices(const H& xt) {
   using K = typename H::key_type;
-  unordered_map<K, K> a; K i = 0;
+  vector<K> a(xt.span()); K i = 0;
   auto fn   = [&](auto u) { a[u] = i; };
   auto vis  = createContainer(xt, bool());
   auto visx = createContainer(xt, bool());
   for (; a.size() < xt.order(); i++)
     levelwiseSortDo(visx, vis, xt, fn);
+  return a;
+}
+
+
+template <class G, class H>
+auto levelwiseGroupsFrontier(const G& x, const H& xt) {
+  using K = typename G::key_type; vector2d<K> a;
+  levelwiseFrontiersDo(x, xt, [&](const auto& frnt) { a.push_back(frnt); });
+  return a;
+}
+
+template <class G, class H>
+auto levelwiseGroupIndicesFrontier(const G& x, const H& xt) {
+  using K = typename G::key_type;
+  vector<K> a(x.span()); K i = 0;
+  levelwiseFrontiersDo(x, xt, [&](const auto& frnt) {
+    fillAt(a, i++, frnt);
+  });
   return a;
 }
 
@@ -151,6 +200,28 @@ auto levelwiseComponents(const G& x, const H& xt) {
 }
 
 
+template <class G, class H, class K>
+void levelwiseComponentsFrontierTo(vector2d<K>& cs, const G& b, const H& bt) {
+  auto bks = levelwiseSortFrontier(b, bt);
+  reorderDirty(cs, bks);
+}
+
+template <class G, class H, class K>
+auto levelwiseComponentsFrontierFrom(const vector2d<K>& cs, const G& b, const H& bt) {
+  auto bks = levelwiseSortFrontier(b, bt);
+  return copyAt(cs, bks);
+}
+
+template <class G, class H>
+auto levelwiseComponentsFrontier(const G& x, const H& xt) {
+  auto cs = components(x, xt);
+  auto b  = blockgraph(x, cs);
+  auto bt = transpose(x);
+  levelwiseComponentsFrontierTo(cs, b, bt);
+  return cs;
+}
+
+
 
 
 // LEVELWISE-GROUPED-COMPONENTS
@@ -171,4 +242,22 @@ auto levelwiseGroupedComponents(const G& x, const H& xt) {
   auto b  = blockgraph(x, cs);
   auto bt = transpose(b);
   return levelwiseGroupedComponentsFrom(cs, bt);
+}
+
+
+template <class G, class H, class K>
+auto levelwiseGroupedComponentsFrontierFrom(const vector2d<K>& cs, const G& b, const H& bt) {
+  vector2d<K> a;
+  auto bgs = levelwiseGroupsFrontier(b, bt);
+  for (const auto& g : bgs)
+    a.push_back(joinAt<K>(cs, g));
+  return a;
+}
+
+template <class G, class H>
+auto levelwiseGroupedComponentsFrontier(const G& x, const H& xt) {
+  auto cs = components(x, xt);
+  auto b  = blockgraph(x, cs);
+  auto bt = transpose(b);
+  return levelwiseGroupedComponentsFrontierFrom(cs, b, bt);
 }

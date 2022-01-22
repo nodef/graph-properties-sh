@@ -1,7 +1,28 @@
 #pragma once
 #include <tuple>
+#include "vertices.hxx"
 
 using std::make_tuple;
+
+
+
+
+// DEGREES
+// -------
+
+template <class G, class F>
+auto degreesDo(const G& x, F fn) {
+  using K = typename G::key_type;
+  auto  a = createContainer(x, K());
+  x.forEachVertexKey([&](auto u) { a[u] = x.degree(u); fn(u, x.degree(u)); });
+  return a;
+}
+template <class G>
+auto degrees(const G& x) {
+  auto fn = [](auto u, auto d) {};
+  return degreesDo(x, fn);
+}
+
 
 
 
