@@ -60,8 +60,8 @@ using std::inplace_merge;
 
 #ifndef BITSET_FIND
 #define BITSET_FIND(K, V, data) \
-  inline auto find(const K& k)        noexcept { return locateMatch(k); } \
-  inline auto cfind(const K& k) const noexcept { return locateMatch(k); } \
+  inline auto find(const K& k)        noexcept { return locate_match(k); } \
+  inline auto cfind(const K& k) const noexcept { return locate_match(k); } \
   inline auto find(const K& k)  const noexcept { return cfind(k); }
 
 #define BITSET_ENTRIES(K, V, data) \
@@ -129,18 +129,18 @@ using std::inplace_merge;
 #ifndef BITSET_HAS
 #define BITSET_HAS(K, V) \
   inline bool has(const K& k) const noexcept { \
-    return locateMatch(k) != end(); \
+    return locate_match(k) != end(); \
   }
 
 #define BITSET_GET(K, V) \
   inline V get(const K& k) const noexcept { \
-    auto it = locateMatch(k); \
+    auto it = locate_match(k); \
     return it == end()? V() : (*it).second; \
   }
 
 #define BITSET_SET(K, V) \
   inline bool set(const K& k, const V& v) noexcept { \
-    auto it = locateMatch(k); \
+    auto it = locate_match(k); \
     if (it == end()) return false; \
     (*it).second = v; \
     return true; \
@@ -148,22 +148,22 @@ using std::inplace_merge;
 
 #define BITSET_SUBSCRIPT(K, V) \
   inline V& operator[](const K& k) noexcept { \
-    auto it = locateMatch(k); \
+    auto it = locate_match(k); \
     return (*it).second; \
   } \
   inline const V& operator[](const K& k) const noexcept { \
-    auto it = locateMatch(k); \
+    auto it = locate_match(k); \
     return (*it).second; \
   }
 
 #define BITSET_AT(K, V) \
   inline V& at(const K& k) { \
-    auto it = locateMatch(k); \
+    auto it = locate_match(k); \
     if (it == end()) throw out_of_range("bitset key not present"); \
     return (*it).second; \
   } \
   inline const V& at(const K& k) const { \
-    auto it = locateMatch(k); \
+    auto it = locate_match(k); \
     if (it == end()) throw out_of_range("bitset key not present"); \
     return (*it).second; \
   }
@@ -187,7 +187,7 @@ using std::inplace_merge;
 // It maintains integers in insertion order.
 
 #define UNORDERED_BITSET_LOCATE(K, V, f0, f1) \
-  f0 auto locateMatch(const K& k) f1 { \
+  f0 auto locate_match(const K& k) f1 { \
     auto fe = [&](const pair<K, V>& p) { return p.first == k; }; \
     return find_if(begin(), end(), fe); \
   }
@@ -251,7 +251,7 @@ class UnorderedBitset {
   }
 
   inline bool remove(const K& k) {
-    auto it = locateMatch(k);
+    auto it = locate_match(k);
     if (it == end()) return false;
     iter_swap(it, end()-1);
     data.pop_back();
@@ -277,7 +277,7 @@ auto unorderedBitset(K _k=K(), V _v=V()) {
     auto fl = [](const pair<K, V>& p, const K& k) { return p.first < k; }; \
     return lower_bound(begin(), end(), k, fl); \
   } \
-  f0 auto locateMatch(const K& k) f1 { \
+  f0 auto locate_match(const K& k) f1 { \
     auto it = locateSpot(k); \
     return it == end() || (*it).first != k? end() : it; \
   }
@@ -342,7 +342,7 @@ class OrderedBitset {
   }
 
   inline bool remove(const K& k) {
-    auto it = locateMatch(k);
+    auto it = locate_match(k);
     if (it == end()) return false;
     data.erase(it);
     return true;
@@ -363,18 +363,18 @@ auto orderedBitset(K _k=K(), V _v=V()) {
 // It maintains a portion of integers in ascending value order.
 
 #define PORDERED_BITSET_LOCATE(K, V, f0, f1) \
-  f0 auto locateMatchOrdered(const K& k) f1 { \
+  f0 auto locate_match_ordered(const K& k) f1 { \
     auto fl = [](const pair<K, V>& p, const K& k) { return p.first < k; }; \
     auto it = lower_bound(begin(), middle(), k, fl); \
     return it == middle() || (*it).first != k? end() : it; \
   } \
-  f0 auto locateMatchUnordered(const K& k) f1 { \
+  f0 auto locate_match_unordered(const K& k) f1 { \
     auto fe = [&](const pair<K, V>& p) { return p.first == k; }; \
     return find_if(middle(), end(), fe); \
   } \
-  f0 auto locateMatch(const K& k) f1 { \
-    auto it = locateMatchOrdered(k); \
-    return it != end()? it : locateMatchUnordered(k); \
+  f0 auto locate_match(const K& k) f1 { \
+    auto it = locate_match_ordered(k); \
+    return it != end()? it : locate_match_unordered(k); \
   }
 
 
@@ -452,7 +452,7 @@ class POrderedBitset {
   }
 
   inline bool add(const K& k, const V& v=V()) {
-    auto it = locateMatch(k);
+    auto it = locate_match(k);
     if (it != end()) return false;
     data.push_back({k, v});
     if (unordered() <= LIMIT) mergePartitions();
@@ -460,7 +460,7 @@ class POrderedBitset {
   }
 
   inline bool remove(const K& k) {
-    auto it = locateMatch(k);
+    auto it = locate_match(k);
     if (it == end()) return false;
     if (it < middle()) --ordered;
     data.erase(it);
@@ -535,12 +535,12 @@ class ROrderedBitset {
   public:
   inline bool correct(bool unq, vector<pair<K, V>>& buf) {
     BITSET_FCOMPARES(K, V)
-    auto it = begin();
+    size_t e = 0;
     if (unq) ordered = size();
     if (ordered == size()) return false;
-    if (ordered <= size()/2) it = sortedUnique(data, fl, fe);
-    else it = inplaceMergeUnique(data, ordered, buf, fl, fe);
-    data.resize(it - begin());
+    if (ordered <= size()/2) e = sortedUnique(data, fl, fe);
+    else e = inplaceMergeUnique(data, ordered, buf, fl, fe);
+    data.resize(e);
     ordered = size();
     return true;
   }
@@ -548,8 +548,8 @@ class ROrderedBitset {
     BITSET_FCOMPARES(K, V)
     if (unq) ordered = size();
     if (ordered == size()) return false;
-    auto it = sortedUnique(data, fl, fe);
-    data.resize(it - begin());
+    size_t e = sortedUnique(data, fl, fe);
+    data.resize(e);
     ordered = size();
     return true;
   }
@@ -567,7 +567,7 @@ class ROrderedBitset {
   }
 
   inline bool remove(const K& k) {
-    auto it = locateMatch(k);
+    auto it = locate_match(k);
     if (it == end()) return false;
     if (it < middle()) --ordered;
     data.erase(it);
