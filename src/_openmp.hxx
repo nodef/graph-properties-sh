@@ -396,18 +396,18 @@ inline void multiplyValuesOmp(const vector<TX>& x, const vector<TY>& y, vector<T
 // MULTIPLY-VALUE
 // --------------
 
-template <class TX, class TA, class V>
-void multiplyValueOmp(const TX *x, const TA *a, size_t N, const V& v) {
+template <class T, class TA, class V>
+void multiplyValueOmp(const T *x, const TA *a, size_t N, const V& v) {
   if (N<SIZE_MIN_OMPM) { multiplyValue(x, a, N, v); return; }
   #pragma omp parallel for num_threads(32) schedule(auto)
   for (size_t i=0; i<N; i++)
     a[i] = TA(x[i] * v);
 }
-template <class TX, class TA, class V>
-inline void multiplyValueOmp(const vector<TX>& x, vector<TA>& a, const V& v) {
+template <class T, class TA, class V>
+inline void multiplyValueOmp(const vector<T>& x, vector<TA>& a, const V& v) {
   multiplyValueOmp(x.data(), a.data(), x.size(), v);
 }
-template <class TX, class TA, class V>
-inline void multiplyValueOmp(const vector<TX>& x, vector<TA>& a, size_t i, size_t N, const V& v) {
+template <class T, class TA, class V>
+inline void multiplyValueOmp(const vector<T>& x, vector<TA>& a, size_t i, size_t N, const V& v) {
   multiplyValueOmp(x.data()+i, a.data()+i, N, v);
 }

@@ -213,9 +213,15 @@ inline size_t countIf(const J& x, F fn) {
 }
 
 
+
+
+// COUNT-EACH
+// ----------
+// Count businesses in each sector.
+
 template <class I, class M, class FM>
 inline auto count_each(I ib, I ie, M& a, FM fm) {
-  for_each(ib, ie, [&](const K& v) { ++a[fm(v)]; });
+  for_each(ib, ie, [&](const auto& v) { ++a[fm(v)]; });
   return a;
 }
 template <class I, class M>
@@ -251,6 +257,77 @@ inline auto countEachUnorderedMap(const J& x, FM fm) {
 template <class J>
 inline auto countEachUnorderedMap(const J& x) {
   return count_each_unordered_map(x.begin(), x.end());
+}
+
+
+
+
+// GROUP-VALUES
+// ------------
+// Group businesses in each sector.
+
+template <class I, class M, class FM>
+inline auto group_values(I ib, I ie, M& a, FM fm) {
+  for_each(ib, ie, [&](const auto& v) { a[fm(v)].push_back(v); });
+  return a;
+}
+template <class I, class M>
+inline auto group_values(I ib, I ie, M& a) {
+  auto fm = [](const auto& v) { return v; };
+  return group_values(ib, ie, a, fm);
+}
+template <class J, class M, class FM>
+inline auto groupValues(const J& x, M& a, FM fm) {
+  return group_values(x.begin(), x.end(), a, fm);
+}
+template <class J, class M>
+inline auto groupValues(const J& x, M& a) {
+  return group_values(x.begin(), x.end(), a);
+}
+
+
+template <class I, class FM>
+inline auto group_values_unordered_map(I ib, I ie, FM fm) {
+  using K = remove_reference_t<decltype(fm(*ib))>;
+  using V = typename iterator_traits<I>::value_type;
+  unordered_map<K, size_t> a;
+  return group_values(ib, ie, a, fm);
+}
+template <class I>
+inline auto group_values_unordered_map(I ib, I ie) {
+  auto fm = [](const auto& v) { return v; };
+  return group_values_unordered_map(ib, ie, fm);
+}
+template <class J, class FM>
+inline auto groupValuesUnorderedMap(const J& x, FM fm) {
+  return group_values_unordered_map(x.begin(), x.end(), fm);
+}
+template <class J>
+inline auto groupValuesUnorderedMap(const J& x) {
+  return group_values_unordered_map(x.begin(), x.end());
+}
+
+
+template <class I, class FM>
+inline auto group_values_vector(I ib, I ie, FM fm) {
+  using V = typename iterator_traits<I>::value_type; vector<vector<V>> a;
+  auto gs = group_values_unordered_map(ib, ie, fm);
+  for (const auto& [k, g] : gs)
+    a.push_back(move(g));
+  return a;
+}
+template <class I>
+inline auto group_values_vector(I ib, I ie) {
+  auto fm = [](const auto& v) { return v; };
+  return group_values_vector(ib, ie, fm);
+}
+template <class J, class FM>
+inline auto groupValuesVector(const J& x, FM fm) {
+  return group_values_vector(x.begin(), x.end(), fm);
+}
+template <class J>
+inline auto groupValuesVector(const J& x) {
+  return group_values_vector(x.begin(), x.end());
 }
 
 
@@ -302,6 +379,46 @@ inline auto copy_vector(I ib, I ie) {
 template <class J>
 inline auto copy_vector(const J& x) {
   return copy_vector(x.begin(), x.end());
+}
+
+
+
+
+// COPY-AT
+// -------
+// Requires random access!
+
+template <class IX, class II, class IA>
+auto copy_at(IX xb, IX xe, II ib, II ie, IA ab) {
+  for (; ib < ie; ++ib)
+    *(ab++) = *(xb + *(ib));
+  return ab;
+}
+template <class JX, class JI, class JA>
+inline size_t copyAt(const JX& x, const JI& is, JA& a) {
+  auto   it = copy_at(x.begin(), x.end(), is.begin(), is.end(), a.begin());
+  return it - a.begin();
+}
+
+template <class IX, class II, class T>
+inline auto copy_at_append(IX xb, IX xe, II ib, II ie, vector<T>& a) {
+  return copy_at(xb, xe, ib, ie, back_inserter(a));
+}
+template <class JX, class JI, class T>
+inline size_t copyAtAppend(const JX& x, const JI& is, vector<T>& a) {
+  auto   it = copy_at_append(x.begin(), x.end(), is.begin(), is.end(), a);
+  return it - a.begin();
+}
+
+template <class IX, class II>
+inline auto copy_at_vector(IX xb, IX xe, II ib, II ie) {
+  using T = typename iterator_traits<IX>::value_type; vector<T> a;
+  copy_at_append(xb, xe, ib, ie, a);
+  return a;
+}
+template <class JX, class JI>
+inline auto copyAtVector(const JX& x, const JI& is) {
+  return copy_at_vector(x.begin(), x.end(), is.begin(), is.end());
 }
 
 
