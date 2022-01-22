@@ -905,7 +905,7 @@ void writeGraphDetailed(ostream& a, const G& x) {
   a << (x.directed()? " [directed]" : " [undirected]") << " {\n";
   x.forEachVertex([&](auto u, auto d) {
     a << u << ":" << d << " ->";
-    x.forEachEdge([&](auto v, auto w) {
+    x.forEachEdge(u, [&](auto v, auto w) {
       a << " " << v << ":" << w;
     });
     a << "\n";

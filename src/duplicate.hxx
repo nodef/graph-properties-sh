@@ -10,7 +10,7 @@ template <class H, class G, class FV, class FE>
 void duplicateTo(H& a, const G& x, FV fv, FE fe) {
   x.forEachVertex([&](auto u, auto d) { if (fv(u)) a.addVertex(u, d); });
   x.forEachVertex([&](auto u, auto d) {
-    if (fv(u)) x.forEachEdge([&](auto v, auto w) {
+    if (fv(u)) x.forEachEdge(u, [&](auto v, auto w) {
       if (fv(v) && fe(u, v)) a.addEdge(u, v, w);
     });
   });

@@ -10,8 +10,8 @@
 template <class H, class G>
 void transpose(H& a, const G& x) {
   x.forEachVertex([&](auto u, auto d) { a.addVertex(u, d); });
-  x.forEachVertex([&](auto u, auto d) {
-    x.forEachEdge([&](auto v, auto w) { a.addEdge(v, u, w); });
+  x.forEachVertexKey([&](auto u) {
+    x.forEachEdge(u, [&](auto v, auto w) { a.addEdge(v, u, w); });
   });
 }
 
@@ -31,7 +31,7 @@ template <class H, class G>
 void transposeWithDegree(H& a, const G& x) {
   x.forEachVertexKey([&](auto u) { a.addVertex(u, x.degree(u)); });
   x.forEachVertexKey([&](auto u) {
-    x.forEachEdge([&](auto v, auto w) { a.addEdge(v, u, w); });
+    x.forEachEdge(u, [&](auto v, auto w) { a.addEdge(v, u, w); });
   });
 }
 

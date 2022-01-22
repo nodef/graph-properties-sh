@@ -62,7 +62,7 @@ void blockgraph(H& a, const G& x, const vector2d<K>& cs) {
   auto c = componentIds(x, cs);
   x.forEachVertexKey([&](auto u) {
     a.addVertex(c[u]);
-    x.forEachEdgeKey([&](auto v) {
+    x.forEachEdgeKey(u, [&](auto v) {
       if (c[u] != c[v]) a.addEdge(c[u], c[v]);
     });
   });
