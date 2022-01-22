@@ -273,12 +273,12 @@ auto unorderedBitset(K _k=K(), V _v=V()) {
 // It maintains integers in ascending value order.
 
 #define ORDERED_BITSET_LOCATE(K, V, f0, f1) \
-  f0 auto locateSpot(const K& k) f1 { \
+  f0 auto locate_spot(const K& k) f1 { \
     auto fl = [](const pair<K, V>& p, const K& k) { return p.first < k; }; \
     return lower_bound(begin(), end(), k, fl); \
   } \
   f0 auto locate_match(const K& k) f1 { \
-    auto it = locateSpot(k); \
+    auto it = locate_spot(k); \
     return it == end() || (*it).first != k? end() : it; \
   }
 
@@ -335,7 +335,7 @@ class OrderedBitset {
   }
 
   inline bool add(const K& k, const V& v=V()) {
-    auto it = locateSpot(k);
+    auto it = locate_spot(k);
     if (it != end() && (*it).first == k) return false;
     data.insert(it, {k, v});
     return true;
@@ -535,10 +535,10 @@ class ROrderedBitset {
   public:
   inline bool correct(bool unq, vector<pair<K, V>>& buf) {
     BITSET_FCOMPARES(K, V)
-    size_t e = 0;
-    if (unq) ordered = size();
+    size_t e = size();
     if (ordered == size()) return false;
-    if (ordered <= size()/2) e = sortedUnique(data, fl, fe);
+    sort(middle(), end(), fl);
+    if (unq) inplaceMerge(data, ordered, fl, fe);
     else e = inplaceMergeUnique(data, ordered, buf, fl, fe);
     data.resize(e);
     ordered = size();
@@ -546,9 +546,11 @@ class ROrderedBitset {
   }
   inline bool correct(bool unq=false) {
     BITSET_FCOMPARES(K, V)
-    if (unq) ordered = size();
+    size_t e = size();
     if (ordered == size()) return false;
-    size_t e = sortedUnique(data, fl, fe);
+    sort(middle(), end(), fl);
+    if (!unq) e = unique(middle(), end(), fe) - begin();
+    inplaceMerge(data, ordered, fl);
     data.resize(e);
     ordered = size();
     return true;
