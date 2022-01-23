@@ -761,6 +761,7 @@ inline void inplaceMerge(J& x, size_t m, FL fl) {
 template <class IX, class IB, class FL, class FE>
 auto inplace_merge_unique(IX xb, IX xm, IX xe, IB bb, IB be, FL fl, FE fe) {
   // `it` points to the previous target value, unlike `ib` and `im`.
+  // `bb` -> `be` should have atleast 2 + (`xm` -> `xe`) space.
   IX   it = xb, ib = xb, im = xm;
   auto bq = bounded_deque_view(bb, be);
   if (ib < xm && im < xe) {
@@ -777,10 +778,10 @@ auto inplace_merge_unique(IX xb, IX xm, IX xe, IB bb, IB be, FL fl, FE fe) {
     if (fe(*it, *im))        { ++im;           continue; }
     *(++it) = fl(*im, bq.front())? *(im++) : bq.pop_front();
   }
-  for (; !bq.empty(); bq.pop_front())
+  for (; !bq.empty(); bq.pop_front()) {
+    if (ib < xm) bq.push_back(*(ib++));
     if (!fe(*it, bq.front())) *(++it) = bq.front();
-  for (; ib < xm; ++ib)
-    if (!fe(*it, *ib)) *(++it) = *ib;
+  }
   for (; im < xe; ++im)
     if (!fe(*it, *im)) *(++it) = *im;
   return ++it;
@@ -803,14 +804,14 @@ inline size_t inplaceMergeUnique(JX& x, size_t m, JB& b) {
 }
 template <class JX, class T, class FL, class FE>
 inline size_t inplaceMergeUnique(JX& x, size_t m, vector<T>& buf, FL fl, FE fe) {
-  size_t s = distance(x.begin()+m, x.end());
+  size_t s = 2 + distance(x.begin()+m, x.end());
   if (buf.size() < s) buf.resize(s);
   auto   it = inplace_merge_unique(x.begin(), x.begin()+m, x.end(), buf.begin(), buf.end(), fl, fe);
   return it - x.begin();
 }
 template <class JX, class T>
 inline auto inplaceMergeUnique(JX& x, size_t m, vector<T>& buf) {
-  size_t s = distance(x.begin()+m, x.end());
+  size_t s = 2 + distance(x.begin()+m, x.end());
   if (buf.size() < s) buf.resize(s);
   auto   it = inplace_merge_unique(x.begin(), x.begin()+m, x.end(), buf.begin(), buf.end());
   return it - x.begin();
