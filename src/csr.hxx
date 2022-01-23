@@ -14,8 +14,7 @@ using std::transform;
 
 template <class G, class J>
 auto sourceOffsets(const G& x, const J& ks) {
-  using K = typename G::key_type;
-  size_t i = 0; vector<K> a;
+  size_t i = 0; vector<size_t> a;
   a.reserve(x.order()+1);
   for (auto u : ks) {
     a.push_back(i);
@@ -42,7 +41,7 @@ auto destinationIndices(const G& x, const J& ks, F fp) {
   for (auto u : ks) {
     copyAppend(x.edgeKeys(u), a);
     auto ie = a.end(), ib = ie-x.degree(u);
-    fp(ib, ie); transform(ib, ie, ib, [&](K v) { return ids[v]; });
+    fp(ib, ie); transform(ib, ie, ib, [&](auto v) { return K(ids[v]); });
   }
   return a;
 }

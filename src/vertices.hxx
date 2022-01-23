@@ -1,9 +1,11 @@
 #pragma once
+#include <type_traits>
+#include <algorithm>
 #include <vector>
 #include <iterator>
-#include <algorithm>
 #include "_main.hxx"
 
+using std::remove_reference_t;
 using std::vector;
 using std::transform;
 using std::back_inserter;
