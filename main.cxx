@@ -200,7 +200,7 @@ void runSnap(const Options& o) {
 // MAIN
 // ----
 
-int old_main(int argc, char **argv) {
+int main(int argc, char **argv) {
   typedef FileFormat F;
   Options o = readOptions(argc, argv);
   if (o.help)           { printf("%s\n\n", helpMessage()); return 0; }
@@ -211,15 +211,5 @@ int old_main(int argc, char **argv) {
     case F::TEMPORAL_TXT: runSnap(o); break;
   }
   printf("\n");
-  return 0;
-}
-
-
-int main(int argc, char **argv) {
-  vector<int> x {2, 4, 6, 8, 5, 7};
-  vector<int> buf;
-  inplaceMergeUnique(x, 4, buf);
-  printf("x: "); println(x);
-  println();
   return 0;
 }
