@@ -58,7 +58,7 @@ auto componentIds(const G& x, const vector2d<K>& cs) {
 // Each component is represented as a vertex.
 
 template <class H, class G, class K>
-void blockgraph(H& a, const G& x, const vector2d<K>& cs) {
+void blockgraphTo(H& a, const G& x, const vector2d<K>& cs) {
   auto c = componentIds(x, cs);
   x.forEachVertexKey([&](auto u) {
     a.addVertex(c[u]);
@@ -67,10 +67,9 @@ void blockgraph(H& a, const G& x, const vector2d<K>& cs) {
     });
   });
 }
-
 template <class G, class K>
-auto blockgraph(const G& x, const vector2d<K>& cs) {
-  G a; blockgraph(a, x, cs);
+inline auto blockgraph(const G& x, const vector2d<K>& cs) {
+  G a; blockgraphTo(a, x, cs);
   return a;
 }
 
@@ -87,9 +86,8 @@ bool componentsEqual(const G& x, const vector<K>& xc, const G& y, const vector<K
     if (!verticesEqual(x, xc[i], y, yc[i])) return false;
   return true;
 }
-
 template <class G, class H, class K>
-bool componentsEqual(const G& x, const H& xt, const vector<K>& xc, const G& y, const H& yt, const vector<K>& yc) {
+inline bool componentsEqual(const G& x, const H& xt, const vector<K>& xc, const G& y, const H& yt, const vector<K>& yc) {
   return componentsEqual(x, xc, y, yc) && componentsEqual(xt, xc, yt, yc);
 }
 

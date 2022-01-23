@@ -24,9 +24,8 @@ auto sourceOffsets(const G& x, const J& ks) {
   a.push_back(i);
   return a;
 }
-
 template <class G>
-auto sourceOffsets(const G& x) {
+inline auto sourceOffsets(const G& x) {
   return sourceOffsets(x, x.vertexKeys());
 }
 
@@ -47,13 +46,11 @@ auto destinationIndices(const G& x, const J& ks, F fp) {
   }
   return a;
 }
-
 template <class G, class J>
-auto destinationIndices(const G& x, const J& ks) {
+inline auto destinationIndices(const G& x, const J& ks) {
   return destinationIndices(x, ks, [](auto ib, auto ie) {});
 }
-
 template <class G>
-auto destinationIndices(const G& x) {
+inline auto destinationIndices(const G& x) {
   return destinationIndices(x, x.vertexKeys());
 }

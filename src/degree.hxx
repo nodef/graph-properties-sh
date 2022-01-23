@@ -52,7 +52,7 @@ auto maxDegree(const G& x) {
 }
 
 template <class G>
-float avgDegree(const G& x) {
+inline float avgDegree(const G& x) {
   size_t N = x.order();
   return N>0? x.size()/float(N) : 0;
 }

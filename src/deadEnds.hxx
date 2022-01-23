@@ -12,7 +12,7 @@ using std::unordered_set;
 // -----------
 
 template <class G, class K>
-bool isDeadEnd(const G& x, K u) {
+inline bool isDeadEnd(const G& x, K u) {
   return x.degree(u) == 0;
 }
 
@@ -23,20 +23,17 @@ bool isDeadEnd(const G& x, K u) {
 // ---------
 
 template <class G, class F>
-void deadEndsForEach(const G& x, F fn) {
+inline void deadEndsForEach(const G& x, F fn) {
   x.forEachVertexKey([&](auto u) { if (isDeadEnd(x, u)) fn(u); });
 }
-
-
 template <class G>
-auto deadEnds(const G& x) {
+inline auto deadEnds(const G& x) {
   using K = typename G::key_type; vector<K> a;
   deadEndsForEach(x, [&](auto u) { a.push_back(u); });
   return a;
 }
-
 template <class G>
-auto deadEndCount(const G& x) {
+inline auto deadEndCount(const G& x) {
   using K = typename G::key_type; K a = 0;
   deadEndsForEach(x, [&](auto u) { ++a; });
   return a;
@@ -63,17 +60,14 @@ auto recursiveDeadEndsForEach(const G& x, F fn) {
   }
   return a;
 }
-
-
 template <class G>
-auto recursiveDeadEnds(const G& x) {
+inline auto recursiveDeadEnds(const G& x) {
   using K = typename G::key_type; vector<K> a;
   recursiveDeadEndsForEach(x, [&](auto u) { a.push_back(u); });
   return a;
 }
-
 template <class G>
-auto recursiveDeadEndCount(const G& x) {
+inline auto recursiveDeadEndCount(const G& x) {
   using K = typename G::key_type; K a = 0;
   recursiveDeadEndsForEach(x, [&](auto u) { ++a; });
   return a;

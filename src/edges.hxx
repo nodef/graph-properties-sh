@@ -22,14 +22,12 @@ auto edges(const G& x, K u, F fm, D fp) {
   fp(ib, ie); transform(ib, ie, ib, fm);
   return a;
 }
-
 template <class G, class K, class F>
-auto edges(const G& x, K u, F fm) {
+inline auto edges(const G& x, K u, F fm) {
   return edges(x, u, fm, [](auto ib, auto ie) {});
 }
-
 template <class G, class K>
-auto edges(const G& x, K u) {
+inline auto edges(const G& x, K u) {
   return edges(x, u, [](auto v) { return v; });
 }
 
@@ -45,9 +43,8 @@ auto edge(const G& x, K u, F fm) {
     return fm(v);
   return K(-1);
 }
-
 template <class G, class K>
-auto edge(const G& x, K u) {
+inline auto edge(const G& x, K u) {
   return edge(x, u, [](auto v) { return v; });
 }
 
@@ -69,19 +66,16 @@ auto edgeData(const G& x, const J& ks, F fm, D fp) {
   }
   return a;
 }
-
 template <class G, class J, class F>
-auto edgeData(const G& x, const J& ks, F fm) {
+inline auto edgeData(const G& x, const J& ks, F fm) {
   return edgeData(x, ks, fm, [](auto ib, auto ie) {});
 }
-
 template <class G, class J>
-auto edgeData(const G& x, const J& ks) {
+inline auto edgeData(const G& x, const J& ks) {
   return edgeData(x, ks, [&](auto u, auto v) { return x.edgeValue(u, v); });
 }
-
 template <class G>
-auto edgeData(const G& x) {
+inline auto edgeData(const G& x) {
   return edgeData(x, x.vertexKeys());
 }
 

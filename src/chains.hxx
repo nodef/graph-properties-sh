@@ -43,18 +43,15 @@ auto chainsFromSize(const G& x, const H& xt, const J& ks, size_t n) {
   }
   return a;
 }
-
 template <class G, class H>
-auto chainsFromSize(const G& x, const H& xt, size_t n) {
+inline auto chainsFromSize(const G& x, const H& xt, size_t n) {
   return chainsFromSize(x, xt, x.vertexKeys(), n);
 }
-
 template <class G, class H, class J>
-auto chains(const G& x, const H& xt, const J& ks) {
+inline auto chains(const G& x, const H& xt, const J& ks) {
   return chainsFromSize(x, xt, ks, 2);
 }
-
 template <class G, class H>
-auto chains(const G& x, const H& xt) {
+inline auto chains(const G& x, const H& xt) {
   return chains(x, xt, x.vertexKeys());
 }

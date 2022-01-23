@@ -21,7 +21,7 @@ using std::max;
 // --------
 
 template <class G>
-void readMtx(G& a, istream& s) {
+void readMtxTo(G& a, istream& s) {
   using K = typename G::key_type;
   string ln, h0, h1, h2, h3, h4;
 
@@ -53,22 +53,18 @@ void readMtx(G& a, istream& s) {
     if (sym) a.addEdge(v, u);
   }
 }
-
-auto readMtx(istream& s) {
-  DiGraph<> a; readMtx(a, s);
-  return a;
-}
-
-
 template <class G>
-void readMtx(G& a, const char *pth) {
+void readMtxTo(G& a, const char *pth) {
   string buf = readFile(pth);
   stringstream s(buf);
   return readMtx(a, s);
 }
-
-auto readMtx(const char *pth) {
-  DiGraph<> a; readMtx(a, pth);
+inline auto readMtx(istream& s) {
+  DiGraph<> a; readMtxTo(a, s);
+  return a;
+}
+inline auto readMtx(const char *pth) {
+  DiGraph<> a; readMtxTo(a, pth);
   return a;
 }
 
@@ -88,9 +84,8 @@ void writeMtx(ostream& a, const G& x) {
     });
   });
 }
-
 template <class G>
-void writeMtx(string pth, const G& x) {
+inline void writeMtx(string pth, const G& x) {
   string s0; stringstream s(s0);
   writeMtx(s, x);
   ofstream f(pth);
