@@ -26,15 +26,18 @@ inline void duplicateTo(H& a, const G& x) {
 template <class G, class FV, class FE>
 inline auto duplicate(const G& x, FV fv, FE fe) {
   G a; duplicateTo(a, x, fv, fe);
+  a.correct(true);
   return a;
 }
 template <class G, class FV>
 inline auto duplicate(const G& x, FV fv) {
   G a; duplicateTo(a, x, fv);
+  a.correct(true);
   return a;
 }
 template <class G>
 inline auto duplicate(const G& x) {
   G a; duplicateTo(a, x);
+  a.correct(true);
   return a;
 }

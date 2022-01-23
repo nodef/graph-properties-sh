@@ -70,6 +70,7 @@ void blockgraphTo(H& a, const G& x, const vector2d<K>& cs) {
 template <class G, class K>
 inline auto blockgraph(const G& x, const vector2d<K>& cs) {
   G a; blockgraphTo(a, x, cs);
+  a.correct();
   return a;
 }
 
