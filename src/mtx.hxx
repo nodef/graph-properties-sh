@@ -61,10 +61,12 @@ void readMtxTo(G& a, const char *pth) {
 }
 inline auto readMtx(istream& s) {
   DiGraph<> a; readMtxTo(a, s);
+  a.correct(true);
   return a;
 }
 inline auto readMtx(const char *pth) {
   DiGraph<> a; readMtxTo(a, pth);
+  a.correct(true);
   return a;
 }
 

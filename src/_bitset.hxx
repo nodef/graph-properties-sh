@@ -538,7 +538,7 @@ class ROrderedBitset {
     size_t e = size();
     if (ordered == size()) return false;
     sort(middle(), end(), fl);
-    if (unq) inplaceMerge(data, ordered, fl, fe);
+    if (unq) inplaceMerge(data, ordered, fl);
     else e = inplaceMergeUnique(data, ordered, buf, fl, fe);
     data.resize(e);
     ordered = size();

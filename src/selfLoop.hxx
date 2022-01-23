@@ -48,5 +48,6 @@ void selfLoopTo(G& a, F fn) {
 template <class G, class F>
 auto selfLoop(const G& x, F fn) {
   auto a = duplicate(x); selfLoopTo(a, fn);
+  a.correct();
   return a;
 }

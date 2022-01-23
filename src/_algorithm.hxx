@@ -747,11 +747,11 @@ inline size_t mergeInto(JX& x, const JY& y) {
 
 
 template <class J>
-inline void inplaceMerge(const J& x, size_t m) {
+inline void inplaceMerge(J& x, size_t m) {
   inplace_merge(x.begin(), x.begin()+m, x.end());
 }
 template <class J, class FL>
-inline void inplaceMerge(const J& x, size_t m, FL fl) {
+inline void inplaceMerge(J& x, size_t m, FL fl) {
   inplace_merge(x.begin(), x.begin()+m, x.end(), fl);
 }
 
