@@ -162,7 +162,7 @@ auto doTransform(const G& x, GraphTransform o) {
 
 void runMtx(const Options& o) {
   printf("Loading graph %s ...\n", o.file.c_str());
-  auto x  = readMtx(o.file.c_str()); println(x);
+  auto x  = readMtxOutDiGraph(o.file.c_str()); println(x);
   doTransformTo(x, o.transform);
   auto xt = transposeWithDegree(x);
   print(xt); printf(" (transposeWithDegree)\n");
