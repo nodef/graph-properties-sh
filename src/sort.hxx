@@ -76,11 +76,10 @@ void levelwiseFrontiersDo(const G& x, const H& xt, F fn) {
   auto ideg = degreesDo(xt, [&](auto u, auto d) {
     if (d == 0) frnt.push_back(u);
   });
-  fn(frnt);
   while (!frnt.empty()) {
+    fn(frnt);
     frnu.clear();
     levelwiseFrontierDo(x, frnt, ideg, [&](auto v) { frnu.push_back(v); });
-    fn(frnu);
     swap(frnu, frnt);
   }
 }

@@ -57,7 +57,7 @@ void showSpecial(const char *pre, const G& x, const H& xt) {
 
 template <class G, class H>
 void showLevels(const char *pre, const G& x, const H& xt) {
-  auto [lnum, lmin, lmax, lavg] = groupDetails(levelwiseGroups(xt));
+  auto [lnum, lmin, lmax, lavg] = groupDetails(levelwiseGroupsFrontier(x, xt));
   printf("- %slevels:    %d (vertices in a level are independent)\n", pre, lnum);
   printf("- %slevel-min: %d (minimum vertices in a level)\n",         pre, lmin);
   printf("- %slevel-max: %d (maximum vertices in a level)\n",         pre, lmax);
