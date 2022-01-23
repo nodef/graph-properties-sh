@@ -19,7 +19,7 @@ auto components(const G& x, const H& xt) {
   // original dfs
   auto vis = createContainer(x, bool());
   x.forEachVertexKey([&](auto u) {
-    if (!vis[u]) dfsEndLoop(vs, vis, x, u);
+    if (!vis[u]) dfsEndTo(vs, vis, x, u);
   });
   // transpose dfs
   fill(vis, false);
@@ -27,7 +27,7 @@ auto components(const G& x, const H& xt) {
     auto u = vs.back(); vs.pop_back();
     if (vis[u]) continue;
     a.push_back(vector<K>());
-    dfsLoop(a.back(), vis, xt, u);
+    dfsTo(a.back(), vis, xt, u);
   }
   return a;
 }

@@ -28,7 +28,7 @@ auto topologicalSort(const G& x) {
   using K = typename G::key_type; vector<K> a;
   auto vis = createContainer(x, bool());
   x.forEachVertexKey([&](auto u) {
-    if (!vis[u]) dfsEndLoop(a, vis, x, u);
+    if (!vis[u]) dfsEndTo(a, vis, x, u);
   });
   reverse(a.begin(), a.end());
   return a;
@@ -140,7 +140,7 @@ auto levelwiseGroupIndicesFrontier(const G& x, const H& xt) {
   using K = typename G::key_type;
   vector<K> a(x.span()); K i = 0;
   levelwiseFrontiersDo(x, xt, [&](const auto& frnt) {
-    fillAt(a, i++, frnt);
+    fillValueAt(a, frnt, i++);
   });
   return a;
 }
@@ -161,7 +161,7 @@ void topologicalComponentsTo(vector2d<K>& cs, const G& b) {
 template <class G, class K>
 auto topologicalComponentsFrom(const vector2d<K>& cs, const G& b) {
   auto bks = topologicalSort(b);
-  return copyAt(cs, bks);
+  return copyAtVector(cs, bks);
 }
 
 template <class G, class H>
@@ -187,7 +187,7 @@ void levelwiseComponentsTo(vector2d<K>& cs, const H& bt) {
 template <class H, class K>
 auto levelwiseComponentsFrom(const vector2d<K>& cs, const H& bt) {
   auto bks = levelwiseSort(bt);
-  return copyAt(cs, bks);
+  return copyAtVector(cs, bks);
 }
 
 template <class G, class H>
@@ -209,7 +209,7 @@ void levelwiseComponentsFrontierTo(vector2d<K>& cs, const G& b, const H& bt) {
 template <class G, class H, class K>
 auto levelwiseComponentsFrontierFrom(const vector2d<K>& cs, const G& b, const H& bt) {
   auto bks = levelwiseSortFrontier(b, bt);
-  return copyAt(cs, bks);
+  return copyAtVector(cs, bks);
 }
 
 template <class G, class H>
@@ -232,7 +232,7 @@ auto levelwiseGroupedComponentsFrom(const vector2d<K>& cs, const H& bt) {
   vector2d<K> a;
   auto bgs = levelwiseGroups(bt);
   for (const auto& g : bgs)
-    a.push_back(joinAt<K>(cs, g));
+    a.push_back(joinAtVector(cs, g));
   return a;
 }
 
@@ -250,7 +250,7 @@ auto levelwiseGroupedComponentsFrontierFrom(const vector2d<K>& cs, const G& b, c
   vector2d<K> a;
   auto bgs = levelwiseGroupsFrontier(b, bt);
   for (const auto& g : bgs)
-    a.push_back(joinAt<K>(cs, g));
+    a.push_back(joinAtVector(cs, g));
   return a;
 }
 

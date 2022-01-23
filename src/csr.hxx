@@ -38,7 +38,7 @@ inline auto sourceOffsets(const G& x) {
 template <class G, class J, class F>
 auto destinationIndices(const G& x, const J& ks, F fp) {
   using K = typename G::key_type; vector<K> a;
-  auto ids = indices(ks);
+  auto ids = valueIndicesUnorderedMap(ks);
   for (auto u : ks) {
     copyAppend(x.edgeKeys(u), a);
     auto ie = a.end(), ib = ie-x.degree(u);
