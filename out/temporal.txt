@@ -1,9 +1,9 @@
 Using graph /home/subhajit/data/email-Eu-core-temporal.txt ...
 - temporal-edges: 332335 (including repeated ones)
 ---
-order: 751 size: 6952 {}
-order: 751 size: 7089 {} (loopDeadEnds)
-order: 751 size: 7089 {} (transposeWithDegree)
+order: 751 size: 6952 [directed] {}
+order: 751 size: 7089 [directed] {} (loopDeadEnds)
+order: 751 size: 7089 [directed] {} (transposeWithDegree)
 - sample:  1 (of 10)
 - order:   751 (vertices)
 - size:    7089 (edges)
@@ -56,9 +56,9 @@ order: 751 size: 7089 {} (transposeWithDegree)
 - blockgraph-level-max: 132 (maximum vertices in a level)
 - blockgraph-level-avg: 33.599998 (average vertices in a level)
 ---
-order: 802 size: 10532 {}
-order: 802 size: 10677 {} (loopDeadEnds)
-order: 802 size: 10677 {} (transposeWithDegree)
+order: 802 size: 10532 [directed] {}
+order: 802 size: 10677 [directed] {} (loopDeadEnds)
+order: 802 size: 10677 [directed] {} (transposeWithDegree)
 - sample:  2 (of 10)
 - order:   802 (vertices)
 - size:    10677 (edges)
@@ -111,9 +111,9 @@ order: 802 size: 10677 {} (transposeWithDegree)
 - blockgraph-level-max: 142 (maximum vertices in a level)
 - blockgraph-level-avg: 33.599998 (average vertices in a level)
 ---
-order: 827 size: 12761 {}
-order: 827 size: 12899 {} (loopDeadEnds)
-order: 827 size: 12899 {} (transposeWithDegree)
+order: 827 size: 12761 [directed] {}
+order: 827 size: 12899 [directed] {} (loopDeadEnds)
+order: 827 size: 12899 [directed] {} (transposeWithDegree)
 - sample:  3 (of 10)
 - order:   827 (vertices)
 - size:    12899 (edges)
@@ -166,9 +166,9 @@ order: 827 size: 12899 {} (transposeWithDegree)
 - blockgraph-level-max: 138 (maximum vertices in a level)
 - blockgraph-level-avg: 32.200001 (average vertices in a level)
 ---
-order: 850 size: 14927 {}
-order: 850 size: 15062 {} (loopDeadEnds)
-order: 850 size: 15062 {} (transposeWithDegree)
+order: 850 size: 14927 [directed] {}
+order: 850 size: 15062 [directed] {} (loopDeadEnds)
+order: 850 size: 15062 [directed] {} (transposeWithDegree)
 - sample:  4 (of 10)
 - order:   850 (vertices)
 - size:    15062 (edges)
@@ -221,9 +221,9 @@ order: 850 size: 15062 {} (transposeWithDegree)
 - blockgraph-level-max: 135 (maximum vertices in a level)
 - blockgraph-level-avg: 38.750000 (average vertices in a level)
 ---
-order: 865 size: 16627 {}
-order: 865 size: 16765 {} (loopDeadEnds)
-order: 865 size: 16765 {} (transposeWithDegree)
+order: 865 size: 16627 [directed] {}
+order: 865 size: 16765 [directed] {} (loopDeadEnds)
+order: 865 size: 16765 [directed] {} (transposeWithDegree)
 - sample:  5 (of 10)
 - order:   865 (vertices)
 - size:    16765 (edges)
@@ -276,9 +276,9 @@ order: 865 size: 16765 {} (transposeWithDegree)
 - blockgraph-level-max: 138 (maximum vertices in a level)
 - blockgraph-level-avg: 40.000000 (average vertices in a level)
 ---
-order: 883 size: 18363 {}
-order: 883 size: 18508 {} (loopDeadEnds)
-order: 883 size: 18508 {} (transposeWithDegree)
+order: 883 size: 18363 [directed] {}
+order: 883 size: 18508 [directed] {} (loopDeadEnds)
+order: 883 size: 18508 [directed] {} (transposeWithDegree)
 - sample:  6 (of 10)
 - order:   883 (vertices)
 - size:    18508 (edges)
@@ -331,9 +331,9 @@ order: 883 size: 18508 {} (transposeWithDegree)
 - blockgraph-level-max: 145 (maximum vertices in a level)
 - blockgraph-level-avg: 41.500000 (average vertices in a level)
 ---
-order: 913 size: 19981 {}
-order: 913 size: 20127 {} (loopDeadEnds)
-order: 913 size: 20127 {} (transposeWithDegree)
+order: 913 size: 19981 [directed] {}
+order: 913 size: 20127 [directed] {} (loopDeadEnds)
+order: 913 size: 20127 [directed] {} (transposeWithDegree)
 - sample:  7 (of 10)
 - order:   913 (vertices)
 - size:    20127 (edges)
@@ -386,9 +386,9 @@ order: 913 size: 20127 {} (transposeWithDegree)
 - blockgraph-level-max: 146 (maximum vertices in a level)
 - blockgraph-level-avg: 34.400002 (average vertices in a level)
 ---
-order: 959 size: 21882 {}
-order: 959 size: 22038 {} (loopDeadEnds)
-order: 959 size: 22038 {} (transposeWithDegree)
+order: 959 size: 21882 [directed] {}
+order: 959 size: 22038 [directed] {} (loopDeadEnds)
+order: 959 size: 22038 [directed] {} (transposeWithDegree)
 - sample:  8 (of 10)
 - order:   959 (vertices)
 - size:    22038 (edges)
@@ -441,9 +441,9 @@ order: 959 size: 22038 {} (transposeWithDegree)
 - blockgraph-level-max: 156 (maximum vertices in a level)
 - blockgraph-level-avg: 44.500000 (average vertices in a level)
 ---
-order: 975 size: 23474 {}
-order: 975 size: 23635 {} (loopDeadEnds)
-order: 975 size: 23635 {} (transposeWithDegree)
+order: 975 size: 23474 [directed] {}
+order: 975 size: 23635 [directed] {} (loopDeadEnds)
+order: 975 size: 23635 [directed] {} (transposeWithDegree)
 - sample:  9 (of 10)
 - order:   975 (vertices)
 - size:    23635 (edges)
@@ -496,9 +496,9 @@ order: 975 size: 23635 {} (transposeWithDegree)
 - blockgraph-level-max: 161 (maximum vertices in a level)
 - blockgraph-level-avg: 46.500000 (average vertices in a level)
 ---
-order: 986 size: 24929 {}
-order: 986 size: 25091 {} (loopDeadEnds)
-order: 986 size: 25091 {} (transposeWithDegree)
+order: 986 size: 24929 [directed] {}
+order: 986 size: 25091 [directed] {} (loopDeadEnds)
+order: 986 size: 25091 [directed] {} (transposeWithDegree)
 - sample:  10 (of 10)
 - order:   986 (vertices)
 - size:    25091 (edges)
@@ -551,9 +551,9 @@ order: 986 size: 25091 {} (transposeWithDegree)
 - blockgraph-level-max: 162 (maximum vertices in a level)
 - blockgraph-level-avg: 61.333332 (average vertices in a level)
 ---
-order: 986 size: 24929 {}
-order: 986 size: 25091 {} (loopDeadEnds)
-order: 986 size: 25091 {} (transposeWithDegree)
+order: 986 size: 24929 [directed] {}
+order: 986 size: 25091 [directed] {} (loopDeadEnds)
+order: 986 size: 25091 [directed] {} (transposeWithDegree)
 - sample:  11 (of 10)
 - order:   986 (vertices)
 - size:    25091 (edges)
@@ -610,9 +610,9 @@ order: 986 size: 25091 {} (transposeWithDegree)
 Using graph /home/subhajit/data/CollegeMsg.txt ...
 - temporal-edges: 59836 (including repeated ones)
 ---
-order: 564 size: 2335 {}
-order: 564 size: 2551 {} (loopDeadEnds)
-order: 564 size: 2551 {} (transposeWithDegree)
+order: 564 size: 2335 [directed] {}
+order: 564 size: 2551 [directed] {} (loopDeadEnds)
+order: 564 size: 2551 [directed] {} (transposeWithDegree)
 - sample:  1 (of 10)
 - order:   564 (vertices)
 - size:    2551 (edges)
@@ -665,9 +665,9 @@ order: 564 size: 2551 {} (transposeWithDegree)
 - blockgraph-level-max: 134 (maximum vertices in a level)
 - blockgraph-level-avg: 52.166668 (average vertices in a level)
 ---
-order: 792 size: 4452 {}
-order: 792 size: 4724 {} (loopDeadEnds)
-order: 792 size: 4724 {} (transposeWithDegree)
+order: 792 size: 4452 [directed] {}
+order: 792 size: 4724 [directed] {} (loopDeadEnds)
+order: 792 size: 4724 [directed] {} (transposeWithDegree)
 - sample:  2 (of 10)
 - order:   792 (vertices)
 - size:    4724 (edges)
@@ -720,9 +720,9 @@ order: 792 size: 4724 {} (transposeWithDegree)
 - blockgraph-level-max: 228 (maximum vertices in a level)
 - blockgraph-level-avg: 74.000000 (average vertices in a level)
 ---
-order: 981 size: 6628 {}
-order: 981 size: 6951 {} (loopDeadEnds)
-order: 981 size: 6951 {} (transposeWithDegree)
+order: 981 size: 6628 [directed] {}
+order: 981 size: 6951 [directed] {} (loopDeadEnds)
+order: 981 size: 6951 [directed] {} (transposeWithDegree)
 - sample:  3 (of 10)
 - order:   981 (vertices)
 - size:    6951 (edges)
@@ -775,9 +775,9 @@ order: 981 size: 6951 {} (transposeWithDegree)
 - blockgraph-level-max: 321 (maximum vertices in a level)
 - blockgraph-level-avg: 94.750000 (average vertices in a level)
 ---
-order: 1116 size: 8607 {}
-order: 1116 size: 8959 {} (loopDeadEnds)
-order: 1116 size: 8959 {} (transposeWithDegree)
+order: 1116 size: 8607 [directed] {}
+order: 1116 size: 8959 [directed] {} (loopDeadEnds)
+order: 1116 size: 8959 [directed] {} (transposeWithDegree)
 - sample:  4 (of 10)
 - order:   1116 (vertices)
 - size:    8959 (edges)
@@ -830,9 +830,9 @@ order: 1116 size: 8959 {} (transposeWithDegree)
 - blockgraph-level-max: 352 (maximum vertices in a level)
 - blockgraph-level-avg: 99.500000 (average vertices in a level)
 ---
-order: 1260 size: 10542 {}
-order: 1260 size: 10928 {} (loopDeadEnds)
-order: 1260 size: 10928 {} (transposeWithDegree)
+order: 1260 size: 10542 [directed] {}
+order: 1260 size: 10928 [directed] {} (loopDeadEnds)
+order: 1260 size: 10928 [directed] {} (transposeWithDegree)
 - sample:  5 (of 10)
 - order:   1260 (vertices)
 - size:    10928 (edges)
@@ -885,9 +885,9 @@ order: 1260 size: 10928 {} (transposeWithDegree)
 - blockgraph-level-max: 387 (maximum vertices in a level)
 - blockgraph-level-avg: 108.250000 (average vertices in a level)
 ---
-order: 1398 size: 12578 {}
-order: 1398 size: 12978 {} (loopDeadEnds)
-order: 1398 size: 12978 {} (transposeWithDegree)
+order: 1398 size: 12578 [directed] {}
+order: 1398 size: 12978 [directed] {} (loopDeadEnds)
+order: 1398 size: 12978 [directed] {} (transposeWithDegree)
 - sample:  6 (of 10)
 - order:   1398 (vertices)
 - size:    12978 (edges)
@@ -940,9 +940,9 @@ order: 1398 size: 12978 {} (transposeWithDegree)
 - blockgraph-level-max: 401 (maximum vertices in a level)
 - blockgraph-level-avg: 114.500000 (average vertices in a level)
 ---
-order: 1498 size: 14380 {}
-order: 1498 size: 14804 {} (loopDeadEnds)
-order: 1498 size: 14804 {} (transposeWithDegree)
+order: 1498 size: 14380 [directed] {}
+order: 1498 size: 14804 [directed] {} (loopDeadEnds)
+order: 1498 size: 14804 [directed] {} (transposeWithDegree)
 - sample:  7 (of 10)
 - order:   1498 (vertices)
 - size:    14804 (edges)
@@ -995,9 +995,9 @@ order: 1498 size: 14804 {} (transposeWithDegree)
 - blockgraph-level-max: 425 (maximum vertices in a level)
 - blockgraph-level-avg: 118.750000 (average vertices in a level)
 ---
-order: 1677 size: 16720 {}
-order: 1677 size: 17180 {} (loopDeadEnds)
-order: 1677 size: 17180 {} (transposeWithDegree)
+order: 1677 size: 16720 [directed] {}
+order: 1677 size: 17180 [directed] {} (loopDeadEnds)
+order: 1677 size: 17180 [directed] {} (transposeWithDegree)
 - sample:  8 (of 10)
 - order:   1677 (vertices)
 - size:    17180 (edges)
@@ -1050,9 +1050,9 @@ order: 1677 size: 17180 {} (transposeWithDegree)
 - blockgraph-level-max: 460 (maximum vertices in a level)
 - blockgraph-level-avg: 128.000000 (average vertices in a level)
 ---
-order: 1771 size: 18637 {}
-order: 1771 size: 19123 {} (loopDeadEnds)
-order: 1771 size: 19123 {} (transposeWithDegree)
+order: 1771 size: 18637 [directed] {}
+order: 1771 size: 19123 [directed] {} (loopDeadEnds)
+order: 1771 size: 19123 [directed] {} (transposeWithDegree)
 - sample:  9 (of 10)
 - order:   1771 (vertices)
 - size:    19123 (edges)
@@ -1105,9 +1105,9 @@ order: 1771 size: 19123 {} (transposeWithDegree)
 - blockgraph-level-max: 486 (maximum vertices in a level)
 - blockgraph-level-avg: 133.750000 (average vertices in a level)
 ---
-order: 1899 size: 20293 {}
-order: 1899 size: 20842 {} (loopDeadEnds)
-order: 1899 size: 20842 {} (transposeWithDegree)
+order: 1899 size: 20293 [directed] {}
+order: 1899 size: 20842 [directed] {} (loopDeadEnds)
+order: 1899 size: 20842 [directed] {} (transposeWithDegree)
 - sample:  10 (of 10)
 - order:   1899 (vertices)
 - size:    20842 (edges)
@@ -1160,9 +1160,9 @@ order: 1899 size: 20842 {} (transposeWithDegree)
 - blockgraph-level-max: 548 (maximum vertices in a level)
 - blockgraph-level-avg: 150.250000 (average vertices in a level)
 ---
-order: 1899 size: 20296 {}
-order: 1899 size: 20845 {} (loopDeadEnds)
-order: 1899 size: 20845 {} (transposeWithDegree)
+order: 1899 size: 20296 [directed] {}
+order: 1899 size: 20845 [directed] {} (loopDeadEnds)
+order: 1899 size: 20845 [directed] {} (transposeWithDegree)
 - sample:  11 (of 10)
 - order:   1899 (vertices)
 - size:    20845 (edges)
@@ -1219,9 +1219,9 @@ order: 1899 size: 20845 {} (transposeWithDegree)
 Using graph /home/subhajit/data/sx-mathoverflow.txt ...
 - temporal-edges: 506551 (including repeated ones)
 ---
-order: 8702 size: 42944 {}
-order: 8702 size: 46643 {} (loopDeadEnds)
-order: 8702 size: 46643 {} (transposeWithDegree)
+order: 8702 size: 42944 [directed] {}
+order: 8702 size: 46643 [directed] {} (loopDeadEnds)
+order: 8702 size: 46643 [directed] {} (transposeWithDegree)
 - sample:  1 (of 10)
 - order:   8702 (vertices)
 - size:    46643 (edges)
@@ -1274,9 +1274,9 @@ order: 8702 size: 46643 {} (transposeWithDegree)
 - blockgraph-level-max: 3470 (maximum vertices in a level)
 - blockgraph-level-avg: 870.125000 (average vertices in a level)
 ---
-order: 20257 size: 85348 {}
-order: 20257 size: 95798 {} (loopDeadEnds)
-order: 20257 size: 95798 {} (transposeWithDegree)
+order: 20257 size: 85348 [directed] {}
+order: 20257 size: 95798 [directed] {} (loopDeadEnds)
+order: 20257 size: 95798 [directed] {} (transposeWithDegree)
 - sample:  2 (of 10)
 - order:   20257 (vertices)
 - size:    95798 (edges)
@@ -1329,9 +1329,9 @@ order: 20257 size: 95798 {} (transposeWithDegree)
 - blockgraph-level-max: 9789 (maximum vertices in a level)
 - blockgraph-level-avg: 2147.000000 (average vertices in a level)
 ---
-order: 21720 size: 106967 {}
-order: 21720 size: 117852 {} (loopDeadEnds)
-order: 21720 size: 117852 {} (transposeWithDegree)
+order: 21720 size: 106967 [directed] {}
+order: 21720 size: 117852 [directed] {} (loopDeadEnds)
+order: 21720 size: 117852 [directed] {} (transposeWithDegree)
 - sample:  3 (of 10)
 - order:   21720 (vertices)
 - size:    117852 (edges)
@@ -1384,9 +1384,9 @@ order: 21720 size: 117852 {} (transposeWithDegree)
 - blockgraph-level-max: 10548 (maximum vertices in a level)
 - blockgraph-level-avg: 2191.875000 (average vertices in a level)
 ---
-order: 21799 size: 126265 {}
-order: 21799 size: 136594 {} (loopDeadEnds)
-order: 21799 size: 136594 {} (transposeWithDegree)
+order: 21799 size: 126265 [directed] {}
+order: 21799 size: 136594 [directed] {} (loopDeadEnds)
+order: 21799 size: 136594 [directed] {} (transposeWithDegree)
 - sample:  4 (of 10)
 - order:   21799 (vertices)
 - size:    136594 (edges)
@@ -1439,9 +1439,9 @@ order: 21799 size: 136594 {} (transposeWithDegree)
 - blockgraph-level-max: 10328 (maximum vertices in a level)
 - blockgraph-level-avg: 2078.500000 (average vertices in a level)
 ---
-order: 21976 size: 146173 {}
-order: 21976 size: 155790 {} (loopDeadEnds)
-order: 21976 size: 155790 {} (transposeWithDegree)
+order: 21976 size: 146173 [directed] {}
+order: 21976 size: 155790 [directed] {} (loopDeadEnds)
+order: 21976 size: 155790 [directed] {} (transposeWithDegree)
 - sample:  5 (of 10)
 - order:   21976 (vertices)
 - size:    155790 (edges)
@@ -1494,9 +1494,9 @@ order: 21976 size: 155790 {} (transposeWithDegree)
 - blockgraph-level-max: 10048 (maximum vertices in a level)
 - blockgraph-level-avg: 1954.750000 (average vertices in a level)
 ---
-order: 22242 size: 165809 {}
-order: 22242 size: 174524 {} (loopDeadEnds)
-order: 22242 size: 174524 {} (transposeWithDegree)
+order: 22242 size: 165809 [directed] {}
+order: 22242 size: 174524 [directed] {} (loopDeadEnds)
+order: 22242 size: 174524 [directed] {} (transposeWithDegree)
 - sample:  6 (of 10)
 - order:   22242 (vertices)
 - size:    174524 (edges)
@@ -1549,9 +1549,9 @@ order: 22242 size: 174524 {} (transposeWithDegree)
 - blockgraph-level-max: 9592 (maximum vertices in a level)
 - blockgraph-level-avg: 2420.666748 (average vertices in a level)
 ---
-order: 22615 size: 185550 {}
-order: 22615 size: 193287 {} (loopDeadEnds)
-order: 22615 size: 193287 {} (transposeWithDegree)
+order: 22615 size: 185550 [directed] {}
+order: 22615 size: 193287 [directed] {} (loopDeadEnds)
+order: 22615 size: 193287 [directed] {} (transposeWithDegree)
 - sample:  7 (of 10)
 - order:   22615 (vertices)
 - size:    193287 (edges)
@@ -1604,9 +1604,9 @@ order: 22615 size: 193287 {} (transposeWithDegree)
 - blockgraph-level-max: 9154 (maximum vertices in a level)
 - blockgraph-level-avg: 2244.500000 (average vertices in a level)
 ---
-order: 23206 size: 203955 {}
-order: 23206 size: 210668 {} (loopDeadEnds)
-order: 23206 size: 210668 {} (transposeWithDegree)
+order: 23206 size: 203955 [directed] {}
+order: 23206 size: 210668 [directed] {} (loopDeadEnds)
+order: 23206 size: 210668 [directed] {} (transposeWithDegree)
 - sample:  8 (of 10)
 - order:   23206 (vertices)
 - size:    210668 (edges)
@@ -1659,9 +1659,9 @@ order: 23206 size: 210668 {} (transposeWithDegree)
 - blockgraph-level-max: 8740 (maximum vertices in a level)
 - blockgraph-level-avg: 2101.000000 (average vertices in a level)
 ---
-order: 23869 size: 221852 {}
-order: 23869 size: 227623 {} (loopDeadEnds)
-order: 23869 size: 227623 {} (transposeWithDegree)
+order: 23869 size: 221852 [directed] {}
+order: 23869 size: 227623 [directed] {} (loopDeadEnds)
+order: 23869 size: 227623 [directed] {} (transposeWithDegree)
 - sample:  9 (of 10)
 - order:   23869 (vertices)
 - size:    227623 (edges)
@@ -1714,9 +1714,9 @@ order: 23869 size: 227623 {} (transposeWithDegree)
 - blockgraph-level-max: 8421 (maximum vertices in a level)
 - blockgraph-level-avg: 1991.166626 (average vertices in a level)
 ---
-order: 24818 size: 239978 {}
-order: 24818 size: 245022 {} (loopDeadEnds)
-order: 24818 size: 245022 {} (transposeWithDegree)
+order: 24818 size: 239978 [directed] {}
+order: 24818 size: 245022 [directed] {} (loopDeadEnds)
+order: 24818 size: 245022 [directed] {} (transposeWithDegree)
 - sample:  10 (of 10)
 - order:   24818 (vertices)
 - size:    245022 (edges)
@@ -1773,9 +1773,9 @@ order: 24818 size: 245022 {} (transposeWithDegree)
 Using graph /home/subhajit/data/sx-askubuntu.txt ...
 - temporal-edges: 964438 (including repeated ones)
 ---
-order: 40374 size: 89232 {}
-order: 40374 size: 108762 {} (loopDeadEnds)
-order: 40374 size: 108762 {} (transposeWithDegree)
+order: 40374 size: 89232 [directed] {}
+order: 40374 size: 108762 [directed] {} (loopDeadEnds)
+order: 40374 size: 108762 [directed] {} (transposeWithDegree)
 - sample:  1 (of 10)
 - order:   40374 (vertices)
 - size:    108762 (edges)
@@ -1828,9 +1828,9 @@ order: 40374 size: 108762 {} (transposeWithDegree)
 - blockgraph-level-max: 14765 (maximum vertices in a level)
 - blockgraph-level-avg: 3434.363525 (average vertices in a level)
 ---
-order: 92200 size: 180494 {}
-order: 92200 size: 226978 {} (loopDeadEnds)
-order: 92200 size: 226978 {} (transposeWithDegree)
+order: 92200 size: 180494 [directed] {}
+order: 92200 size: 226978 [directed] {} (loopDeadEnds)
+order: 92200 size: 226978 [directed] {} (transposeWithDegree)
 - sample:  2 (of 10)
 - order:   92200 (vertices)
 - size:    226978 (edges)
@@ -1883,9 +1883,9 @@ order: 92200 size: 226978 {} (transposeWithDegree)
 - blockgraph-level-max: 33079 (maximum vertices in a level)
 - blockgraph-level-avg: 6760.000000 (average vertices in a level)
 ---
-order: 137550 size: 267040 {}
-order: 137550 size: 335321 {} (loopDeadEnds)
-order: 137550 size: 335321 {} (transposeWithDegree)
+order: 137550 size: 267040 [directed] {}
+order: 137550 size: 335321 [directed] {} (loopDeadEnds)
+order: 137550 size: 335321 [directed] {} (transposeWithDegree)
 - sample:  3 (of 10)
 - order:   137550 (vertices)
 - size:    335321 (edges)
@@ -1938,9 +1938,9 @@ order: 137550 size: 335321 {} (transposeWithDegree)
 - blockgraph-level-max: 49572 (maximum vertices in a level)
 - blockgraph-level-avg: 10910.083008 (average vertices in a level)
 ---
-order: 138533 size: 315450 {}
-order: 138533 size: 379420 {} (loopDeadEnds)
-order: 138533 size: 379420 {} (transposeWithDegree)
+order: 138533 size: 315450 [directed] {}
+order: 138533 size: 379420 [directed] {} (loopDeadEnds)
+order: 138533 size: 379420 [directed] {} (transposeWithDegree)
 - sample:  4 (of 10)
 - order:   138533 (vertices)
 - size:    379420 (edges)
@@ -1993,9 +1993,9 @@ order: 138533 size: 379420 {} (transposeWithDegree)
 - blockgraph-level-max: 48758 (maximum vertices in a level)
 - blockgraph-level-avg: 10291.916992 (average vertices in a level)
 ---
-order: 140380 size: 365500 {}
-order: 140380 size: 424274 {} (loopDeadEnds)
-order: 140380 size: 424274 {} (transposeWithDegree)
+order: 140380 size: 365500 [directed] {}
+order: 140380 size: 424274 [directed] {} (loopDeadEnds)
+order: 140380 size: 424274 [directed] {} (transposeWithDegree)
 - sample:  5 (of 10)
 - order:   140380 (vertices)
 - size:    424274 (edges)
@@ -2048,9 +2048,9 @@ order: 140380 size: 424274 {} (transposeWithDegree)
 - blockgraph-level-max: 49903 (maximum vertices in a level)
 - blockgraph-level-avg: 10528.363281 (average vertices in a level)
 ---
-order: 142806 size: 415464 {}
-order: 142806 size: 468387 {} (loopDeadEnds)
-order: 142806 size: 468387 {} (transposeWithDegree)
+order: 142806 size: 415464 [directed] {}
+order: 142806 size: 468387 [directed] {} (loopDeadEnds)
+order: 142806 size: 468387 [directed] {} (transposeWithDegree)
 - sample:  6 (of 10)
 - order:   142806 (vertices)
 - size:    468387 (edges)
@@ -2103,9 +2103,9 @@ order: 142806 size: 468387 {} (transposeWithDegree)
 - blockgraph-level-max: 49846 (maximum vertices in a level)
 - blockgraph-level-avg: 9867.000000 (average vertices in a level)
 ---
-order: 145391 size: 461895 {}
-order: 145391 size: 509772 {} (loopDeadEnds)
-order: 145391 size: 509772 {} (transposeWithDegree)
+order: 145391 size: 461895 [directed] {}
+order: 145391 size: 509772 [directed] {} (loopDeadEnds)
+order: 145391 size: 509772 [directed] {} (transposeWithDegree)
 - sample:  7 (of 10)
 - order:   145391 (vertices)
 - size:    509772 (edges)
@@ -2158,9 +2158,9 @@ order: 145391 size: 509772 {} (transposeWithDegree)
 - blockgraph-level-max: 49622 (maximum vertices in a level)
 - blockgraph-level-avg: 10305.500000 (average vertices in a level)
 ---
-order: 148343 size: 508104 {}
-order: 148343 size: 551305 {} (loopDeadEnds)
-order: 148343 size: 551305 {} (transposeWithDegree)
+order: 148343 size: 508104 [directed] {}
+order: 148343 size: 551305 [directed] {} (loopDeadEnds)
+order: 148343 size: 551305 [directed] {} (transposeWithDegree)
 - sample:  8 (of 10)
 - order:   148343 (vertices)
 - size:    551305 (edges)
@@ -2213,9 +2213,9 @@ order: 148343 size: 551305 {} (transposeWithDegree)
 - blockgraph-level-max: 49576 (maximum vertices in a level)
 - blockgraph-level-avg: 10908.444336 (average vertices in a level)
 ---
-order: 153186 size: 551717 {}
-order: 153186 size: 592273 {} (loopDeadEnds)
-order: 153186 size: 592273 {} (transposeWithDegree)
+order: 153186 size: 551717 [directed] {}
+order: 153186 size: 592273 [directed] {} (loopDeadEnds)
+order: 153186 size: 592273 [directed] {} (transposeWithDegree)
 - sample:  9 (of 10)
 - order:   153186 (vertices)
 - size:    592273 (edges)
@@ -2268,9 +2268,9 @@ order: 153186 size: 592273 {} (transposeWithDegree)
 - blockgraph-level-max: 51138 (maximum vertices in a level)
 - blockgraph-level-avg: 10787.000000 (average vertices in a level)
 ---
-order: 159315 size: 596930 {}
-order: 159315 size: 635428 {} (loopDeadEnds)
-order: 159315 size: 635428 {} (transposeWithDegree)
+order: 159315 size: 596930 [directed] {}
+order: 159315 size: 635428 [directed] {} (loopDeadEnds)
+order: 159315 size: 635428 [directed] {} (transposeWithDegree)
 - sample:  10 (of 10)
 - order:   159315 (vertices)
 - size:    635428 (edges)
@@ -2323,9 +2323,9 @@ order: 159315 size: 635428 {} (transposeWithDegree)
 - blockgraph-level-max: 53692 (maximum vertices in a level)
 - blockgraph-level-avg: 10797.000000 (average vertices in a level)
 ---
-order: 159316 size: 596933 {}
-order: 159316 size: 635431 {} (loopDeadEnds)
-order: 159316 size: 635431 {} (transposeWithDegree)
+order: 159316 size: 596933 [directed] {}
+order: 159316 size: 635431 [directed] {} (loopDeadEnds)
+order: 159316 size: 635431 [directed] {} (transposeWithDegree)
 - sample:  11 (of 10)
 - order:   159316 (vertices)
 - size:    635431 (edges)
@@ -2382,9 +2382,9 @@ order: 159316 size: 635431 {} (transposeWithDegree)
 Using graph /home/subhajit/data/sx-askubuntu-a2q.txt ...
 - temporal-edges: 280103 (including repeated ones)
 ---
-order: 7841 size: 25054 {}
-order: 7841 size: 28429 {} (loopDeadEnds)
-order: 7841 size: 28429 {} (transposeWithDegree)
+order: 7841 size: 25054 [directed] {}
+order: 7841 size: 28429 [directed] {} (loopDeadEnds)
+order: 7841 size: 28429 [directed] {} (transposeWithDegree)
 - sample:  1 (of 10)
 - order:   7841 (vertices)
 - size:    28429 (edges)
@@ -2437,9 +2437,9 @@ order: 7841 size: 28429 {} (transposeWithDegree)
 - blockgraph-level-max: 3002 (maximum vertices in a level)
 - blockgraph-level-avg: 849.000000 (average vertices in a level)
 ---
-order: 20077 size: 51002 {}
-order: 20077 size: 60360 {} (loopDeadEnds)
-order: 20077 size: 60360 {} (transposeWithDegree)
+order: 20077 size: 51002 [directed] {}
+order: 20077 size: 60360 [directed] {} (loopDeadEnds)
+order: 20077 size: 60360 [directed] {} (transposeWithDegree)
 - sample:  2 (of 10)
 - order:   20077 (vertices)
 - size:    60360 (edges)
@@ -2492,9 +2492,9 @@ order: 20077 size: 60360 {} (transposeWithDegree)
 - blockgraph-level-max: 7263 (maximum vertices in a level)
 - blockgraph-level-avg: 1832.500000 (average vertices in a level)
 ---
-order: 33729 size: 77428 {}
-order: 33729 size: 93635 {} (loopDeadEnds)
-order: 33729 size: 93635 {} (transposeWithDegree)
+order: 33729 size: 77428 [directed] {}
+order: 33729 size: 93635 [directed] {} (loopDeadEnds)
+order: 33729 size: 93635 [directed] {} (transposeWithDegree)
 - sample:  3 (of 10)
 - order:   33729 (vertices)
 - size:    93635 (edges)
@@ -2547,9 +2547,9 @@ order: 33729 size: 93635 {} (transposeWithDegree)
 - blockgraph-level-max: 12300 (maximum vertices in a level)
 - blockgraph-level-avg: 3134.600098 (average vertices in a level)
 ---
-order: 48856 size: 104061 {}
-order: 48856 size: 127889 {} (loopDeadEnds)
-order: 48856 size: 127889 {} (transposeWithDegree)
+order: 48856 size: 104061 [directed] {}
+order: 48856 size: 127889 [directed] {} (loopDeadEnds)
+order: 48856 size: 127889 [directed] {} (transposeWithDegree)
 - sample:  4 (of 10)
 - order:   48856 (vertices)
 - size:    127889 (edges)
@@ -2602,9 +2602,9 @@ order: 48856 size: 127889 {} (transposeWithDegree)
 - blockgraph-level-max: 17890 (maximum vertices in a level)
 - blockgraph-level-avg: 4596.399902 (average vertices in a level)
 ---
-order: 64247 size: 130710 {}
-order: 64247 size: 162628 {} (loopDeadEnds)
-order: 64247 size: 162628 {} (transposeWithDegree)
+order: 64247 size: 130710 [directed] {}
+order: 64247 size: 162628 [directed] {} (loopDeadEnds)
+order: 64247 size: 162628 [directed] {} (transposeWithDegree)
 - sample:  5 (of 10)
 - order:   64247 (vertices)
 - size:    162628 (edges)
@@ -2657,9 +2657,9 @@ order: 64247 size: 162628 {} (transposeWithDegree)
 - blockgraph-level-max: 23277 (maximum vertices in a level)
 - blockgraph-level-avg: 4347.643066 (average vertices in a level)
 ---
-order: 79739 size: 157175 {}
-order: 79739 size: 197395 {} (loopDeadEnds)
-order: 79739 size: 197395 {} (transposeWithDegree)
+order: 79739 size: 157175 [directed] {}
+order: 79739 size: 197395 [directed] {} (loopDeadEnds)
+order: 79739 size: 197395 [directed] {} (transposeWithDegree)
 - sample:  6 (of 10)
 - order:   79739 (vertices)
 - size:    197395 (edges)
@@ -2712,9 +2712,9 @@ order: 79739 size: 197395 {} (transposeWithDegree)
 - blockgraph-level-max: 28641 (maximum vertices in a level)
 - blockgraph-level-avg: 5836.615234 (average vertices in a level)
 ---
-order: 93801 size: 183506 {}
-order: 93801 size: 230836 {} (loopDeadEnds)
-order: 93801 size: 230836 {} (transposeWithDegree)
+order: 93801 size: 183506 [directed] {}
+order: 93801 size: 230836 [directed] {} (loopDeadEnds)
+order: 93801 size: 230836 [directed] {} (transposeWithDegree)
 - sample:  7 (of 10)
 - order:   93801 (vertices)
 - size:    230836 (edges)
@@ -2767,9 +2767,9 @@ order: 93801 size: 230836 {} (transposeWithDegree)
 - blockgraph-level-max: 33598 (maximum vertices in a level)
 - blockgraph-level-avg: 6878.538574 (average vertices in a level)
 ---
-order: 108665 size: 209925 {}
-order: 108665 size: 264536 {} (loopDeadEnds)
-order: 108665 size: 264536 {} (transposeWithDegree)
+order: 108665 size: 209925 [directed] {}
+order: 108665 size: 264536 [directed] {} (loopDeadEnds)
+order: 108665 size: 264536 [directed] {} (transposeWithDegree)
 - sample:  8 (of 10)
 - order:   108665 (vertices)
 - size:    264536 (edges)
@@ -2822,9 +2822,9 @@ order: 108665 size: 264536 {} (transposeWithDegree)
 - blockgraph-level-max: 39003 (maximum vertices in a level)
 - blockgraph-level-avg: 7986.615234 (average vertices in a level)
 ---
-order: 122619 size: 235973 {}
-order: 122619 size: 297519 {} (loopDeadEnds)
-order: 122619 size: 297519 {} (transposeWithDegree)
+order: 122619 size: 235973 [directed] {}
+order: 122619 size: 297519 [directed] {} (loopDeadEnds)
+order: 122619 size: 297519 [directed] {} (transposeWithDegree)
 - sample:  9 (of 10)
 - order:   122619 (vertices)
 - size:    297519 (edges)
@@ -2877,9 +2877,9 @@ order: 122619 size: 297519 {} (transposeWithDegree)
 - blockgraph-level-max: 43968 (maximum vertices in a level)
 - blockgraph-level-avg: 9776.833008 (average vertices in a level)
 ---
-order: 137517 size: 262104 {}
-order: 137517 size: 330679 {} (loopDeadEnds)
-order: 137517 size: 330679 {} (transposeWithDegree)
+order: 137517 size: 262104 [directed] {}
+order: 137517 size: 330679 [directed] {} (loopDeadEnds)
+order: 137517 size: 330679 [directed] {} (transposeWithDegree)
 - sample:  10 (of 10)
 - order:   137517 (vertices)
 - size:    330679 (edges)
@@ -2932,9 +2932,9 @@ order: 137517 size: 330679 {} (transposeWithDegree)
 - blockgraph-level-max: 49808 (maximum vertices in a level)
 - blockgraph-level-avg: 10980.500000 (average vertices in a level)
 ---
-order: 137517 size: 262106 {}
-order: 137517 size: 330681 {} (loopDeadEnds)
-order: 137517 size: 330681 {} (transposeWithDegree)
+order: 137517 size: 262106 [directed] {}
+order: 137517 size: 330681 [directed] {} (loopDeadEnds)
+order: 137517 size: 330681 [directed] {} (transposeWithDegree)
 - sample:  11 (of 10)
 - order:   137517 (vertices)
 - size:    330681 (edges)
@@ -2991,9 +2991,9 @@ order: 137517 size: 330681 {} (transposeWithDegree)
 Using graph /home/subhajit/data/sx-askubuntu-c2a.txt ...
 - temporal-edges: 356823 (including repeated ones)
 ---
-order: 5604 size: 19257 {}
-order: 5604 size: 20244 {} (loopDeadEnds)
-order: 5604 size: 20244 {} (transposeWithDegree)
+order: 5604 size: 19257 [directed] {}
+order: 5604 size: 20244 [directed] {} (loopDeadEnds)
+order: 5604 size: 20244 [directed] {} (transposeWithDegree)
 - sample:  1 (of 10)
 - order:   5604 (vertices)
 - size:    20244 (edges)
@@ -3046,9 +3046,9 @@ order: 5604 size: 20244 {} (transposeWithDegree)
 - blockgraph-level-max: 2844 (maximum vertices in a level)
 - blockgraph-level-avg: 624.571411 (average vertices in a level)
 ---
-order: 13386 size: 38277 {}
-order: 13386 size: 41007 {} (loopDeadEnds)
-order: 13386 size: 41007 {} (transposeWithDegree)
+order: 13386 size: 38277 [directed] {}
+order: 13386 size: 41007 [directed] {} (loopDeadEnds)
+order: 13386 size: 41007 [directed] {} (transposeWithDegree)
 - sample:  2 (of 10)
 - order:   13386 (vertices)
 - size:    41007 (edges)
@@ -3101,9 +3101,9 @@ order: 13386 size: 41007 {} (transposeWithDegree)
 - blockgraph-level-max: 7139 (maximum vertices in a level)
 - blockgraph-level-avg: 1242.222168 (average vertices in a level)
 ---
-order: 21281 size: 56799 {}
-order: 21281 size: 61579 {} (loopDeadEnds)
-order: 21281 size: 61579 {} (transposeWithDegree)
+order: 21281 size: 56799 [directed] {}
+order: 21281 size: 61579 [directed] {} (loopDeadEnds)
+order: 21281 size: 61579 [directed] {} (transposeWithDegree)
 - sample:  3 (of 10)
 - order:   21281 (vertices)
 - size:    61579 (edges)
@@ -3156,9 +3156,9 @@ order: 21281 size: 61579 {} (transposeWithDegree)
 - blockgraph-level-max: 11405 (maximum vertices in a level)
 - blockgraph-level-avg: 2023.222168 (average vertices in a level)
 ---
-order: 29645 size: 75454 {}
-order: 29645 size: 82146 {} (loopDeadEnds)
-order: 29645 size: 82146 {} (transposeWithDegree)
+order: 29645 size: 75454 [directed] {}
+order: 29645 size: 82146 [directed] {} (loopDeadEnds)
+order: 29645 size: 82146 [directed] {} (transposeWithDegree)
 - sample:  4 (of 10)
 - order:   29645 (vertices)
 - size:    82146 (edges)
@@ -3211,9 +3211,9 @@ order: 29645 size: 82146 {} (transposeWithDegree)
 - blockgraph-level-max: 16180 (maximum vertices in a level)
 - blockgraph-level-avg: 2571.300049 (average vertices in a level)
 ---
-order: 38264 size: 93571 {}
-order: 38264 size: 102184 {} (loopDeadEnds)
-order: 38264 size: 102184 {} (transposeWithDegree)
+order: 38264 size: 93571 [directed] {}
+order: 38264 size: 102184 [directed] {} (loopDeadEnds)
+order: 38264 size: 102184 [directed] {} (transposeWithDegree)
 - sample:  5 (of 10)
 - order:   38264 (vertices)
 - size:    102184 (edges)
@@ -3266,9 +3266,9 @@ order: 38264 size: 102184 {} (transposeWithDegree)
 - blockgraph-level-max: 21269 (maximum vertices in a level)
 - blockgraph-level-avg: 3357.399902 (average vertices in a level)
 ---
-order: 46022 size: 111001 {}
-order: 46022 size: 121147 {} (loopDeadEnds)
-order: 46022 size: 121147 {} (transposeWithDegree)
+order: 46022 size: 111001 [directed] {}
+order: 46022 size: 121147 [directed] {} (loopDeadEnds)
+order: 46022 size: 121147 [directed] {} (transposeWithDegree)
 - sample:  6 (of 10)
 - order:   46022 (vertices)
 - size:    121147 (edges)
@@ -3321,9 +3321,9 @@ order: 46022 size: 121147 {} (transposeWithDegree)
 - blockgraph-level-max: 25957 (maximum vertices in a level)
 - blockgraph-level-avg: 4065.899902 (average vertices in a level)
 ---
-order: 53669 size: 128484 {}
-order: 53669 size: 140143 {} (loopDeadEnds)
-order: 53669 size: 140143 {} (transposeWithDegree)
+order: 53669 size: 128484 [directed] {}
+order: 53669 size: 140143 [directed] {} (loopDeadEnds)
+order: 53669 size: 140143 [directed] {} (transposeWithDegree)
 - sample:  7 (of 10)
 - order:   53669 (vertices)
 - size:    140143 (edges)
@@ -3376,9 +3376,9 @@ order: 53669 size: 140143 {} (transposeWithDegree)
 - blockgraph-level-max: 30547 (maximum vertices in a level)
 - blockgraph-level-avg: 4754.299805 (average vertices in a level)
 ---
-order: 61270 size: 145669 {}
-order: 61270 size: 158884 {} (loopDeadEnds)
-order: 61270 size: 158884 {} (transposeWithDegree)
+order: 61270 size: 145669 [directed] {}
+order: 61270 size: 158884 [directed] {} (loopDeadEnds)
+order: 61270 size: 158884 [directed] {} (transposeWithDegree)
 - sample:  8 (of 10)
 - order:   61270 (vertices)
 - size:    158884 (edges)
@@ -3431,9 +3431,9 @@ order: 61270 size: 158884 {} (transposeWithDegree)
 - blockgraph-level-max: 34972 (maximum vertices in a level)
 - blockgraph-level-avg: 4947.090820 (average vertices in a level)
 ---
-order: 67960 size: 161138 {}
-order: 67960 size: 175497 {} (loopDeadEnds)
-order: 67960 size: 175497 {} (transposeWithDegree)
+order: 67960 size: 161138 [directed] {}
+order: 67960 size: 175497 [directed] {} (loopDeadEnds)
+order: 67960 size: 175497 [directed] {} (transposeWithDegree)
 - sample:  9 (of 10)
 - order:   67960 (vertices)
 - size:    175497 (edges)
@@ -3486,9 +3486,9 @@ order: 67960 size: 175497 {} (transposeWithDegree)
 - blockgraph-level-max: 39163 (maximum vertices in a level)
 - blockgraph-level-avg: 5497.181641 (average vertices in a level)
 ---
-order: 75555 size: 178209 {}
-order: 75555 size: 194136 {} (loopDeadEnds)
-order: 75555 size: 194136 {} (transposeWithDegree)
+order: 75555 size: 178209 [directed] {}
+order: 75555 size: 194136 [directed] {} (loopDeadEnds)
+order: 75555 size: 194136 [directed] {} (transposeWithDegree)
 - sample:  10 (of 10)
 - order:   75555 (vertices)
 - size:    194136 (edges)
@@ -3541,9 +3541,9 @@ order: 75555 size: 194136 {} (transposeWithDegree)
 - blockgraph-level-max: 43599 (maximum vertices in a level)
 - blockgraph-level-avg: 6120.454590 (average vertices in a level)
 ---
-order: 75555 size: 178210 {}
-order: 75555 size: 194137 {} (loopDeadEnds)
-order: 75555 size: 194137 {} (transposeWithDegree)
+order: 75555 size: 178210 [directed] {}
+order: 75555 size: 194137 [directed] {} (loopDeadEnds)
+order: 75555 size: 194137 [directed] {} (transposeWithDegree)
 - sample:  11 (of 10)
 - order:   75555 (vertices)
 - size:    194137 (edges)
@@ -3600,9 +3600,9 @@ order: 75555 size: 194137 {} (transposeWithDegree)
 Using graph /home/subhajit/data/sx-askubuntu-c2q.txt ...
 - temporal-edges: 327514 (including repeated ones)
 ---
-order: 8226 size: 21725 {}
-order: 8226 size: 24914 {} (loopDeadEnds)
-order: 8226 size: 24914 {} (transposeWithDegree)
+order: 8226 size: 21725 [directed] {}
+order: 8226 size: 24914 [directed] {} (loopDeadEnds)
+order: 8226 size: 24914 [directed] {} (transposeWithDegree)
 - sample:  1 (of 10)
 - order:   8226 (vertices)
 - size:    24914 (edges)
@@ -3655,9 +3655,9 @@ order: 8226 size: 24914 {} (transposeWithDegree)
 - blockgraph-level-max: 4528 (maximum vertices in a level)
 - blockgraph-level-avg: 774.400024 (average vertices in a level)
 ---
-order: 17438 size: 43651 {}
-order: 17438 size: 51044 {} (loopDeadEnds)
-order: 17438 size: 51044 {} (transposeWithDegree)
+order: 17438 size: 43651 [directed] {}
+order: 17438 size: 51044 [directed] {} (loopDeadEnds)
+order: 17438 size: 51044 [directed] {} (transposeWithDegree)
 - sample:  2 (of 10)
 - order:   17438 (vertices)
 - size:    51044 (edges)
@@ -3710,9 +3710,9 @@ order: 17438 size: 51044 {} (transposeWithDegree)
 - blockgraph-level-max: 10716 (maximum vertices in a level)
 - blockgraph-level-avg: 1386.583374 (average vertices in a level)
 ---
-order: 26640 size: 65091 {}
-order: 26640 size: 76541 {} (loopDeadEnds)
-order: 26640 size: 76541 {} (transposeWithDegree)
+order: 26640 size: 65091 [directed] {}
+order: 26640 size: 76541 [directed] {} (loopDeadEnds)
+order: 26640 size: 76541 [directed] {} (transposeWithDegree)
 - sample:  3 (of 10)
 - order:   26640 (vertices)
 - size:    76541 (edges)
@@ -3765,9 +3765,9 @@ order: 26640 size: 76541 {} (transposeWithDegree)
 - blockgraph-level-max: 16222 (maximum vertices in a level)
 - blockgraph-level-avg: 2327.000000 (average vertices in a level)
 ---
-order: 36058 size: 86501 {}
-order: 36058 size: 102315 {} (loopDeadEnds)
-order: 36058 size: 102315 {} (transposeWithDegree)
+order: 36058 size: 86501 [directed] {}
+order: 36058 size: 102315 [directed] {} (loopDeadEnds)
+order: 36058 size: 102315 [directed] {} (transposeWithDegree)
 - sample:  4 (of 10)
 - order:   36058 (vertices)
 - size:    102315 (edges)
@@ -3820,9 +3820,9 @@ order: 36058 size: 102315 {} (transposeWithDegree)
 - blockgraph-level-max: 21875 (maximum vertices in a level)
 - blockgraph-level-avg: 3483.600098 (average vertices in a level)
 ---
-order: 43892 size: 106317 {}
-order: 43892 size: 124960 {} (loopDeadEnds)
-order: 43892 size: 124960 {} (transposeWithDegree)
+order: 43892 size: 106317 [directed] {}
+order: 43892 size: 124960 [directed] {} (loopDeadEnds)
+order: 43892 size: 124960 [directed] {} (transposeWithDegree)
 - sample:  5 (of 10)
 - order:   43892 (vertices)
 - size:    124960 (edges)
@@ -3875,9 +3875,9 @@ order: 43892 size: 124960 {} (transposeWithDegree)
 - blockgraph-level-max: 26622 (maximum vertices in a level)
 - blockgraph-level-avg: 3537.833252 (average vertices in a level)
 ---
-order: 51449 size: 125881 {}
-order: 51449 size: 147426 {} (loopDeadEnds)
-order: 51449 size: 147426 {} (transposeWithDegree)
+order: 51449 size: 125881 [directed] {}
+order: 51449 size: 147426 [directed] {} (loopDeadEnds)
+order: 51449 size: 147426 [directed] {} (transposeWithDegree)
 - sample:  6 (of 10)
 - order:   51449 (vertices)
 - size:    147426 (edges)
@@ -3930,9 +3930,9 @@ order: 51449 size: 147426 {} (transposeWithDegree)
 - blockgraph-level-max: 31630 (maximum vertices in a level)
 - blockgraph-level-avg: 4152.500000 (average vertices in a level)
 ---
-order: 58618 size: 144720 {}
-order: 58618 size: 168915 {} (loopDeadEnds)
-order: 58618 size: 168915 {} (transposeWithDegree)
+order: 58618 size: 144720 [directed] {}
+order: 58618 size: 168915 [directed] {} (loopDeadEnds)
+order: 58618 size: 168915 [directed] {} (transposeWithDegree)
 - sample:  7 (of 10)
 - order:   58618 (vertices)
 - size:    168915 (edges)
@@ -3985,9 +3985,9 @@ order: 58618 size: 168915 {} (transposeWithDegree)
 - blockgraph-level-max: 36239 (maximum vertices in a level)
 - blockgraph-level-avg: 4062.285645 (average vertices in a level)
 ---
-order: 65487 size: 162897 {}
-order: 65487 size: 189603 {} (loopDeadEnds)
-order: 65487 size: 189603 {} (transposeWithDegree)
+order: 65487 size: 162897 [directed] {}
+order: 65487 size: 189603 [directed] {} (loopDeadEnds)
+order: 65487 size: 189603 [directed] {} (transposeWithDegree)
 - sample:  8 (of 10)
 - order:   65487 (vertices)
 - size:    189603 (edges)
@@ -4040,9 +4040,9 @@ order: 65487 size: 189603 {} (transposeWithDegree)
 - blockgraph-level-max: 40553 (maximum vertices in a level)
 - blockgraph-level-avg: 4543.214355 (average vertices in a level)
 ---
-order: 72193 size: 180590 {}
-order: 72193 size: 209677 {} (loopDeadEnds)
-order: 72193 size: 209677 {} (transposeWithDegree)
+order: 72193 size: 180590 [directed] {}
+order: 72193 size: 209677 [directed] {} (loopDeadEnds)
+order: 72193 size: 209677 [directed] {} (transposeWithDegree)
 - sample:  9 (of 10)
 - order:   72193 (vertices)
 - size:    209677 (edges)
@@ -4095,9 +4095,9 @@ order: 72193 size: 209677 {} (transposeWithDegree)
 - blockgraph-level-max: 45169 (maximum vertices in a level)
 - blockgraph-level-avg: 5013.143066 (average vertices in a level)
 ---
-order: 79154 size: 198851 {}
-order: 79154 size: 230464 {} (loopDeadEnds)
-order: 79154 size: 230464 {} (transposeWithDegree)
+order: 79154 size: 198851 [directed] {}
+order: 79154 size: 230464 [directed] {} (loopDeadEnds)
+order: 79154 size: 230464 [directed] {} (transposeWithDegree)
 - sample:  10 (of 10)
 - order:   79154 (vertices)
 - size:    230464 (edges)
@@ -4150,9 +4150,9 @@ order: 79154 size: 230464 {} (transposeWithDegree)
 - blockgraph-level-max: 49705 (maximum vertices in a level)
 - blockgraph-level-avg: 5498.928711 (average vertices in a level)
 ---
-order: 79155 size: 198852 {}
-order: 79155 size: 230466 {} (loopDeadEnds)
-order: 79155 size: 230466 {} (transposeWithDegree)
+order: 79155 size: 198852 [directed] {}
+order: 79155 size: 230466 [directed] {} (loopDeadEnds)
+order: 79155 size: 230466 [directed] {} (transposeWithDegree)
 - sample:  11 (of 10)
 - order:   79155 (vertices)
 - size:    230466 (edges)
@@ -4209,9 +4209,9 @@ order: 79155 size: 230466 {} (transposeWithDegree)
 Using graph /home/subhajit/data/sx-superuser.txt ...
 - temporal-edges: 1443340 (including repeated ones)
 ---
-order: 37574 size: 133316 {}
-order: 37574 size: 148561 {} (loopDeadEnds)
-order: 37574 size: 148561 {} (transposeWithDegree)
+order: 37574 size: 133316 [directed] {}
+order: 37574 size: 148561 [directed] {} (loopDeadEnds)
+order: 37574 size: 148561 [directed] {} (transposeWithDegree)
 - sample:  1 (of 10)
 - order:   37574 (vertices)
 - size:    148561 (edges)
@@ -4264,9 +4264,9 @@ order: 37574 size: 148561 {} (transposeWithDegree)
 - blockgraph-level-max: 13823 (maximum vertices in a level)
 - blockgraph-level-avg: 2565.230713 (average vertices in a level)
 ---
-order: 96385 size: 269324 {}
-order: 96385 size: 309233 {} (loopDeadEnds)
-order: 96385 size: 309233 {} (transposeWithDegree)
+order: 96385 size: 269324 [directed] {}
+order: 96385 size: 309233 [directed] {} (loopDeadEnds)
+order: 96385 size: 309233 [directed] {} (transposeWithDegree)
 - sample:  2 (of 10)
 - order:   96385 (vertices)
 - size:    309233 (edges)
@@ -4319,9 +4319,9 @@ order: 96385 size: 309233 {} (transposeWithDegree)
 - blockgraph-level-max: 39072 (maximum vertices in a level)
 - blockgraph-level-avg: 6866.769043 (average vertices in a level)
 ---
-order: 167986 size: 405589 {}
-order: 167986 size: 475711 {} (loopDeadEnds)
-order: 167986 size: 475711 {} (transposeWithDegree)
+order: 167986 size: 405589 [directed] {}
+order: 167986 size: 475711 [directed] {} (loopDeadEnds)
+order: 167986 size: 475711 [directed] {} (transposeWithDegree)
 - sample:  3 (of 10)
 - order:   167986 (vertices)
 - size:    475711 (edges)
@@ -4374,9 +4374,9 @@ order: 167986 size: 475711 {} (transposeWithDegree)
 - blockgraph-level-max: 70598 (maximum vertices in a level)
 - blockgraph-level-avg: 10531.866211 (average vertices in a level)
 ---
-order: 168495 size: 482948 {}
-order: 168495 size: 548969 {} (loopDeadEnds)
-order: 168495 size: 548969 {} (transposeWithDegree)
+order: 168495 size: 482948 [directed] {}
+order: 168495 size: 548969 [directed] {} (loopDeadEnds)
+order: 168495 size: 548969 [directed] {} (transposeWithDegree)
 - sample:  4 (of 10)
 - order:   168495 (vertices)
 - size:    548969 (edges)
@@ -4429,9 +4429,9 @@ order: 168495 size: 548969 {} (transposeWithDegree)
 - blockgraph-level-max: 67779 (maximum vertices in a level)
 - blockgraph-level-avg: 12314.666992 (average vertices in a level)
 ---
-order: 169908 size: 554634 {}
-order: 169908 size: 615296 {} (loopDeadEnds)
-order: 169908 size: 615296 {} (transposeWithDegree)
+order: 169908 size: 554634 [directed] {}
+order: 169908 size: 615296 [directed] {} (loopDeadEnds)
+order: 169908 size: 615296 [directed] {} (transposeWithDegree)
 - sample:  5 (of 10)
 - order:   169908 (vertices)
 - size:    615296 (edges)
@@ -4484,9 +4484,9 @@ order: 169908 size: 615296 {} (transposeWithDegree)
 - blockgraph-level-max: 64880 (maximum vertices in a level)
 - blockgraph-level-avg: 12618.363281 (average vertices in a level)
 ---
-order: 172468 size: 627338 {}
-order: 172468 size: 682624 {} (loopDeadEnds)
-order: 172468 size: 682624 {} (transposeWithDegree)
+order: 172468 size: 627338 [directed] {}
+order: 172468 size: 682624 [directed] {} (loopDeadEnds)
+order: 172468 size: 682624 [directed] {} (transposeWithDegree)
 - sample:  6 (of 10)
 - order:   172468 (vertices)
 - size:    682624 (edges)
@@ -4539,9 +4539,9 @@ order: 172468 size: 682624 {} (transposeWithDegree)
 - blockgraph-level-max: 61398 (maximum vertices in a level)
 - blockgraph-level-avg: 13029.299805 (average vertices in a level)
 ---
-order: 175930 size: 700701 {}
-order: 175930 size: 750081 {} (loopDeadEnds)
-order: 175930 size: 750081 {} (transposeWithDegree)
+order: 175930 size: 700701 [directed] {}
+order: 175930 size: 750081 [directed] {} (loopDeadEnds)
+order: 175930 size: 750081 [directed] {} (transposeWithDegree)
 - sample:  7 (of 10)
 - order:   175930 (vertices)
 - size:    750081 (edges)
@@ -4594,9 +4594,9 @@ order: 175930 size: 750081 {} (transposeWithDegree)
 - blockgraph-level-max: 57912 (maximum vertices in a level)
 - blockgraph-level-avg: 13608.333008 (average vertices in a level)
 ---
-order: 180309 size: 774206 {}
-order: 180309 size: 817630 {} (loopDeadEnds)
-order: 180309 size: 817630 {} (transposeWithDegree)
+order: 180309 size: 774206 [directed] {}
+order: 180309 size: 817630 [directed] {} (loopDeadEnds)
+order: 180309 size: 817630 [directed] {} (transposeWithDegree)
 - sample:  8 (of 10)
 - order:   180309 (vertices)
 - size:    817630 (edges)
@@ -4649,9 +4649,9 @@ order: 180309 size: 817630 {} (transposeWithDegree)
 - blockgraph-level-max: 54752 (maximum vertices in a level)
 - blockgraph-level-avg: 12878.444336 (average vertices in a level)
 ---
-order: 186192 size: 849300 {}
-order: 186192 size: 887514 {} (loopDeadEnds)
-order: 186192 size: 887514 {} (transposeWithDegree)
+order: 186192 size: 849300 [directed] {}
+order: 186192 size: 887514 [directed] {} (loopDeadEnds)
+order: 186192 size: 887514 [directed] {} (transposeWithDegree)
 - sample:  9 (of 10)
 - order:   186192 (vertices)
 - size:    887514 (edges)
@@ -4704,9 +4704,9 @@ order: 186192 size: 887514 {} (transposeWithDegree)
 - blockgraph-level-max: 51290 (maximum vertices in a level)
 - blockgraph-level-avg: 12314.333008 (average vertices in a level)
 ---
-order: 194085 size: 924886 {}
-order: 194085 size: 959490 {} (loopDeadEnds)
-order: 194085 size: 959490 {} (transposeWithDegree)
+order: 194085 size: 924886 [directed] {}
+order: 194085 size: 959490 [directed] {} (loopDeadEnds)
+order: 194085 size: 959490 [directed] {} (transposeWithDegree)
 - sample:  10 (of 10)
 - order:   194085 (vertices)
 - size:    959490 (edges)
@@ -4763,9 +4763,9 @@ order: 194085 size: 959490 {} (transposeWithDegree)
 Using graph /home/subhajit/data/sx-superuser-a2q.txt ...
 - temporal-edges: 430034 (including repeated ones)
 ---
-order: 8653 size: 39480 {}
-order: 8653 size: 42358 {} (loopDeadEnds)
-order: 8653 size: 42358 {} (transposeWithDegree)
+order: 8653 size: 39480 [directed] {}
+order: 8653 size: 42358 [directed] {} (loopDeadEnds)
+order: 8653 size: 42358 [directed] {} (transposeWithDegree)
 - sample:  1 (of 10)
 - order:   8653 (vertices)
 - size:    42358 (edges)
@@ -4818,9 +4818,9 @@ order: 8653 size: 42358 {} (transposeWithDegree)
 - blockgraph-level-max: 2804 (maximum vertices in a level)
 - blockgraph-level-avg: 623.363647 (average vertices in a level)
 ---
-order: 19033 size: 79018 {}
-order: 19033 size: 86056 {} (loopDeadEnds)
-order: 19033 size: 86056 {} (transposeWithDegree)
+order: 19033 size: 79018 [directed] {}
+order: 19033 size: 86056 [directed] {} (loopDeadEnds)
+order: 19033 size: 86056 [directed] {} (transposeWithDegree)
 - sample:  2 (of 10)
 - order:   19033 (vertices)
 - size:    86056 (edges)
@@ -4873,9 +4873,9 @@ order: 19033 size: 86056 {} (transposeWithDegree)
 - blockgraph-level-max: 6635 (maximum vertices in a level)
 - blockgraph-level-avg: 1781.555542 (average vertices in a level)
 ---
-order: 33034 size: 119163 {}
-order: 33034 size: 132373 {} (loopDeadEnds)
-order: 33034 size: 132373 {} (transposeWithDegree)
+order: 33034 size: 119163 [directed] {}
+order: 33034 size: 132373 [directed] {} (loopDeadEnds)
+order: 33034 size: 132373 [directed] {} (transposeWithDegree)
 - sample:  3 (of 10)
 - order:   33034 (vertices)
 - size:    132373 (edges)
@@ -4928,9 +4928,9 @@ order: 33034 size: 132373 {} (transposeWithDegree)
 - blockgraph-level-max: 12128 (maximum vertices in a level)
 - blockgraph-level-avg: 2430.500000 (average vertices in a level)
 ---
-order: 46935 size: 159128 {}
-order: 46935 size: 178310 {} (loopDeadEnds)
-order: 46935 size: 178310 {} (transposeWithDegree)
+order: 46935 size: 159128 [directed] {}
+order: 46935 size: 178310 [directed] {} (loopDeadEnds)
+order: 46935 size: 178310 [directed] {} (transposeWithDegree)
 - sample:  4 (of 10)
 - order:   46935 (vertices)
 - size:    178310 (edges)
@@ -4983,9 +4983,9 @@ order: 46935 size: 178310 {} (transposeWithDegree)
 - blockgraph-level-max: 17702 (maximum vertices in a level)
 - blockgraph-level-avg: 3244.538574 (average vertices in a level)
 ---
-order: 64019 size: 199661 {}
-order: 64019 size: 225892 {} (loopDeadEnds)
-order: 64019 size: 225892 {} (transposeWithDegree)
+order: 64019 size: 199661 [directed] {}
+order: 64019 size: 225892 [directed] {} (loopDeadEnds)
+order: 64019 size: 225892 [directed] {} (transposeWithDegree)
 - sample:  5 (of 10)
 - order:   64019 (vertices)
 - size:    225892 (edges)
@@ -5038,9 +5038,9 @@ order: 64019 size: 225892 {} (transposeWithDegree)
 - blockgraph-level-max: 25111 (maximum vertices in a level)
 - blockgraph-level-avg: 4861.750000 (average vertices in a level)
 ---
-order: 82555 size: 240298 {}
-order: 82555 size: 274140 {} (loopDeadEnds)
-order: 82555 size: 274140 {} (transposeWithDegree)
+order: 82555 size: 240298 [directed] {}
+order: 82555 size: 274140 [directed] {} (loopDeadEnds)
+order: 82555 size: 274140 [directed] {} (transposeWithDegree)
 - sample:  6 (of 10)
 - order:   82555 (vertices)
 - size:    274140 (edges)
@@ -5093,9 +5093,9 @@ order: 82555 size: 274140 {} (transposeWithDegree)
 - blockgraph-level-max: 33287 (maximum vertices in a level)
 - blockgraph-level-avg: 4751.000000 (average vertices in a level)
 ---
-order: 102170 size: 281025 {}
-order: 102170 size: 323362 {} (loopDeadEnds)
-order: 102170 size: 323362 {} (transposeWithDegree)
+order: 102170 size: 281025 [directed] {}
+order: 102170 size: 323362 [directed] {} (loopDeadEnds)
+order: 102170 size: 323362 [directed] {} (transposeWithDegree)
 - sample:  7 (of 10)
 - order:   102170 (vertices)
 - size:    323362 (edges)
@@ -5148,9 +5148,9 @@ order: 102170 size: 323362 {} (transposeWithDegree)
 - blockgraph-level-max: 41606 (maximum vertices in a level)
 - blockgraph-level-avg: 6773.500000 (average vertices in a level)
 ---
-order: 123159 size: 321874 {}
-order: 123159 size: 373126 {} (loopDeadEnds)
-order: 123159 size: 373126 {} (transposeWithDegree)
+order: 123159 size: 321874 [directed] {}
+order: 123159 size: 373126 [directed] {} (loopDeadEnds)
+order: 123159 size: 373126 [directed] {} (transposeWithDegree)
 - sample:  8 (of 10)
 - order:   123159 (vertices)
 - size:    373126 (edges)
@@ -5203,9 +5203,9 @@ order: 123159 size: 373126 {} (transposeWithDegree)
 - blockgraph-level-max: 50847 (maximum vertices in a level)
 - blockgraph-level-avg: 7192.437500 (average vertices in a level)
 ---
-order: 145260 size: 362806 {}
-order: 145260 size: 423306 {} (loopDeadEnds)
-order: 145260 size: 423306 {} (transposeWithDegree)
+order: 145260 size: 362806 [directed] {}
+order: 145260 size: 423306 [directed] {} (loopDeadEnds)
+order: 145260 size: 423306 [directed] {} (transposeWithDegree)
 - sample:  9 (of 10)
 - order:   145260 (vertices)
 - size:    423306 (edges)
@@ -5258,9 +5258,9 @@ order: 145260 size: 423306 {} (transposeWithDegree)
 - blockgraph-level-max: 60693 (maximum vertices in a level)
 - blockgraph-level-avg: 8526.250000 (average vertices in a level)
 ---
-order: 167980 size: 403575 {}
-order: 167980 size: 473749 {} (loopDeadEnds)
-order: 167980 size: 473749 {} (transposeWithDegree)
+order: 167980 size: 403575 [directed] {}
+order: 167980 size: 473749 [directed] {} (loopDeadEnds)
+order: 167980 size: 473749 [directed] {} (transposeWithDegree)
 - sample:  10 (of 10)
 - order:   167980 (vertices)
 - size:    473749 (edges)
@@ -5313,9 +5313,9 @@ order: 167980 size: 473749 {} (transposeWithDegree)
 - blockgraph-level-max: 70702 (maximum vertices in a level)
 - blockgraph-level-avg: 10552.466797 (average vertices in a level)
 ---
-order: 167981 size: 403578 {}
-order: 167981 size: 473753 {} (loopDeadEnds)
-order: 167981 size: 473753 {} (transposeWithDegree)
+order: 167981 size: 403578 [directed] {}
+order: 167981 size: 473753 [directed] {} (loopDeadEnds)
+order: 167981 size: 473753 [directed] {} (transposeWithDegree)
 - sample:  11 (of 10)
 - order:   167981 (vertices)
 - size:    473753 (edges)
@@ -5372,9 +5372,9 @@ order: 167981 size: 473753 {} (transposeWithDegree)
 Using graph /home/subhajit/data/sx-superuser-c2a.txt ...
 - temporal-edges: 534240 (including repeated ones)
 ---
-order: 7472 size: 32100 {}
-order: 7472 size: 33280 {} (loopDeadEnds)
-order: 7472 size: 33280 {} (transposeWithDegree)
+order: 7472 size: 32100 [directed] {}
+order: 7472 size: 33280 [directed] {} (loopDeadEnds)
+order: 7472 size: 33280 [directed] {} (transposeWithDegree)
 - sample:  1 (of 10)
 - order:   7472 (vertices)
 - size:    33280 (edges)
@@ -5427,9 +5427,9 @@ order: 7472 size: 33280 {} (transposeWithDegree)
 - blockgraph-level-max: 3292 (maximum vertices in a level)
 - blockgraph-level-avg: 578.555542 (average vertices in a level)
 ---
-order: 15045 size: 61502 {}
-order: 15045 size: 64150 {} (loopDeadEnds)
-order: 15045 size: 64150 {} (transposeWithDegree)
+order: 15045 size: 61502 [directed] {}
+order: 15045 size: 64150 [directed] {} (loopDeadEnds)
+order: 15045 size: 64150 [directed] {} (transposeWithDegree)
 - sample:  2 (of 10)
 - order:   15045 (vertices)
 - size:    64150 (edges)
@@ -5482,9 +5482,9 @@ order: 15045 size: 64150 {} (transposeWithDegree)
 - blockgraph-level-max: 7204 (maximum vertices in a level)
 - blockgraph-level-avg: 1128.000000 (average vertices in a level)
 ---
-order: 23019 size: 88656 {}
-order: 23019 size: 92804 {} (loopDeadEnds)
-order: 23019 size: 92804 {} (transposeWithDegree)
+order: 23019 size: 88656 [directed] {}
+order: 23019 size: 92804 [directed] {} (loopDeadEnds)
+order: 23019 size: 92804 [directed] {} (transposeWithDegree)
 - sample:  3 (of 10)
 - order:   23019 (vertices)
 - size:    92804 (edges)
@@ -5537,9 +5537,9 @@ order: 23019 size: 92804 {} (transposeWithDegree)
 - blockgraph-level-max: 11637 (maximum vertices in a level)
 - blockgraph-level-avg: 2246.375000 (average vertices in a level)
 ---
-order: 31515 size: 116278 {}
-order: 31515 size: 122070 {} (loopDeadEnds)
-order: 31515 size: 122070 {} (transposeWithDegree)
+order: 31515 size: 116278 [directed] {}
+order: 31515 size: 122070 [directed] {} (loopDeadEnds)
+order: 31515 size: 122070 [directed] {} (transposeWithDegree)
 - sample:  4 (of 10)
 - order:   31515 (vertices)
 - size:    122070 (edges)
@@ -5592,9 +5592,9 @@ order: 31515 size: 122070 {} (transposeWithDegree)
 - blockgraph-level-max: 16190 (maximum vertices in a level)
 - blockgraph-level-avg: 2513.399902 (average vertices in a level)
 ---
-order: 41452 size: 144378 {}
-order: 41452 size: 152536 {} (loopDeadEnds)
-order: 41452 size: 152536 {} (transposeWithDegree)
+order: 41452 size: 144378 [directed] {}
+order: 41452 size: 152536 [directed] {} (loopDeadEnds)
+order: 41452 size: 152536 [directed] {} (transposeWithDegree)
 - sample:  5 (of 10)
 - order:   41452 (vertices)
 - size:    152536 (edges)
@@ -5647,9 +5647,9 @@ order: 41452 size: 152536 {} (transposeWithDegree)
 - blockgraph-level-max: 21335 (maximum vertices in a level)
 - blockgraph-level-avg: 3379.100098 (average vertices in a level)
 ---
-order: 52349 size: 172487 {}
-order: 52349 size: 183159 {} (loopDeadEnds)
-order: 52349 size: 183159 {} (transposeWithDegree)
+order: 52349 size: 172487 [directed] {}
+order: 52349 size: 183159 [directed] {} (loopDeadEnds)
+order: 52349 size: 183159 [directed] {} (transposeWithDegree)
 - sample:  6 (of 10)
 - order:   52349 (vertices)
 - size:    183159 (edges)
@@ -5702,9 +5702,9 @@ order: 52349 size: 183159 {} (transposeWithDegree)
 - blockgraph-level-max: 27252 (maximum vertices in a level)
 - blockgraph-level-avg: 3943.363525 (average vertices in a level)
 ---
-order: 63813 size: 201117 {}
-order: 63813 size: 214334 {} (loopDeadEnds)
-order: 63813 size: 214334 {} (transposeWithDegree)
+order: 63813 size: 201117 [directed] {}
+order: 63813 size: 214334 [directed] {} (loopDeadEnds)
+order: 63813 size: 214334 [directed] {} (transposeWithDegree)
 - sample:  7 (of 10)
 - order:   63813 (vertices)
 - size:    214334 (edges)
@@ -5757,9 +5757,9 @@ order: 63813 size: 214334 {} (transposeWithDegree)
 - blockgraph-level-max: 33611 (maximum vertices in a level)
 - blockgraph-level-avg: 6686.750000 (average vertices in a level)
 ---
-order: 75916 size: 230489 {}
-order: 75916 size: 246386 {} (loopDeadEnds)
-order: 75916 size: 246386 {} (transposeWithDegree)
+order: 75916 size: 230489 [directed] {}
+order: 75916 size: 246386 [directed] {} (loopDeadEnds)
+order: 75916 size: 246386 [directed] {} (transposeWithDegree)
 - sample:  8 (of 10)
 - order:   75916 (vertices)
 - size:    246386 (edges)
@@ -5812,9 +5812,9 @@ order: 75916 size: 246386 {} (transposeWithDegree)
 - blockgraph-level-max: 40278 (maximum vertices in a level)
 - blockgraph-level-avg: 7143.333496 (average vertices in a level)
 ---
-order: 88339 size: 259757 {}
-order: 88339 size: 278776 {} (loopDeadEnds)
-order: 88339 size: 278776 {} (transposeWithDegree)
+order: 88339 size: 259757 [directed] {}
+order: 88339 size: 278776 [directed] {} (loopDeadEnds)
+order: 88339 size: 278776 [directed] {} (transposeWithDegree)
 - sample:  9 (of 10)
 - order:   88339 (vertices)
 - size:    278776 (edges)
@@ -5867,9 +5867,9 @@ order: 88339 size: 278776 {} (transposeWithDegree)
 - blockgraph-level-max: 46755 (maximum vertices in a level)
 - blockgraph-level-avg: 8375.555664 (average vertices in a level)
 ---
-order: 101052 size: 289487 {}
-order: 101052 size: 311758 {} (loopDeadEnds)
-order: 101052 size: 311758 {} (transposeWithDegree)
+order: 101052 size: 289487 [directed] {}
+order: 101052 size: 311758 [directed] {} (loopDeadEnds)
+order: 101052 size: 311758 [directed] {} (transposeWithDegree)
 - sample:  10 (of 10)
 - order:   101052 (vertices)
 - size:    311758 (edges)
@@ -5926,9 +5926,9 @@ order: 101052 size: 311758 {} (transposeWithDegree)
 Using graph /home/subhajit/data/sx-superuser-c2q.txt ...
 - temporal-edges: 479068 (including repeated ones)
 ---
-order: 11779 size: 34199 {}
-order: 11779 size: 38098 {} (loopDeadEnds)
-order: 11779 size: 38098 {} (transposeWithDegree)
+order: 11779 size: 34199 [directed] {}
+order: 11779 size: 38098 [directed] {} (loopDeadEnds)
+order: 11779 size: 38098 [directed] {} (transposeWithDegree)
 - sample:  1 (of 10)
 - order:   11779 (vertices)
 - size:    38098 (edges)
@@ -5981,9 +5981,9 @@ order: 11779 size: 38098 {} (transposeWithDegree)
 - blockgraph-level-max: 5684 (maximum vertices in a level)
 - blockgraph-level-avg: 1001.363647 (average vertices in a level)
 ---
-order: 21097 size: 64620 {}
-order: 21097 size: 71499 {} (loopDeadEnds)
-order: 21097 size: 71499 {} (transposeWithDegree)
+order: 21097 size: 64620 [directed] {}
+order: 21097 size: 71499 [directed] {} (loopDeadEnds)
+order: 21097 size: 71499 [directed] {} (transposeWithDegree)
 - sample:  2 (of 10)
 - order:   21097 (vertices)
 - size:    71499 (edges)
@@ -6036,9 +6036,9 @@ order: 21097 size: 71499 {} (transposeWithDegree)
 - blockgraph-level-max: 11025 (maximum vertices in a level)
 - blockgraph-level-avg: 1654.083374 (average vertices in a level)
 ---
-order: 30407 size: 94448 {}
-order: 30407 size: 104216 {} (loopDeadEnds)
-order: 30407 size: 104216 {} (transposeWithDegree)
+order: 30407 size: 94448 [directed] {}
+order: 30407 size: 104216 [directed] {} (loopDeadEnds)
+order: 30407 size: 104216 [directed] {} (transposeWithDegree)
 - sample:  3 (of 10)
 - order:   30407 (vertices)
 - size:    104216 (edges)
@@ -6091,9 +6091,9 @@ order: 30407 size: 104216 {} (transposeWithDegree)
 - blockgraph-level-max: 16394 (maximum vertices in a level)
 - blockgraph-level-avg: 2393.250000 (average vertices in a level)
 ---
-order: 40005 size: 123864 {}
-order: 40005 size: 136687 {} (loopDeadEnds)
-order: 40005 size: 136687 {} (transposeWithDegree)
+order: 40005 size: 123864 [directed] {}
+order: 40005 size: 136687 [directed] {} (loopDeadEnds)
+order: 40005 size: 136687 [directed] {} (transposeWithDegree)
 - sample:  4 (of 10)
 - order:   40005 (vertices)
 - size:    136687 (edges)
@@ -6146,9 +6146,9 @@ order: 40005 size: 136687 {} (transposeWithDegree)
 - blockgraph-level-max: 21704 (maximum vertices in a level)
 - blockgraph-level-avg: 2917.538574 (average vertices in a level)
 ---
-order: 49047 size: 152319 {}
-order: 49047 size: 168103 {} (loopDeadEnds)
-order: 49047 size: 168103 {} (transposeWithDegree)
+order: 49047 size: 152319 [directed] {}
+order: 49047 size: 168103 [directed] {} (loopDeadEnds)
+order: 49047 size: 168103 [directed] {} (transposeWithDegree)
 - sample:  5 (of 10)
 - order:   49047 (vertices)
 - size:    168103 (edges)
@@ -6201,9 +6201,9 @@ order: 49047 size: 168103 {} (transposeWithDegree)
 - blockgraph-level-max: 28062 (maximum vertices in a level)
 - blockgraph-level-avg: 3587.230713 (average vertices in a level)
 ---
-order: 57808 size: 179867 {}
-order: 57808 size: 198110 {} (loopDeadEnds)
-order: 57808 size: 198110 {} (transposeWithDegree)
+order: 57808 size: 179867 [directed] {}
+order: 57808 size: 198110 [directed] {} (loopDeadEnds)
+order: 57808 size: 198110 [directed] {} (transposeWithDegree)
 - sample:  6 (of 10)
 - order:   57808 (vertices)
 - size:    198110 (edges)
@@ -6256,9 +6256,9 @@ order: 57808 size: 198110 {} (transposeWithDegree)
 - blockgraph-level-max: 32976 (maximum vertices in a level)
 - blockgraph-level-avg: 4239.692383 (average vertices in a level)
 ---
-order: 66893 size: 207601 {}
-order: 66893 size: 228585 {} (loopDeadEnds)
-order: 66893 size: 228585 {} (transposeWithDegree)
+order: 66893 size: 207601 [directed] {}
+order: 66893 size: 228585 [directed] {} (loopDeadEnds)
+order: 66893 size: 228585 [directed] {} (transposeWithDegree)
 - sample:  7 (of 10)
 - order:   66893 (vertices)
 - size:    228585 (edges)
@@ -6311,9 +6311,9 @@ order: 66893 size: 228585 {} (transposeWithDegree)
 - blockgraph-level-max: 38015 (maximum vertices in a level)
 - blockgraph-level-avg: 4260.866699 (average vertices in a level)
 ---
-order: 76065 size: 235541 {}
-order: 76065 size: 259530 {} (loopDeadEnds)
-order: 76065 size: 259530 {} (transposeWithDegree)
+order: 76065 size: 235541 [directed] {}
+order: 76065 size: 259530 [directed] {} (loopDeadEnds)
+order: 76065 size: 259530 [directed] {} (transposeWithDegree)
 - sample:  8 (of 10)
 - order:   76065 (vertices)
 - size:    259530 (edges)
@@ -6366,9 +6366,9 @@ order: 76065 size: 259530 {} (transposeWithDegree)
 - blockgraph-level-max: 43446 (maximum vertices in a level)
 - blockgraph-level-avg: 5202.785645 (average vertices in a level)
 ---
-order: 85318 size: 263314 {}
-order: 85318 size: 290380 {} (loopDeadEnds)
-order: 85318 size: 290380 {} (transposeWithDegree)
+order: 85318 size: 263314 [directed] {}
+order: 85318 size: 290380 [directed] {} (loopDeadEnds)
+order: 85318 size: 290380 [directed] {} (transposeWithDegree)
 - sample:  9 (of 10)
 - order:   85318 (vertices)
 - size:    290380 (edges)
@@ -6421,9 +6421,9 @@ order: 85318 size: 290380 {} (transposeWithDegree)
 - blockgraph-level-max: 49105 (maximum vertices in a level)
 - blockgraph-level-avg: 5844.785645 (average vertices in a level)
 ---
-order: 94546 size: 291026 {}
-order: 94546 size: 321360 {} (loopDeadEnds)
-order: 94546 size: 321360 {} (transposeWithDegree)
+order: 94546 size: 291026 [directed] {}
+order: 94546 size: 321360 [directed] {} (loopDeadEnds)
+order: 94546 size: 321360 [directed] {} (transposeWithDegree)
 - sample:  10 (of 10)
 - order:   94546 (vertices)
 - size:    321360 (edges)
@@ -6476,9 +6476,9 @@ order: 94546 size: 321360 {} (transposeWithDegree)
 - blockgraph-level-max: 56538 (maximum vertices in a level)
 - blockgraph-level-avg: 6481.785645 (average vertices in a level)
 ---
-order: 94548 size: 291030 {}
-order: 94548 size: 321364 {} (loopDeadEnds)
-order: 94548 size: 321364 {} (transposeWithDegree)
+order: 94548 size: 291030 [directed] {}
+order: 94548 size: 321364 [directed] {} (loopDeadEnds)
+order: 94548 size: 321364 [directed] {} (transposeWithDegree)
 - sample:  11 (of 10)
 - order:   94548 (vertices)
 - size:    321364 (edges)
@@ -6535,9 +6535,9 @@ order: 94548 size: 321364 {} (transposeWithDegree)
 Using graph /home/subhajit/data/wiki-talk-temporal.txt ...
 - temporal-edges: 7833141 (including repeated ones)
 ---
-order: 52898 size: 266047 {}
-order: 52898 size: 274659 {} (loopDeadEnds)
-order: 52898 size: 274659 {} (transposeWithDegree)
+order: 52898 size: 266047 [directed] {}
+order: 52898 size: 274659 [directed] {} (loopDeadEnds)
+order: 52898 size: 274659 [directed] {} (transposeWithDegree)
 - sample:  1 (of 10)
 - order:   52898 (vertices)
 - size:    274659 (edges)
@@ -6590,9 +6590,9 @@ order: 52898 size: 274659 {} (transposeWithDegree)
 - blockgraph-level-max: 36278 (maximum vertices in a level)
 - blockgraph-level-avg: 6778.143066 (average vertices in a level)
 ---
-order: 92901 size: 532308 {}
-order: 92901 size: 554794 {} (loopDeadEnds)
-order: 92901 size: 554794 {} (transposeWithDegree)
+order: 92901 size: 532308 [directed] {}
+order: 92901 size: 554794 [directed] {} (loopDeadEnds)
+order: 92901 size: 554794 [directed] {} (transposeWithDegree)
 - sample:  2 (of 10)
 - order:   92901 (vertices)
 - size:    554794 (edges)
@@ -6645,9 +6645,9 @@ order: 92901 size: 554794 {} (transposeWithDegree)
 - blockgraph-level-max: 51345 (maximum vertices in a level)
 - blockgraph-level-avg: 11403.857422 (average vertices in a level)
 ---
-order: 146071 size: 804542 {}
-order: 146071 size: 859078 {} (loopDeadEnds)
-order: 146071 size: 859078 {} (transposeWithDegree)
+order: 146071 size: 804542 [directed] {}
+order: 146071 size: 859078 [directed] {} (loopDeadEnds)
+order: 146071 size: 859078 [directed] {} (transposeWithDegree)
 - sample:  3 (of 10)
 - order:   146071 (vertices)
 - size:    859078 (edges)
@@ -6700,9 +6700,9 @@ order: 146071 size: 859078 {} (transposeWithDegree)
 - blockgraph-level-max: 60454 (maximum vertices in a level)
 - blockgraph-level-avg: 17784.427734 (average vertices in a level)
 ---
-order: 221189 size: 1114635 {}
-order: 221189 size: 1224993 {} (loopDeadEnds)
-order: 221189 size: 1224993 {} (transposeWithDegree)
+order: 221189 size: 1114635 [directed] {}
+order: 221189 size: 1224993 [directed] {} (loopDeadEnds)
+order: 221189 size: 1224993 [directed] {} (transposeWithDegree)
 - sample:  4 (of 10)
 - order:   221189 (vertices)
 - size:    1224993 (edges)
@@ -6755,9 +6755,9 @@ order: 221189 size: 1224993 {} (transposeWithDegree)
 - blockgraph-level-max: 121101 (maximum vertices in a level)
 - blockgraph-level-avg: 27091.285156 (average vertices in a level)
 ---
-order: 315953 size: 1431845 {}
-order: 315953 size: 1614949 {} (loopDeadEnds)
-order: 315953 size: 1614949 {} (transposeWithDegree)
+order: 315953 size: 1431845 [directed] {}
+order: 315953 size: 1614949 [directed] {} (loopDeadEnds)
+order: 315953 size: 1614949 [directed] {} (transposeWithDegree)
 - sample:  5 (of 10)
 - order:   315953 (vertices)
 - size:    1614949 (edges)
@@ -6810,9 +6810,9 @@ order: 315953 size: 1614949 {} (transposeWithDegree)
 - blockgraph-level-max: 198813 (maximum vertices in a level)
 - blockgraph-level-avg: 39030.144531 (average vertices in a level)
 ---
-order: 420170 size: 1750480 {}
-order: 420170 size: 2016310 {} (loopDeadEnds)
-order: 420170 size: 2016310 {} (transposeWithDegree)
+order: 420170 size: 1750480 [directed] {}
+order: 420170 size: 2016310 [directed] {} (loopDeadEnds)
+order: 420170 size: 2016310 [directed] {} (transposeWithDegree)
 - sample:  6 (of 10)
 - order:   420170 (vertices)
 - size:    2016310 (edges)
@@ -6865,9 +6865,9 @@ order: 420170 size: 2016310 {} (transposeWithDegree)
 - blockgraph-level-max: 288343 (maximum vertices in a level)
 - blockgraph-level-avg: 52065.285156 (average vertices in a level)
 ---
-order: 555002 size: 2101529 {}
-order: 555002 size: 2478625 {} (loopDeadEnds)
-order: 555002 size: 2478625 {} (transposeWithDegree)
+order: 555002 size: 2101529 [directed] {}
+order: 555002 size: 2478625 [directed] {} (loopDeadEnds)
+order: 555002 size: 2478625 [directed] {} (transposeWithDegree)
 - sample:  7 (of 10)
 - order:   555002 (vertices)
 - size:    2478625 (edges)
@@ -6920,9 +6920,9 @@ order: 555002 size: 2478625 {} (transposeWithDegree)
 - blockgraph-level-max: 406243 (maximum vertices in a level)
 - blockgraph-level-avg: 69378.859375 (average vertices in a level)
 ---
-order: 712776 size: 2473529 {}
-order: 712776 size: 2983673 {} (loopDeadEnds)
-order: 712776 size: 2983673 {} (transposeWithDegree)
+order: 712776 size: 2473529 [directed] {}
+order: 712776 size: 2983673 [directed] {} (loopDeadEnds)
+order: 712776 size: 2983673 [directed] {} (transposeWithDegree)
 - sample:  8 (of 10)
 - order:   712776 (vertices)
 - size:    2983673 (edges)
@@ -6975,9 +6975,9 @@ order: 712776 size: 2983673 {} (transposeWithDegree)
 - blockgraph-level-max: 549838 (maximum vertices in a level)
 - blockgraph-level-avg: 89930.570312 (average vertices in a level)
 ---
-order: 904060 size: 2868115 {}
-order: 904060 size: 3545581 {} (loopDeadEnds)
-order: 904060 size: 3545581 {} (transposeWithDegree)
+order: 904060 size: 2868115 [directed] {}
+order: 904060 size: 3545581 [directed] {} (loopDeadEnds)
+order: 904060 size: 3545581 [directed] {} (transposeWithDegree)
 - sample:  9 (of 10)
 - order:   904060 (vertices)
 - size:    3545581 (edges)
@@ -7030,9 +7030,9 @@ order: 904060 size: 3545581 {} (transposeWithDegree)
 - blockgraph-level-max: 723828 (maximum vertices in a level)
 - blockgraph-level-avg: 100737.250000 (average vertices in a level)
 ---
-order: 1140149 size: 3309592 {}
-order: 1140149 size: 4198587 {} (loopDeadEnds)
-order: 1140149 size: 4198587 {} (transposeWithDegree)
+order: 1140149 size: 3309592 [directed] {}
+order: 1140149 size: 4198587 [directed] {} (loopDeadEnds)
+order: 1140149 size: 4198587 [directed] {} (transposeWithDegree)
 - sample:  10 (of 10)
 - order:   1140149 (vertices)
 - size:    4198587 (edges)
@@ -7089,9 +7089,9 @@ order: 1140149 size: 4198587 {} (transposeWithDegree)
 Using graph /home/subhajit/data/sx-stackoverflow.txt ...
 - temporal-edges: 63497051 (including repeated ones)
 ---
-order: 747591 size: 5768470 {}
-order: 747591 size: 6102013 {} (loopDeadEnds)
-order: 747591 size: 6102013 {} (transposeWithDegree)
+order: 747591 size: 5768470 [directed] {}
+order: 747591 size: 6102013 [directed] {} (loopDeadEnds)
+order: 747591 size: 6102013 [directed] {} (transposeWithDegree)
 - sample:  1 (of 10)
 - order:   747591 (vertices)
 - size:    6102013 (edges)
@@ -7144,9 +7144,9 @@ order: 747591 size: 6102013 {} (transposeWithDegree)
 - blockgraph-level-max: 331603 (maximum vertices in a level)
 - blockgraph-level-avg: 46983.078125 (average vertices in a level)
 ---
-order: 1652959 size: 11582276 {}
-order: 1652959 size: 12339389 {} (loopDeadEnds)
-order: 1652959 size: 12339389 {} (transposeWithDegree)
+order: 1652959 size: 11582276 [directed] {}
+order: 1652959 size: 12339389 [directed] {} (loopDeadEnds)
+order: 1652959 size: 12339389 [directed] {} (transposeWithDegree)
 - sample:  2 (of 10)
 - order:   1652959 (vertices)
 - size:    12339389 (edges)
@@ -7199,9 +7199,9 @@ order: 1652959 size: 12339389 {} (transposeWithDegree)
 - blockgraph-level-max: 744672 (maximum vertices in a level)
 - blockgraph-level-avg: 85624.937500 (average vertices in a level)
 ---
-order: 2464728 size: 16901020 {}
-order: 2464728 size: 18017041 {} (loopDeadEnds)
-order: 2464728 size: 18017041 {} (transposeWithDegree)
+order: 2464728 size: 16901020 [directed] {}
+order: 2464728 size: 18017041 [directed] {} (loopDeadEnds)
+order: 2464728 size: 18017041 [directed] {} (transposeWithDegree)
 - sample:  3 (of 10)
 - order:   2464728 (vertices)
 - size:    18017041 (edges)
@@ -7254,9 +7254,9 @@ order: 2464728 size: 18017041 {} (transposeWithDegree)
 - blockgraph-level-max: 1112686 (maximum vertices in a level)
 - blockgraph-level-avg: 106872.945312 (average vertices in a level)
 ---
-order: 2470036 size: 19786012 {}
-order: 2470036 size: 20800036 {} (loopDeadEnds)
-order: 2470036 size: 20800036 {} (transposeWithDegree)
+order: 2470036 size: 19786012 [directed] {}
+order: 2470036 size: 20800036 [directed] {} (loopDeadEnds)
+order: 2470036 size: 20800036 [directed] {} (transposeWithDegree)
 - sample:  4 (of 10)
 - order:   2470036 (vertices)
 - size:    20800036 (edges)
@@ -7309,9 +7309,9 @@ order: 2470036 size: 20800036 {} (transposeWithDegree)
 - blockgraph-level-max: 1033921 (maximum vertices in a level)
 - blockgraph-level-avg: 124380.335938 (average vertices in a level)
 ---
-order: 2478030 size: 22546875 {}
-order: 2478030 size: 23471889 {} (loopDeadEnds)
-order: 2478030 size: 23471889 {} (transposeWithDegree)
+order: 2478030 size: 22546875 [directed] {}
+order: 2478030 size: 23471889 [directed] {} (loopDeadEnds)
+order: 2478030 size: 23471889 [directed] {} (transposeWithDegree)
 - sample:  5 (of 10)
 - order:   2478030 (vertices)
 - size:    23471889 (edges)
@@ -7364,9 +7364,9 @@ order: 2478030 size: 23471889 {} (transposeWithDegree)
 - blockgraph-level-max: 968560 (maximum vertices in a level)
 - blockgraph-level-avg: 143010.328125 (average vertices in a level)
 ---
-order: 2490930 size: 25272564 {}
-order: 2490930 size: 26094206 {} (loopDeadEnds)
-order: 2490930 size: 26094206 {} (transposeWithDegree)
+order: 2490930 size: 25272564 [directed] {}
+order: 2490930 size: 26094206 [directed] {} (loopDeadEnds)
+order: 2490930 size: 26094206 [directed] {} (transposeWithDegree)
 - sample:  6 (of 10)
 - order:   2490930 (vertices)
 - size:    26094206 (edges)
@@ -7419,9 +7419,9 @@ order: 2490930 size: 26094206 {} (transposeWithDegree)
 - blockgraph-level-max: 892376 (maximum vertices in a level)
 - blockgraph-level-avg: 129889.414062 (average vertices in a level)
 ---
-order: 2506373 size: 28006148 {}
-order: 2506373 size: 28719978 {} (loopDeadEnds)
-order: 2506373 size: 28719978 {} (transposeWithDegree)
+order: 2506373 size: 28006148 [directed] {}
+order: 2506373 size: 28719978 [directed] {} (loopDeadEnds)
+order: 2506373 size: 28719978 [directed] {} (transposeWithDegree)
 - sample:  7 (of 10)
 - order:   2506373 (vertices)
 - size:    28719978 (edges)
@@ -7474,9 +7474,9 @@ order: 2506373 size: 28719978 {} (transposeWithDegree)
 - blockgraph-level-max: 817065 (maximum vertices in a level)
 - blockgraph-level-avg: 117156.664062 (average vertices in a level)
 ---
-order: 2526707 size: 30733917 {}
-order: 2526707 size: 31334330 {} (loopDeadEnds)
-order: 2526707 size: 31334330 {} (transposeWithDegree)
+order: 2526707 size: 30733917 [directed] {}
+order: 2526707 size: 31334330 [directed] {} (loopDeadEnds)
+order: 2526707 size: 31334330 [directed] {} (transposeWithDegree)
 - sample:  8 (of 10)
 - order:   2526707 (vertices)
 - size:    31334330 (edges)
@@ -7529,9 +7529,9 @@ order: 2526707 size: 31334330 {} (transposeWithDegree)
 - blockgraph-level-max: 741419 (maximum vertices in a level)
 - blockgraph-level-avg: 113636.546875 (average vertices in a level)
 ---
-order: 2556150 size: 33483062 {}
-order: 2556150 size: 33966896 {} (loopDeadEnds)
-order: 2556150 size: 33966896 {} (transposeWithDegree)
+order: 2556150 size: 33483062 [directed] {}
+order: 2556150 size: 33966896 [directed] {} (loopDeadEnds)
+order: 2556150 size: 33966896 [directed] {} (transposeWithDegree)
 - sample:  9 (of 10)
 - order:   2556150 (vertices)
 - size:    33966896 (edges)
@@ -7584,9 +7584,9 @@ order: 2556150 size: 33966896 {} (transposeWithDegree)
 - blockgraph-level-max: 665985 (maximum vertices in a level)
 - blockgraph-level-avg: 109192.398438 (average vertices in a level)
 ---
-order: 2601977 size: 36233450 {}
-order: 2601977 size: 36609184 {} (loopDeadEnds)
-order: 2601977 size: 36609184 {} (transposeWithDegree)
+order: 2601977 size: 36233450 [directed] {}
+order: 2601977 size: 36609184 [directed] {} (loopDeadEnds)
+order: 2601977 size: 36609184 [directed] {} (transposeWithDegree)
 - sample:  10 (of 10)
 - order:   2601977 (vertices)
 - size:    36609184 (edges)
