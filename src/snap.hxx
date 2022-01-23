@@ -25,14 +25,13 @@ bool readSnapTemporalLineTo(G& a, const string& ln, bool sym=false) {
   if (sym) a.addEdge(v, u);
   return true;
 }
-
-
 template <class G>
 bool readSnapTemporalTo(G& a, istream& s, size_t N, bool sym=false) {
   size_t i = 0;
-  for (; i<N; i++) {
+  for (; i<N; ++i) {
     string ln; getline(s, ln);
     if (!readSnapTemporalLineTo(a, ln, sym)) break;
   }
+  a.correct();
   return i>0;
 }

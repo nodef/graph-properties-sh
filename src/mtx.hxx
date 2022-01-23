@@ -20,8 +20,19 @@ using std::max;
 // READ-MTX
 // --------
 
+#define READ_MTX_RETURN(R, unq) \
+  inline auto readMtx##R(istream& s) { \
+    R<> a; readMtxTo(a, s, unq); \
+    return a; \
+  } \
+  inline auto readMtx##R(const char *pth) { \
+    R<> a; readMtxTo(a, pth, unq); \
+    return a; \
+  }
+
+
 template <class G>
-void readMtxTo(G& a, istream& s) {
+void readMtxTo(G& a, istream& s, bool unq=false) {
   using K = typename G::key_type;
   string ln, h0, h1, h2, h3, h4;
 
@@ -52,43 +63,17 @@ void readMtxTo(G& a, istream& s) {
     a.addEdge(u, v);
     if (sym) a.addEdge(v, u);
   }
+  a.correct(unq);
 }
 template <class G>
-void readMtxTo(G& a, const char *pth) {
+void readMtxTo(G& a, const char *pth, bool unq=false) {
   string buf = readFile(pth);
   stringstream s(buf);
-  return readMtxTo(a, s);
+  return readMtxTo(a, s, unq);
 }
-inline auto readMtxDiGraph(istream& s) {
-  DiGraph<> a; readMtxTo(a, s);
-  a.correct(true);
-  return a;
-}
-inline auto readMtxDiGraph(const char *pth) {
-  DiGraph<> a; readMtxTo(a, pth);
-  a.correct(true);
-  return a;
-}
-inline auto readMtxOutDiGraph(istream& s) {
-  OutDiGraph<> a; readMtxTo(a, s);
-  a.correct(true);
-  return a;
-}
-inline auto readMtxOutDiGraph(const char *pth) {
-  OutDiGraph<> a; readMtxTo(a, pth);
-  a.correct(true);
-  return a;
-}
-inline auto readMtxGraph(istream& s) {
-  Graph<> a; readMtxTo(a, s);
-  a.correct();
-  return a;
-}
-inline auto readMtxGraph(const char *pth) {
-  Graph<> a; readMtxTo(a, pth);
-  a.correct();
-  return a;
-}
+READ_MTX_RETURN(DiGraph, true)
+READ_MTX_RETURN(OutDiGraph, true)
+READ_MTX_RETURN(Graph, false)
 
 
 

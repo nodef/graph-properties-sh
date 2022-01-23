@@ -44,10 +44,10 @@ inline auto selfLoopCount(const G& x) {
 template <class G, class F>
 void selfLoopTo(G& a, F fn) {
   a.forEachVertexKey([&](auto u) { if (fn(u)) a.addEdge(u, u); });
+  a.correct();
 }
 template <class G, class F>
 auto selfLoop(const G& x, F fn) {
   auto a = duplicate(x); selfLoopTo(a, fn);
-  a.correct();
   return a;
 }

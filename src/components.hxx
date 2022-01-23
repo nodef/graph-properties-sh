@@ -66,11 +66,11 @@ void blockgraphTo(H& a, const G& x, const vector2d<K>& cs) {
       if (c[u] != c[v]) a.addEdge(c[u], c[v]);
     });
   });
+  a.correct();
 }
 template <class G, class K>
 inline auto blockgraph(const G& x, const vector2d<K>& cs) {
   G a; blockgraphTo(a, x, cs);
-  a.correct();
   return a;
 }
 
