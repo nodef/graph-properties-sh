@@ -56,12 +56,31 @@ void showSpecial(const char *pre, const G& x, const H& xt) {
 }
 
 template <class G, class H>
-void showLevels(const char *pre, const G& x, const H& xt) {
+void showLevelsOld(const char *pre, const G& x, const H& xt) {
   auto [lnum, lmin, lmax, lavg] = groupDetails(levelwiseGroupsFrontier(x, xt));
   printf("- %slevels:    %d (vertices in a level are independent)\n", pre, lnum);
   printf("- %slevel-min: %d (minimum vertices in a level)\n",         pre, lmin);
   printf("- %slevel-max: %d (maximum vertices in a level)\n",         pre, lmax);
   printf("- %slevel-avg: %f (average vertices in a level)\n",         pre, lavg);
+}
+template <class G, class H>
+void showLevels(const char *pre, const G& x, const H& xt) {
+  float to = measureDuration([&]() {
+    auto [lnum, lmin, lmax, lavg] = groupDetails(levelwiseGroups(xt));
+    printf("- %slevels:    %d (vertices in a level are independent)\n", pre, lnum);
+    printf("- %slevel-min: %d (minimum vertices in a level)\n",         pre, lmin);
+    printf("- %slevel-max: %d (maximum vertices in a level)\n",         pre, lmax);
+    printf("- %slevel-avg: %f (average vertices in a level)\n",         pre, lavg);
+  }, 5);
+  float tf = measureDuration([&]() {
+    auto [lnum, lmin, lmax, lavg] = groupDetails(levelwiseGroupsFrontier(x, xt));
+    printf("- %slevels:    %d (vertices in a level are independent)\n", pre, lnum);
+    printf("- %slevel-min: %d (minimum vertices in a level)\n",         pre, lmin);
+    printf("- %slevel-max: %d (maximum vertices in a level)\n",         pre, lmax);
+    printf("- %slevel-avg: %f (average vertices in a level)\n",         pre, lavg);
+  }, 5);
+  printf("to: %f\n", to);
+  printf("tf: %f\n", tf);
 }
 
 template <class G, class H>
