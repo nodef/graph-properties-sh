@@ -260,7 +260,7 @@ class UnorderedBitset {
 };
 
 template <class K=int, class V=NONE>
-auto unorderedBitset(K _k=K(), V _v=V()) {
+inline auto unorderedBitset(K _k=K(), V _v=V()) {
   return UnorderedBitset<K, V>();
 }
 
@@ -350,7 +350,7 @@ class OrderedBitset {
 };
 
 template <class K=int, class V=NONE>
-auto orderedBitset(K _k=K(), V _v=V()) {
+inline auto orderedBitset(K _k=K(), V _v=V()) {
   return OrderedBitset<K, V>();
 }
 
@@ -469,7 +469,7 @@ class POrderedBitset {
 };
 
 template <class K=int, class V=NONE>
-auto porderedBitset(K _k=K(), V _v=V()) {
+inline auto porderedBitset(K _k=K(), V _v=V()) {
   return POrderedBitset<K, V, 64>();
 }
 
@@ -578,8 +578,31 @@ class ROrderedBitset {
 };
 
 template <class K=int, class V=NONE>
-auto rorderedBitset(K _k=K(), V _v=V()) {
+inline auto rorderedBitset(K _k=K(), V _v=V()) {
   return ROrderedBitset<K, V>();
+}
+
+
+
+
+// RETYPE
+// ------
+
+template <class K, class V, class KA=K, class VA=V>
+constexpr auto retype(const UnorderedBitset<K, V>& x, KA _k=KA(), VA _v=VA()) {
+  return UnorderedBitset<KA, VA>();
+}
+template <class K, class V, class KA=K, class VA=V>
+constexpr auto retype(const OrderedBitset<K, V>& x, KA _k=KA(), VA _v=VA()) {
+  return OrderedBitset<KA, VA>();
+}
+template <class K, class V, size_t N, class KA=K, class VA=V, size_t NA=N>
+constexpr auto retype(const POrderedBitset<K, V, N>& x, KA _k=KA(), VA _v=VA()) {
+  return POrderedBitset<KA, VA, NA>();
+}
+template <class K, class V, class KA=K, class VA=V>
+constexpr auto retype(const ROrderedBitset<K, V>& x, KA _k=KA(), VA _v=VA()) {
+  return ROrderedBitset<KA, VA>();
 }
 
 
@@ -589,19 +612,19 @@ auto rorderedBitset(K _k=K(), V _v=V()) {
 // -----
 
 template <class K, class V>
-void write(ostream& a, const UnorderedBitset<K, V>& x)   { writeValues(a, x); }
+inline void write(ostream& a, const UnorderedBitset<K, V>& x)   { writeValues(a, x); }
 template <class K, class V>
-void write(ostream& a, const OrderedBitset<K, V>& x)     { writeValues(a, x); }
+inline void write(ostream& a, const OrderedBitset<K, V>& x)     { writeValues(a, x); }
 template <class K, class V, size_t N>
-void write(ostream& a, const POrderedBitset<K, V, N>& x) { writeValues(a, x); }
+inline void write(ostream& a, const POrderedBitset<K, V, N>& x) { writeValues(a, x); }
 template <class K, class V>
-void write(ostream& a, const ROrderedBitset<K, V>& x)    { writeValues(a, x); }
+inline void write(ostream& a, const ROrderedBitset<K, V>& x)    { writeValues(a, x); }
 
 template <class K, class V>
-ostream& operator<<(ostream& a, const UnorderedBitset<K, V>& x)   { write(a, x); return a; }
+inline ostream& operator<<(ostream& a, const UnorderedBitset<K, V>& x)   { write(a, x); return a; }
 template <class K, class V>
-ostream& operator<<(ostream& a, const OrderedBitset<K, V>& x)     { write(a, x); return a; }
+inline ostream& operator<<(ostream& a, const OrderedBitset<K, V>& x)     { write(a, x); return a; }
 template <class K, class V, size_t N>
-ostream& operator<<(ostream& a, const POrderedBitset<K, V, N>& x) { write(a, x); return a; }
+inline ostream& operator<<(ostream& a, const POrderedBitset<K, V, N>& x) { write(a, x); return a; }
 template <class K, class V>
-ostream& operator<<(ostream& a, const ROrderedBitset<K, V>& x)    { write(a, x); return a; }
+inline ostream& operator<<(ostream& a, const ROrderedBitset<K, V>& x)    { write(a, x); return a; }

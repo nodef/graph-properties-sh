@@ -59,14 +59,34 @@ void readMtxTo(G& a, const char *pth) {
   stringstream s(buf);
   return readMtxTo(a, s);
 }
-inline auto readMtx(istream& s) {
+inline auto readMtxDiGraph(istream& s) {
   DiGraph<> a; readMtxTo(a, s);
   a.correct(true);
   return a;
 }
-inline auto readMtx(const char *pth) {
+inline auto readMtxDiGraph(const char *pth) {
   DiGraph<> a; readMtxTo(a, pth);
   a.correct(true);
+  return a;
+}
+inline auto readMtxOutDiGraph(istream& s) {
+  OutDiGraph<> a; readMtxTo(a, s);
+  a.correct(true);
+  return a;
+}
+inline auto readMtxOutDiGraph(const char *pth) {
+  OutDiGraph<> a; readMtxTo(a, pth);
+  a.correct(true);
+  return a;
+}
+inline auto readMtxGraph(istream& s) {
+  Graph<> a; readMtxTo(a, s);
+  a.correct();
+  return a;
+}
+inline auto readMtxGraph(const char *pth) {
+  Graph<> a; readMtxTo(a, pth);
+  a.correct();
   return a;
 }
 

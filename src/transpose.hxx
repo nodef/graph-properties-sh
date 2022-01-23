@@ -39,8 +39,8 @@ void transposeWithDegreeTo(H& a, const G& x) {
 template <class G>
 auto transposeWithDegree(const G& x) {
   using K = typename G::key_type;
-  using E = typename G::edge_value_type;
-  DiGraph<K, K, E> a; transposeWithDegreeTo(a, x);
+  using H = decltype(retype(x, K(), K()));
+  H a; transposeWithDegreeTo(a, x);
   a.correct(true);
   return a;
 }

@@ -525,14 +525,14 @@ using std::cout;
 #ifndef GRAPH_WRITE
 #define GRAPH_WRITE(K, V, E, Bitset, Graph) \
   template <class K, class V, class E, tclass2 Bitset> \
-  void write(ostream& a, const Graph<K, V, E, Bitset>& x, bool det=false) { writeGraph(a, x, det); } \
+  inline void write(ostream& a, const Graph<K, V, E, Bitset>& x, bool det=false) { writeGraph(a, x, det); } \
   template <class K, class V, class E, tclass2 Bitset> \
-  ostream& operator<<(ostream& a, const Graph<K, V, E, Bitset>& x) { write(a, x); return a; }
+  inline ostream& operator<<(ostream& a, const Graph<K, V, E, Bitset>& x) { write(a, x); return a; }
 #define GRAPH_WRITE_VIEW(G, Graph) \
   template <class G> \
-  void write(ostream& a, const Graph<G>& x, bool det=false) { writeGraph(a, x, det); } \
+  inline void write(ostream& a, const Graph<G>& x, bool det=false) { writeGraph(a, x, det); } \
   template <class G> \
-  ostream& operator<<(ostream& a, const Graph<G>& x) { write(a, x); return a; }
+  inline ostream& operator<<(ostream& a, const Graph<G>& x) { write(a, x); return a; }
 #endif
 
 
@@ -890,6 +890,25 @@ class TransposedGraphView {
 
 
 
+// RETYPE
+// ------
+
+template <class K, class V, class E, tclass2 B, class KA=K, class VA=V, class EA=E>
+constexpr auto retype(const DiGraph<K, V, E, B>& x, KA _k=KA(), VA _v=VA(), EA _e=E()) {
+  return DiGraph<KA, VA, EA, B>();
+}
+template <class K, class V, class E, tclass2 B, class KA=K, class VA=V, class EA=E>
+constexpr auto retype(const OutDiGraph<K, V, E, B>& x, KA _k=KA(), VA _v=VA(), EA _e=E()) {
+  return OutDiGraph<KA, VA, EA, B>();
+}
+template <class K, class V, class E, tclass2 B, class KA=K, class VA=V, class EA=E>
+constexpr auto retype(const Graph<K, V, E, B>& x, KA _k=KA(), VA _v=VA(), EA _e=E()) {
+  return Graph<KA, VA, EA, B>();
+}
+
+
+
+
 // WTITE
 // -----
 
@@ -914,7 +933,7 @@ void writeGraphDetailed(ostream& a, const G& x) {
 }
 
 template <class G>
-void writeGraph(ostream& a, const G& x, bool detailed=false) {
+inline void writeGraph(ostream& a, const G& x, bool detailed=false) {
   if (detailed) writeGraphDetailed(a, x);
   else writeGraphSizes(a, x);
 }
