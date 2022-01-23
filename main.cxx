@@ -200,7 +200,7 @@ void runSnap(const Options& o) {
 // MAIN
 // ----
 
-int main(int argc, char **argv) {
+int old_main(int argc, char **argv) {
   typedef FileFormat F;
   Options o = readOptions(argc, argv);
   if (o.help)           { printf("%s\n\n", helpMessage()); return 0; }
@@ -211,5 +211,10 @@ int main(int argc, char **argv) {
     case F::TEMPORAL_TXT: runSnap(o); break;
   }
   printf("\n");
+  return 0;
+}
+
+
+int main() {
   return 0;
 }
