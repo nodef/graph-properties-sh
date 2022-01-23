@@ -22,7 +22,7 @@ auto components(const G& x, const H& xt) {
     if (!vis[u]) dfsEndTo(vs, vis, x, u);
   });
   // transpose dfs
-  fill(vis, false);
+  fillValue(vis, false);
   while (!vs.empty()) {
     auto u = vs.back(); vs.pop_back();
     if (vis[u]) continue;

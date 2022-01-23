@@ -184,7 +184,7 @@ void runSnap(const Options& o) {
   DiGraph<> xo;
   stringstream s(data);
   for (int i=0;; ++i) {
-    if (!readSnapTemporal(xo, s, jump)) break; println(xo);
+    if (!readSnapTemporalTo(xo, s, jump)) break; println(xo);
     auto x  = doTransform(xo, o.transform);
     auto xt = transposeWithDegree(x);
     print(xt); printf(" (transposeWithDegree)\n");

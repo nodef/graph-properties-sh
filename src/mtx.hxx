@@ -57,7 +57,7 @@ template <class G>
 void readMtxTo(G& a, const char *pth) {
   string buf = readFile(pth);
   stringstream s(buf);
-  return readMtx(a, s);
+  return readMtxTo(a, s);
 }
 inline auto readMtx(istream& s) {
   DiGraph<> a; readMtxTo(a, s);

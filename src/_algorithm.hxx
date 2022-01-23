@@ -56,9 +56,8 @@ inline void cforEach(const J& x, F fn) {
 // Is anything useful there?
 
 template <class J, class F>
-inline size_t anyOf(const J& x, F fn) {
-  auto   it = any_of(x.begin(), x.end(), fn);
-  return it - x.begin();
+inline bool anyOf(const J& x, F fn) {
+  return any_of(x.begin(), x.end(), fn);
 }
 
 
@@ -69,9 +68,8 @@ inline size_t anyOf(const J& x, F fn) {
 // Is everything there?
 
 template <class J, class F>
-inline size_t allOf(const J& x, F fn) {
-  auto   it = all_of(x.begin(), x.end(), fn);
-  return it - x.begin();
+inline bool allOf(const J& x, F fn) {
+  return all_of(x.begin(), x.end(), fn);
 }
 
 

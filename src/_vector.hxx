@@ -14,12 +14,13 @@ using std::iterator_traits;
 using std::array;
 using std::vector;
 using std::map;
-using std::copy;
-using std::swap;
-using std::move;
 using std::abs;
 using std::max;
 using std::sqrt;
+using std::swap;
+using std::move;
+using std::copy;
+using std::fill;
 
 
 
@@ -298,16 +299,15 @@ inline size_t copyValues(const vector<T>& x, vector<TA>& a, size_t i, size_t N) 
 
 template <class T, class V>
 void fillValue(T *a, size_t N, const V& v) {
-  for (size_t i=0; i<N; ++i)
-    a[i] = v;
+  fill(a, a+N, v);
 }
 template <class T, class V>
 inline void fillValue(vector<T>& a, const V& v) {
-  fillValue(a.data(), a.size(), v);
+  fill(a.begin(), a.end(), v);
 }
 template <class T, class V>
 inline void fillValue(vector<T>& a, size_t i, size_t N, const V& v) {
-  fillValue(a.data()+i, N, v);
+  fill(a.begin()+i, a.begin()+i+N, v);
 }
 
 
