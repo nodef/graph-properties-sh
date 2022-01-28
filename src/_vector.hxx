@@ -182,7 +182,7 @@ inline auto joinValuesVector(const J& xs) {
   using I = decltype(xs.begin());
   using X = typename iterator_traits<I>::value_type;
   using T = typename X::value_type;  // only for vector!
-  vector<T> a; join(xs, a);
+  vector<T> a; joinValues(xs, a);
   return a;
 }
 
@@ -237,7 +237,7 @@ void joinAt2d(const vector2d<T>& xs, const J& ig, vector2d<T>& a) {
     a.push_back(joinAtVector(xs, is));
 }
 template <class T, class J>
-inline auto joinAt2d(const vector2d<T>& xs, const J& ig) {
+inline auto joinAt2dVector(const vector2d<T>& xs, const J& ig) {
   vector2d<T> a; joinAt2d(xs, ig, a);
   return a;
 }
@@ -677,17 +677,17 @@ inline void constrainMinAt(vector<T>& a, size_t i, const J& is, const V& v) {
 // -------
 
 template <class TX, class TY, class V=TX>
-V l1Norm(const TX *x, const TY *y, size_t N, const V& a=V()) {
+V l1Norm(const TX *x, const TY *y, size_t N, V a=V()) {
   for (size_t i=0; i<N; i++)
     a += abs(x[i] - y[i]);
   return a;
 }
 template <class TX, class TY, class V=TX>
-inline V l1Norm(const vector<TX>& x, const vector<TY>& y, const V& a=V()) {
+inline V l1Norm(const vector<TX>& x, const vector<TY>& y, V a=V()) {
   return l1Norm(x.data(), y.data(), x.size(), a);
 }
 template <class TX, class TY, class V=TX>
-inline V l1Norm(const vector<TX>& x, const vector<TY>& y, size_t i, size_t N, const V& a=V()) {
+inline V l1Norm(const vector<TX>& x, const vector<TY>& y, size_t i, size_t N, V a=V()) {
   return l1Norm(x.data()+i, y.data()+i, N, a);
 }
 
@@ -698,17 +698,17 @@ inline V l1Norm(const vector<TX>& x, const vector<TY>& y, size_t i, size_t N, co
 // -------
 
 template <class TX, class TY, class V=TX>
-V l2Norm(const TX *x, const TY *y, size_t N, const V& a=V()) {
+V l2Norm(const TX *x, const TY *y, size_t N, V a=V()) {
   for (size_t i=0; i<N; i++)
     a += (x[i] - y[i]) * (x[i] - y[i]);
   return sqrt(a);
 }
 template <class TX, class TY, class V=TX>
-inline V l2Norm(const vector<TX>& x, const vector<TY>& y, const V& a=V()) {
+inline V l2Norm(const vector<TX>& x, const vector<TY>& y, V a=V()) {
   return l2Norm(x.data(), y.data(), x.size(), a);
 }
 template <class TX, class TY, class V=TX>
-inline V l2Norm(const vector<TX>& x, const vector<TY>& y, size_t i, size_t N, const V& a=V()) {
+inline V l2Norm(const vector<TX>& x, const vector<TY>& y, size_t i, size_t N, V a=V()) {
   return l2Norm(x.data()+i, y.data()+i, N, a);
 }
 
@@ -719,17 +719,17 @@ inline V l2Norm(const vector<TX>& x, const vector<TY>& y, size_t i, size_t N, co
 // ------------------
 
 template <class TX, class TY, class V=TX>
-V liNorm(const TX *x, const TY *y, size_t N, const V& a=V()) {
+V liNorm(const TX *x, const TY *y, size_t N, V a=V()) {
   for (size_t i=0; i<N; i++)
     a = max(a, abs(x[i] - y[i]));
   return a;
 }
 template <class TX, class TY, class V=TX>
-inline V liNorm(const vector<TX>& x, const vector<TY>& y, const V& a=V()) {
+inline V liNorm(const vector<TX>& x, const vector<TY>& y, V a=V()) {
   return liNorm(x.data(), y.data(), x.size(), a);
 }
 template <class TX, class TY, class V=TX>
-inline V liNorm(const vector<TX>& x, const vector<TY>& y, size_t i, size_t N, const V& a=V()) {
+inline V liNorm(const vector<TX>& x, const vector<TY>& y, size_t i, size_t N, V a=V()) {
   return liNorm(x.data()+i, y.data()+i, N, a);
 }
 

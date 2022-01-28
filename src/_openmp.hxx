@@ -306,7 +306,7 @@ inline void constrainMinOmp(vector<T>& a, size_t i, size_t N, const V& v) {
 // -------
 
 template <class TX, class TY, class V=TX>
-V l1NormOmp(const TX *x, const TY *y, size_t N, const V& a=V()) {
+V l1NormOmp(const TX *x, const TY *y, size_t N, V a=V()) {
   if (N<SIZE_MIN_OMPR) return l1Norm(x, y, N, a);
   #pragma omp parallel for num_threads(32) schedule(auto) reduction(+:a)
   for (size_t i=0; i<N; i++)
@@ -314,11 +314,11 @@ V l1NormOmp(const TX *x, const TY *y, size_t N, const V& a=V()) {
   return a;
 }
 template <class TX, class TY, class V=TX>
-inline V l1NormOmp(const vector<TX>& x, const vector<TY>& y, const V& a=V()) {
+inline V l1NormOmp(const vector<TX>& x, const vector<TY>& y, V a=V()) {
   return l1NormOmp(x.data(), y.data(), x.size(), a);
 }
 template <class TX, class TY, class V=TX>
-inline V l1NormOmp(const vector<TX>& x, const vector<TY>& y, size_t i, size_t N, const V& a=V()) {
+inline V l1NormOmp(const vector<TX>& x, const vector<TY>& y, size_t i, size_t N, V a=V()) {
   return l1NormOmp(x.data()+i, y.data()+i, N, a);
 }
 
@@ -329,7 +329,7 @@ inline V l1NormOmp(const vector<TX>& x, const vector<TY>& y, size_t i, size_t N,
 // -------
 
 template <class TX, class TY, class V=TX>
-V l2NormOmp(const TX *x, const TY *y, size_t N, const V& a=V()) {
+V l2NormOmp(const TX *x, const TY *y, size_t N, V a=V()) {
   if (N<SIZE_MIN_OMPR) return l2Norm(x, y, N, a);
   #pragma omp parallel for num_threads(32) schedule(auto) reduction(+:a)
   for (size_t i=0; i<N; i++)
@@ -337,11 +337,11 @@ V l2NormOmp(const TX *x, const TY *y, size_t N, const V& a=V()) {
   return sqrt(a);
 }
 template <class TX, class TY, class V=TX>
-inline V l2NormOmp(const vector<TX>& x, const vector<TY>& y, const V& a=V()) {
+inline V l2NormOmp(const vector<TX>& x, const vector<TY>& y, V a=V()) {
   return l2NormOmp(x.data(), y.data(), x.size(), a);
 }
 template <class TX, class TY, class V=TX>
-inline V l2NormOmp(const vector<TX>& x, const vector<TY>& y, size_t i, size_t N, const V& a=V()) {
+inline V l2NormOmp(const vector<TX>& x, const vector<TY>& y, size_t i, size_t N, V a=V()) {
   return l2NormOmp(x.data()+i, y.data()+i, N, a);
 }
 
@@ -352,7 +352,7 @@ inline V l2NormOmp(const vector<TX>& x, const vector<TY>& y, size_t i, size_t N,
 // ------------------
 
 template <class TX, class TY, class V=TX>
-V liNormOmp(const TX *x, const TY *y, size_t N, const V& a=V()) {
+V liNormOmp(const TX *x, const TY *y, size_t N, V a=V()) {
   if (N<SIZE_MIN_OMPR) return liNorm(x, y, N, a);
   #pragma omp parallel for num_threads(32) schedule(auto) reduction(+:a)
   for (size_t i=0; i<N; i++)
@@ -360,11 +360,11 @@ V liNormOmp(const TX *x, const TY *y, size_t N, const V& a=V()) {
   return a;
 }
 template <class TX, class TY, class V=TX>
-inline V liNormOmp(const vector<TX>& x, const vector<TY>& y, const V& a=V()) {
+inline V liNormOmp(const vector<TX>& x, const vector<TY>& y, V a=V()) {
   return liNormOmp(x.data(), y.data(), x.size(), a);
 }
 template <class TX, class TY, class V=TX>
-inline V liNormOmp(const vector<TX>& x, const vector<TY>& y, size_t i, size_t N, const V& a=V()) {
+inline V liNormOmp(const vector<TX>& x, const vector<TY>& y, size_t i, size_t N, V a=V()) {
   return liNormOmp(x.data()+i, y.data()+i, N, a);
 }
 
