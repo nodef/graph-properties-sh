@@ -2,10 +2,10 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
-const RGRAPH = /^Using graph .*\/(.*?)\.txt \.\.\./m;
+const RGRAPH = /^(?:Loading|Using) graph .*\/(.*?)\.\w+ \.\.\./m;
 const RGRAPD = /^order: (\d+) size: (\d+) {}/m;
 const RTEMPE = /^- temporal-edges: (\d+)/m;
-const RSPACE = /^---/m;
+const RSPACE = /^---|^$/m;
 const RFIELD = /^- (.+?):\s+(\S+)/m;
 
 
@@ -65,14 +65,14 @@ function readLogLine(ln, data, state) {
   if (RGRAPH.test(ln)) {
     var [, graph] = RGRAPH.exec(ln);
     if (!data.has(graph)) data.set(graph, []);
-    state = {graph};
+    state = {graph, temporal_edges: 0, fields: {}};
   }
   else if (RTEMPE.test(ln)) {
     var [, temporal_edges] = RTEMPE.exec(ln);
     state.temporal_edges = parseFloat(temporal_edges);
   }
   else if (RSPACE.test(ln)) {
-    if (state.fields!=null && Object.keys(state.fields).length>0) {
+    if (Object.keys(state.fields).length>0) {
       data.get(state.graph).push(Object.assign({
         graph:          state.graph,
         temporal_edges: state.temporal_edges
