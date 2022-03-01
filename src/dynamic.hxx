@@ -164,7 +164,7 @@ template <class G, class FA>
 auto dynamicVerticesByMark(const G& y, FA fa) {
   using K = typename G::key_type;
   auto vis = createContainer(y, bool());
-  if(fa(vis)) return make_pair(vertices(y), size_t(y.order()));
+  if(fa(vis)) return make_pair(vertexKeys(y), size_t(y.order()));
   vector<K> a; size_t n = 0;
   for (auto u : y.vertexKeys())
     if (vis[u]) { a.push_back(u); ++n; }

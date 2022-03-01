@@ -43,22 +43,25 @@ inline auto sourceOffsets(const G& x) {
 // DESTINATION-INDICES
 // -------------------
 
-template <class G, class J, class F>
-auto destinationIndices(const G& x, const J& ks, F fp) {
-  using K = typename G::key_type; vector<K> a;
-  auto ids = valueIndicesUnorderedMap(ks);
-  for (auto u : ks) {
-    copyAppend(x.edgeKeys(u), a);
-    auto ie = a.end(), ib = ie-x.degree(u);
-    fp(ib, ie); transform(ib, ie, ib, [&](auto v) { return K(ids[v]); });
-  }
+template <class G, class J, class T>
+auto destinationIndicesAs(const G& x, const J& ks, T _) {
+  auto ids = valueIndicesUnorderedMap(ks); vector<T> a;
+  for (auto u : ks)
+    x.forEachEdgeKey(u, [&](auto v) { a.push_back(T(ids[v])); });
   return a;
 }
+template <class G, class T>
+auto destinationIndices(const G& x, T _) {
+  return destinationIndicesAs(x, x.vertexKeys(), _);
+}
+
 template <class G, class J>
-inline auto destinationIndices(const G& x, const J& ks) {
-  return destinationIndices(x, ks, [](auto ib, auto ie) {});
+auto destinationIndices(const G& x, const J& ks) {
+  using K = typename G::key_type;
+  return destinationIndicesAs(x, ks, K());
 }
 template <class G>
 inline auto destinationIndices(const G& x) {
-  return destinationIndices(x, x.vertexKeys());
+  using K = typename G::key_type;
+  return destinationIndicesAs(x, K());
 }
