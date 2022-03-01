@@ -377,7 +377,7 @@ inline auto copy_vector(I ib, I ie) {
   return a;
 }
 template <class J>
-inline auto copy_vector(const J& x) {
+inline auto copyVector(const J& x) {
   return copy_vector(x.begin(), x.end());
 }
 
