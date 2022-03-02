@@ -51,7 +51,7 @@ auto destinationIndicesAs(const G& x, const J& ks, T _) {
   return a;
 }
 template <class G, class T>
-auto destinationIndices(const G& x, T _) {
+auto destinationIndicesAs(const G& x, T _) {
   return destinationIndicesAs(x, x.vertexKeys(), _);
 }
 
