@@ -33,6 +33,25 @@ using std::inplace_merge;
 
 
 
+// FIRST
+// -----
+// First position.
+
+template <class I>
+inline auto first_value(I ib, I ie) {
+  using T = typename iterator_traits<I>::value_type;
+  T a = ib != ie? *ib : T();
+  return a;
+}
+
+template <class J>
+inline auto firstValue(const J& x) {
+  return first_value(x.begin(), x.end());
+}
+
+
+
+
 // FOR-EACH
 // --------
 // Perform a sale.

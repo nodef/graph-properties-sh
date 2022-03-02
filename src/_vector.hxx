@@ -1,19 +1,17 @@
 #pragma once
 #include <cmath>
 #include <type_traits>
+#include <algorithm>
 #include <iterator>
+#include <utility>
 #include <array>
 #include <vector>
-#include <map>
-#include <algorithm>
-#include <utility>
-#include "_openmp.hxx"
+#include "_algorithm.hxx"
 
 using std::remove_reference_t;
 using std::iterator_traits;
 using std::array;
 using std::vector;
-using std::map;
 using std::abs;
 using std::max;
 using std::sqrt;
@@ -68,7 +66,7 @@ size_t size3d(const vector3d<T>& x) {
 // Ref: https://stackoverflow.com/a/22183350/1413259
 
 template <class T, class K>
-void reorderDirty(vector<T>& x, vector<K>& is) {
+void reorderDirtyU(vector<T>& x, vector<K>& is) {
   for(size_t i=0, N=x.size(); i<N; ++i) {
     while(is[i] != is[is[i]]) {
       swap(x[is[i]], x[is[is[i]]]);
@@ -77,8 +75,8 @@ void reorderDirty(vector<T>& x, vector<K>& is) {
   }
 }
 template <class T, class K>
-inline void reorder(vector<T>& x, vector<K> is) {
-  reorderDirty(x, is);
+inline void reorderU(vector<T>& x, vector<K> is) {
+  reorderDirtyU(x, is);
 }
 
 
@@ -88,48 +86,52 @@ inline void reorder(vector<T>& x, vector<K> is) {
 // -----
 
 template <class T>
-inline void eraseIndex(vector<T>& a, size_t i) {
+inline void eraseAtU(vector<T>& a, size_t i) {
   a.erase(a.begin()+i);
 }
 template <class T>
-inline void eraseIndex(vector<T>& a, size_t i, size_t I) {
+inline void eraseRangeU(vector<T>& a, size_t i, size_t I) {
   a.erase(a.begin()+i, a.begin()+I);
 }
 
 
 
 
-// INSERT-VALUE-AT
-// ---------------
+// INSERT
+// ------
 
 template <class T>
-inline void insertValueAt(vector<T>& a, size_t i, const T& v) {
+inline void insertValueAtU(vector<T>& a, size_t i, const T& v) {
   a.insert(a.begin()+i, v);
 }
 template <class T>
-inline void insertValueAt(vector<T>& a, size_t i, size_t n, const T& v) {
+inline void insertValuesAtU(vector<T>& a, size_t i, size_t n, const T& v) {
   a.insert(a.begin()+i, n, v);
 }
 
 
 
 
-// PARITITON-VALUES
-// ----------------
+// BREAK
+// -----
 
 template <class J, class T, class F>
-void partitionValues(const J& x, vector2d<T>& a, F fn) {
+void breakValues(const J& x, vector2d<T>& a, F fn) {
   for (const auto& v : x) {
     auto& b = a.back();
     if (a.empty() || !fn(b, v)) a.push_back({v});
     else b.push_back(v);
   }
 }
+template <class J, class T, class F>
+inline void breakValuesW(vector2d<T>& a, const J& x, F fn) {
+  breakValues(x, a, fn);
+}
+
 template <class J, class F>
-inline auto partitionValuesVector(const J& x, F fn) {
-  using I = decltype(x.begin());
-  using T = typename iterator_traits<I>::value_type;
-  vector2d<T> a; partitionValues(x, a, fn);
+inline auto breakValuesVector(const J& x, F fn) {
+  using T = decltype(firstValue(x));
+  vector2d<T> a; breakValues(x, a, fn);
   return a;
 }
 
@@ -147,11 +149,14 @@ void joinIf(const J& xs, vector2d<T>& a, F fn) {
     else copyAppend(x, b);
   }
 }
+template <class J, class T, class F>
+inline void joinIfW(vector2d<T>& a, const J& xs, F fn) {
+  joinIf(xs, a, fn);
+}
+
 template <class J, class F>
 inline auto joinIfVector(const J& xs, F fn) {
-  using I = decltype(xs.begin());
-  using X = typename iterator_traits<I>::value_type;
-  using T = typename X::value_type;  // only for vector!
+  using T = decltype(firstValue(firstValue(xs)));
   vector2d<T> a; joinIf(xs, a, fn);
   return a;
 }
@@ -162,11 +167,14 @@ inline void joinUntilSize(const J& xs, vector2d<T>& a, size_t S) {
   auto fn = [&](const auto& b, const auto& x) { return b.size()<S; };
   joinIf(xs, a, fn);
 }
+template <class J, class T>
+inline void joinUntilSizeW(vector2d<T>& a, const J& xs, size_t S) {
+  joinUntilSize(xs, a, S);
+}
+
 template <class J>
 inline auto joinUntilSizeVector(const J& xs, size_t S) {
-  using I = decltype(xs.begin());
-  using X = typename iterator_traits<I>::value_type;
-  using T = typename X::value_type;  // only for vector!
+  using T = decltype(firstValue(firstValue(xs)));
   vector2d<T> a; joinUntilSize(xs, a, S);
   return a;
 }
@@ -177,11 +185,14 @@ void joinValues(const J& xs, vector<T>& a) {
   for (const auto& x : xs)
     copyAppend(x, a);
 }
+template <class J, class T>
+inline void joinValuesW(vector<T>& a, const J& xs) {
+  joinValues(xs, a);
+}
+
 template <class J>
 inline auto joinValuesVector(const J& xs) {
-  using I = decltype(xs.begin());
-  using X = typename iterator_traits<I>::value_type;
-  using T = typename X::value_type;  // only for vector!
+  using T = decltype(firstValue(firstValue(xs)));
   vector<T> a; joinValues(xs, a);
   return a;
 }
@@ -189,14 +200,19 @@ inline auto joinValuesVector(const J& xs) {
 
 
 
-// JOIN-AT-*
-// ---------
+// JOIN-AT
+// -------
 
 template <class T, class J>
 void joinAt(const vector2d<T>& xs, const J& is, vector<T>& a) {
   for (auto i : is)
     copyAppend(xs[i], a);
 }
+template <class T, class J>
+inline void joinAtW(vector<T>& a, const vector2d<T>& xs, const J& is) {
+  joinAt(xs, is, a);
+}
+
 template <class T, class J>
 inline auto joinAtVector(const vector2d<T>& xs, const J& is) {
   vector<T> a; joinAt(xs, is, a);
@@ -213,6 +229,11 @@ void joinAtIf(const vector2d<T>& xs, const J& is, vector2d<T>& a, F fn) {
   }
 }
 template <class T, class J, class F>
+inline void joinAtIfW(vector2d<T>& a, const vector2d<T>& xs, const J& is, F fn) {
+  joinAtIf(xs, is, a, fn);
+}
+
+template <class T, class J, class F>
 inline auto joinAtIfVector(const vector2d<T>& xs, const J& is, F fn) {
   vector2d<T> a; joinAtIf(xs, is, a, fn);
   return a;
@@ -220,10 +241,15 @@ inline auto joinAtIfVector(const vector2d<T>& xs, const J& is, F fn) {
 
 
 template <class T, class J>
-void joinAtUntilSize(const vector2d<T>& xs, const J& is, vector2d<T>& a, size_t N) {
+inline void joinAtUntilSize(const vector2d<T>& xs, const J& is, vector2d<T>& a, size_t N) {
   auto fn = [&](const auto& b, const auto& x) { return b.size()<N; };
   joinAtIf(xs, is, a, fn);
 }
+template <class T, class J>
+inline void joinAtUntilSizeW(vector2d<T>& a, const vector2d<T>& xs, const J& is, size_t N) {
+  joinAtUntilSize(xs, is, a, N);
+}
+
 template <class T, class J>
 inline auto joinAtUntilSizeVector(const vector2d<T>& xs, const J& is, size_t N) {
   vector2d<T> a; joinAtUntilSize(xs, is, a, N);
@@ -236,6 +262,11 @@ void joinAt2d(const vector2d<T>& xs, const J& ig, vector2d<T>& a) {
   for (const auto& is : ig)
     a.push_back(joinAtVector(xs, is));
 }
+template <class T, class J>
+inline void joinAt2dW(vector2d<T>& a, const vector2d<T>& xs, const J& ig) {
+  joinAt2d(xs, ig, a);
+}
+
 template <class T, class J>
 inline auto joinAt2dVector(const vector2d<T>& xs, const J& ig) {
   vector2d<T> a; joinAt2d(xs, ig, a);
@@ -259,6 +290,15 @@ inline void gatherValues(const vector<T>& x, const J& is, vector<TA>& a) {
   gatherValues(x.data(), is, a.data());
 }
 
+template <class T, class J, class TA>
+inline void gatherValuesW(TA *a, const T *x, const J& is) {
+  gatherValues(x, is, a);
+}
+template <class T, class J, class TA>
+inline void gatherValuesW(vector<TA>& a, const vector<T>& x, const J& is) {
+  gatherValues(x, is, a);
+}
+
 
 
 
@@ -274,6 +314,15 @@ void scatterValues(const T *x, const J& is, TA *a) {
 template <class T, class J, class TA>
 inline void scatterValues(const vector<T>& x, const J& is, vector<TA>& a) {
   scatterValues(x.data(), is, a.data());
+}
+
+template <class T, class J, class TA>
+inline void scatterValuesW(TA *a, const T *x, const J& is) {
+  scatterValues(x, is, a);
+}
+template <class T, class J, class TA>
+inline void scatterValuesW(vector<TA>& a, const vector<T>& x, const J& is) {
+  scatterValues(x, is, a);
 }
 
 
@@ -297,6 +346,19 @@ inline size_t copyValues(const vector<T>& x, vector<TA>& a, size_t i, size_t N) 
   return copyValues(x.data()+i, a.data()+i, N);
 }
 
+template <class T, class TA>
+inline size_t copyValuesW(TA *a, const T *x, size_t N) {
+  return copyValues(x, a, N);
+}
+template <class T, class TA>
+inline size_t copyValuesW(vector<TA>& a, const vector<T>& x) {
+  return copyValues(x, a);
+}
+template <class T, class TA>
+inline size_t copyValuesW(vector<TA>& a, const vector<T>& x, size_t i, size_t N) {
+  return copyValues(x, a, i, N);
+}
+
 
 
 
@@ -304,15 +366,15 @@ inline size_t copyValues(const vector<T>& x, vector<TA>& a, size_t i, size_t N) 
 // ----------
 
 template <class T, class V>
-void fillValue(T *a, size_t N, const V& v) {
+void fillValueU(T *a, size_t N, const V& v) {
   fill(a, a+N, v);
 }
 template <class T, class V>
-inline void fillValue(vector<T>& a, const V& v) {
+inline void fillValueU(vector<T>& a, const V& v) {
   fill(a.begin(), a.end(), v);
 }
 template <class T, class V>
-inline void fillValue(vector<T>& a, size_t i, size_t N, const V& v) {
+inline void fillValueU(vector<T>& a, size_t i, size_t N, const V& v) {
   fill(a.begin()+i, a.begin()+i+N, v);
 }
 
@@ -323,17 +385,17 @@ inline void fillValue(vector<T>& a, size_t i, size_t N, const V& v) {
 // -------------
 
 template <class T, class J, class V>
-void fillValueAt(T *a, const J& is, const V& v) {
+void fillValueAtU(T *a, const J& is, const V& v) {
   for (auto i : is)
     a[i] = v;
 }
 template <class T, class J, class V>
-inline void fillValueAt(vector<T>& a, const J& is, const V& v) {
-  fillValueAt(a.data(), is, v);
+inline void fillValueAtU(vector<T>& a, const J& is, const V& v) {
+  fillValueAtU(a.data(), is, v);
 }
 template <class T, class J, class V>
-inline void fillValueAt(vector<T>& a, size_t i, const J& is, const V& v) {
-  fillValueAt(a.data()+i, is, v);
+inline void fillValueAtU(vector<T>& a, size_t i, const J& is, const V& v) {
+  fillValueAtU(a.data()+i, is, v);
 }
 
 
@@ -431,17 +493,17 @@ inline V sumValuesAt(const vector<T>& x, size_t i, const J& is, V a=V()) {
 // ---------
 
 template <class T, class V>
-void addValue(T *a, size_t N, const V& v) {
+void addValueU(T *a, size_t N, const V& v) {
   for (size_t i=0; i<N; ++i)
     a[i] += v;
 }
 template <class T, class V>
-inline void addValue(vector<T>& a, const V& v) {
-  addValue(a.data(), a.size(), v);
+inline void addValueU(vector<T>& a, const V& v) {
+  addValueU(a.data(), a.size(), v);
 }
 template <class T, class V>
-inline void addValue(vector<T>& a, size_t i, size_t N, const V& v) {
-  addValue(a.data()+i, N, v);
+inline void addValueU(vector<T>& a, size_t i, size_t N, const V& v) {
+  addValueU(a.data()+i, N, v);
 }
 
 
@@ -451,17 +513,17 @@ inline void addValue(vector<T>& a, size_t i, size_t N, const V& v) {
 // ------------
 
 template <class T, class J, class U>
-void addValueAt(T *a, const J& is, const U& v) {
+void addValueAtU(T *a, const J& is, const U& v) {
   for (auto i : is)
     a[i] += v;
 }
 template <class T, class J, class U>
-inline void addValueAt(vector<T>& a, const J& is, const U& v) {
-  addValueAt(a.data(), is, v);
+inline void addValueAtU(vector<T>& a, const J& is, const U& v) {
+  addValueAtU(a.data(), is, v);
 }
 template <class T, class J, class U>
-inline void addValueAt(vector<T>& a, size_t i, const J& is, const U& v) {
-  addValueAt(a.data()+i, is, v);
+inline void addValueAtU(vector<T>& a, size_t i, const J& is, const U& v) {
+  addValueAtU(a.data()+i, is, v);
 }
 
 
@@ -534,17 +596,17 @@ inline V maxAt(const vector<T>& x, size_t i, const J& is, V a=V()) {
 // -------------
 
 template <class T, class V>
-void constrainMax(T *a, size_t N, const V& v) {
+void constrainMaxU(T *a, size_t N, const V& v) {
   for (size_t i=0; i<N; ++i)
     a[i] = max(a[i], v);
 }
 template <class T, class V>
-inline void constrainMax(vector<T>& a, const V& v) {
-  constrainMax(a.data(), a.size(), v);
+inline void constrainMaxU(vector<T>& a, const V& v) {
+  constrainMaxU(a.data(), a.size(), v);
 }
 template <class T, class V>
-inline void constrainMax(vector<T>& a, size_t i, size_t N, const V& v) {
-  constrainMax(a.data()+i, N, v);
+inline void constrainMaxU(vector<T>& a, size_t i, size_t N, const V& v) {
+  constrainMaxU(a.data()+i, N, v);
 }
 
 
@@ -554,17 +616,17 @@ inline void constrainMax(vector<T>& a, size_t i, size_t N, const V& v) {
 // ----------------
 
 template <class T, class J, class V>
-void constrainMaxAt(T *a, const J& is, const V& v) {
+void constrainMaxAtU(T *a, const J& is, const V& v) {
   for (auto i : is)
     a[i] = max(a[i], v);
 }
 template <class T, class J, class V>
-inline void constrainMaxAt(vector<T>& a, const J& is, const V& v) {
-  constrainMaxAt(a.data(), is, v);
+inline void constrainMaxAtU(vector<T>& a, const J& is, const V& v) {
+  constrainMaxAtU(a.data(), is, v);
 }
 template <class T, class J, class V>
-inline void constrainMaxAt(vector<T>& a, size_t i, const J& is, const V& v) {
-  constrainMaxAt(a.data()+i, is, v);
+inline void constrainMaxAtU(vector<T>& a, size_t i, const J& is, const V& v) {
+  constrainMaxAtU(a.data()+i, is, v);
 }
 
 
@@ -637,17 +699,17 @@ inline V minValueAt(const vector<T>& x, size_t i, const J& is, V a=V()) {
 // -------------
 
 template <class T, class V>
-void constrainMin(T *a, size_t N, const V& v) {
+void constrainMinU(T *a, size_t N, const V& v) {
   for (size_t i=0; i<N; ++i)
     a[i] = min(a[i], v);
 }
 template <class T, class V>
-inline void constrainMin(vector<T>& a, const V& v) {
-  constrainMin(a.data(), a.size(), v);
+inline void constrainMinU(vector<T>& a, const V& v) {
+  constrainMinU(a.data(), a.size(), v);
 }
 template <class T, class V>
-inline void constrainMin(vector<T>& a, size_t i, size_t N, const V& v) {
-  constrainMin(a.data()+i, N, v);
+inline void constrainMinU(vector<T>& a, size_t i, size_t N, const V& v) {
+  constrainMinU(a.data()+i, N, v);
 }
 
 
@@ -657,17 +719,17 @@ inline void constrainMin(vector<T>& a, size_t i, size_t N, const V& v) {
 // ----------------
 
 template <class T, class J, class V>
-void constrainMinAt(T *a, const J& is, const V& v) {
+void constrainMinAtU(T *a, const J& is, const V& v) {
   for (auto i : is)
     a[i] = min(a[i], v);
 }
 template <class T, class J, class V>
-inline void constrainMinAt(vector<T>& a, const J& is, const V& v) {
-  constrainMinAt(a.data(), is, v);
+inline void constrainMinAtU(vector<T>& a, const J& is, const V& v) {
+  constrainMinAtU(a.data(), is, v);
 }
 template <class T, class J, class V>
-inline void constrainMinAt(vector<T>& a, size_t i, const J& is, const V& v) {
-  constrainMinAt(a.data()+i, is, v);
+inline void constrainMinAtU(vector<T>& a, size_t i, const J& is, const V& v) {
+  constrainMinAtU(a.data()+i, is, v);
 }
 
 
@@ -753,6 +815,19 @@ inline void multiplyValues(const vector<TX>& x, const vector<TY>& y, vector<TA>&
   multiplyValues(x.data()+i, y.data()+i, a.data()+i, N);
 }
 
+template <class TA, class TX, class TY>
+inline void multiplyValuesW(TA *a, const TX *x, const TY *y, size_t N) {
+  multiplyValues(x, y, a, N);
+}
+template <class TX, class TY, class TA>
+inline void multiplyValuesW(vector<TA>& a, const vector<TX>& x, const vector<TY>& y) {
+  multiplyValues(x, y, a);
+}
+template <class TX, class TY, class TA>
+inline void multiplyValuesW(vector<TA>& a, const vector<TX>& x, const vector<TY>& y, size_t i, size_t N) {
+  multiplyValues(x, y, a, i, N);
+}
+
 
 
 
@@ -760,7 +835,7 @@ inline void multiplyValues(const vector<TX>& x, const vector<TY>& y, vector<TA>&
 // --------------
 
 template <class T, class TA, class V>
-void multiplyValue(const T *x, const TA *a, size_t N, const V& v) {
+void multiplyValue(const T *x, TA *a, size_t N, const V& v) {
   for (size_t i=0; i<N; i++)
     a[i] = TA(x[i] * v);
 }
@@ -771,4 +846,17 @@ inline void multiplyValue(const vector<T>& x, vector<TA>& a, const V& v) {
 template <class T, class TA, class V>
 inline void multiplyValue(const vector<T>& x, vector<TA>& a, size_t i, size_t N, const V& v) {
   multiplyValue(x.data()+i, a.data()+i, N, v);
+}
+
+template <class TA, class T, class V>
+inline void multiplyValueW(TA *a, const T *x, size_t N, const V& v) {
+  multiplyValue(x, a, N, v);
+}
+template <class TA, class T, class V>
+inline void multiplyValueW(vector<TA>& a, const vector<T>& x, const V& v) {
+  multiplyValue(x, a, v);
+}
+template <class T, class TA, class V>
+inline void multiplyValueW(vector<TA>& a, const vector<T>& x, size_t i, size_t N, const V& v) {
+  multiplyValue(x, a, i, N, v);
 }
