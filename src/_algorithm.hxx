@@ -498,33 +498,61 @@ template <class IX, class IA, class FM>
 inline auto transform_values(IX xb, IX xe, IA ab, FM fm) {
   return transform(xb, xe, ab, fm);
 }
+template <class IX, class IY, class IA, class FM>
+inline auto transform_values(IX xb, IX xe, IY yb, IA ab, FM fm) {
+  return transform(xb, xe, yb, ab, fm);
+}
 template <class JX, class JA, class FM>
 inline size_t transformValues(const JX& x, JA& a, FM fm) {
-  auto   it = transform(x.begin(), x.end(), a.begin(), fm);
+  auto   it = transform_values(x.begin(), x.end(), a.begin(), fm);
+  return it - a.begin();
+}
+template <class JX, class JY, class JA, class FM>
+inline size_t transformValues(const JX& x, const JY& y, JA& a, FM fm) {
+  auto   it = transform_values(x.begin(), x.end(), y.begin(), a.begin(), fm);
   return it - a.begin();
 }
 
 
-template <class I, class T, class FM>
-inline auto transform_append(I ib, I ie, vector<T>& a, FM fm) {
-  return transform(ib, ie, back_inserter(a), fm);
+template <class IX, class T, class FM>
+inline auto transform_append(IX xb, IX xe, vector<T>& a, FM fm) {
+  return transform_values(xb, xe, back_inserter(a), fm);
 }
-template <class J, class T, class FM>
-inline size_t transformAppend(const J& x, vector<T>& a, FM fm) {
+template <class IX, class IY, class T, class FM>
+inline auto transform_append(IX xb, IX xe, IY yb, vector<T>& a, FM fm) {
+  return transform_values(xb, xe, yb, back_inserter(a), fm);
+}
+template <class JX, class T, class FM>
+inline size_t transformAppend(const JX& x, vector<T>& a, FM fm) {
   auto   it = transform_append(x.begin(), x.end(), a, fm);
   return it - a.begin();
 }
+template <class JX, class JY, class T, class FM>
+inline size_t transformAppend(const JX& x, const JY& y, vector<T>& a, FM fm) {
+  auto   it = transform_append(x.begin(), x.end(), y.begin(), a, fm);
+  return it - a.begin();
+}
 
 
-template <class I, class FM>
-inline auto transform_vector(I ib, I ie, FM fm) {
-  using T = typename iterator_traits<I>::value_type; vector<T> a;
-  transform_append(ib, ie, a, fm);
+template <class IX, class FM>
+inline auto transform_vector(IX xb, IX xe, FM fm) {
+  using T = remove_reference_t<decltype(fm(*xb))>; vector<T> a;
+  transform_append(xb, xe, a, fm);
   return a;
 }
-template <class J, class FM>
-inline auto transformVector(const J& x, FM fm) {
+template <class IX, class IY, class FM>
+inline auto transform_vector(IX xb, IX xe, IY yb, FM fm) {
+  using T = remove_reference_t<decltype(fm(*xb, *yb))>; vector<T> a;
+  transform_append(xb, xe, yb, a, fm);
+  return a;
+}
+template <class JX, class FM>
+inline auto transformVector(const JX& x, FM fm) {
   return transform_vector(x.begin(), x.end(), fm);
+}
+template <class JX, class JY, class FM>
+inline auto transformVector(const JX& x, const JY& y, FM fm) {
+  return transform_vector(x.begin(), x.end(), y.begin(), fm);
 }
 
 
