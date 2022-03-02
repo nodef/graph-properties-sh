@@ -19,7 +19,7 @@ auto components(const G& x, const H& xt) {
   // original dfs
   auto vis = createContainer(x, bool());
   x.forEachVertexKey([&](auto u) {
-    if (!vis[u]) dfsEndTo(vs, vis, x, u);
+    if (!vis[u]) dfsEndW(vs, vis, x, u);
   });
   // transpose dfs
   fillValue(vis, false);
@@ -27,7 +27,7 @@ auto components(const G& x, const H& xt) {
     auto u = vs.back(); vs.pop_back();
     if (vis[u]) continue;
     a.push_back(vector<K>());
-    dfsTo(a.back(), vis, xt, u);
+    dfsW(a.back(), vis, xt, u);
   }
   return a;
 }
@@ -58,7 +58,7 @@ auto componentIds(const G& x, const vector2d<K>& cs) {
 // Each component is represented as a vertex.
 
 template <class H, class G, class K>
-void blockgraphTo(H& a, const G& x, const vector2d<K>& cs) {
+void blockgraphW(H& a, const G& x, const vector2d<K>& cs) {
   auto c = componentIds(x, cs);
   x.forEachVertexKey([&](auto u) {
     a.addVertex(c[u]);
@@ -70,7 +70,7 @@ void blockgraphTo(H& a, const G& x, const vector2d<K>& cs) {
 }
 template <class G, class K>
 inline auto blockgraph(const G& x, const vector2d<K>& cs) {
-  G a; blockgraphTo(a, x, cs);
+  G a; blockgraphW(a, x, cs);
   return a;
 }
 

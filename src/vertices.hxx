@@ -76,18 +76,18 @@ inline auto createCompressedContainer(const G& x, const T& _) {
 // --------------------
 
 template <class G, class T, class J>
-inline void decompressContainerTo(vector<T>& a, const G& x, const vector<T>& vs, const J& ks) {
-  scatterValues(vs, ks, a);
+inline void decompressContainerW(vector<T>& a, const G& x, const vector<T>& vs, const J& ks) {
+  scatterValuesW(a, vs, ks);
 }
 template <class G, class T>
-inline void decompressContainerTo(vector<T>& a, const G& x, const vector<T>& vs) {
-  decompressContainerTo(a, x, vs, x.vertexKeys());
+inline void decompressContainerW(vector<T>& a, const G& x, const vector<T>& vs) {
+  decompressContainerW(a, x, vs, x.vertexKeys());
 }
 
 template <class G, class T, class J>
 inline auto decompressContainer(const G& x, const vector<T>& vs, const J& ks) {
   auto a = createContainer(x, T());
-  decompressContainerTo(a, x, vs, ks);
+  decompressContainerW(a, x, vs, ks);
   return a;
 }
 template <class G, class T>
@@ -102,18 +102,18 @@ inline auto decompressContainer(const G& x, const vector<T>& vs) {
 // ------------------
 
 template <class G, class T, class J>
-inline void compressContainerTo(vector<T>& a, const G& x, const vector<T>& vs, const J& ks) {
-  gatherValues(vs, ks, a);
+inline void compressContainerW(vector<T>& a, const G& x, const vector<T>& vs, const J& ks) {
+  gatherValuesW(a, vs, ks);
 }
 template <class G, class T>
-inline void compressContainerTo(vector<T>& a, const G& x, const vector<T>& vs) {
-  return compressContainerTo(a, x, vs, x.vertexKeys());
+inline void compressContainerW(vector<T>& a, const G& x, const vector<T>& vs) {
+  return compressContainerW(a, x, vs, x.vertexKeys());
 }
 
 template <class G, class T, class J>
 inline auto compressContainer(const G& x, const vector<T>& vs, const J& ks) {
   auto a = createCompressedContainer(x, T());
-  compressContainerTo(a, x, vs, ks);
+  compressContainerW(a, x, vs, ks);
   return a;
 }
 template <class G, class T>

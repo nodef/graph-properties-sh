@@ -134,23 +134,23 @@ void showAll(const char *pre, const G& x, const H& xt, const Options& o) {
 // ------------
 
 template <class G>
-void doTransformTo(G& a, GraphTransform o) {
+void doTransformW(G& a, GraphTransform o) {
   typedef GraphTransform T;
   switch (o) {
     default: break;
     case T::IDENTITY: break;
     case T::LOOP_DEADENDS:
-      selfLoopTo(a, [&](int u) { return isDeadEnd(a, u); });
+      selfLoopW(a, [&](int u) { return isDeadEnd(a, u); });
       print(a); printf(" (loopDeadEnds)\n"); break;
     case T::LOOP_VERTICES:
-      selfLoopTo(a, [&](int u) { return true; });
+      selfLoopW(a, [&](int u) { return true; });
       print(a); printf(" (loopVertices)\n"); break;
   }
 }
 
 template <class G>
 auto doTransform(const G& x, GraphTransform o) {
-  auto a = duplicate(x); doTransformTo(a, o);
+  auto a = duplicate(x); doTransformW(a, o);
   return a;
 }
 
@@ -163,7 +163,7 @@ auto doTransform(const G& x, GraphTransform o) {
 void runMtx(const Options& o) {
   printf("Loading graph %s ...\n", o.file.c_str());
   auto x  = readMtxOutDiGraph(o.file.c_str()); println(x);
-  doTransformTo(x, o.transform);
+  doTransformW(x, o.transform);
   auto xt = transposeWithDegree(x);
   print(xt); printf(" (transposeWithDegree)\n");
   showAll("", x, xt, o);
@@ -184,7 +184,7 @@ void runSnap(const Options& o) {
   DiGraph<> xo;
   stringstream s(data);
   for (int i=0;; ++i) {
-    if (!readSnapTemporalTo(xo, s, jump)) break; println(xo);
+    if (!readSnapTemporalW(xo, s, jump)) break; println(xo);
     auto x  = doTransform(xo, o.transform);
     auto xt = transposeWithDegree(x);
     print(xt); printf(" (transposeWithDegree)\n");

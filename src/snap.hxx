@@ -17,7 +17,7 @@ using std::getline;
 // ------------------
 
 template <class G>
-bool readSnapTemporalLineTo(G& a, const string& ln, bool sym=false) {
+bool readSnapTemporalLineW(G& a, const string& ln, bool sym=false) {
   using K = typename G::key_type;
   K u, v; int t; stringstream ls(ln);
   if (!(ls >> u >> v >> t)) return false;
@@ -26,11 +26,11 @@ bool readSnapTemporalLineTo(G& a, const string& ln, bool sym=false) {
   return true;
 }
 template <class G>
-bool readSnapTemporalTo(G& a, istream& s, size_t N, bool sym=false) {
+bool readSnapTemporalW(G& a, istream& s, size_t N, bool sym=false) {
   size_t i = 0;
   for (; i<N; ++i) {
     string ln; getline(s, ln);
-    if (!readSnapTemporalLineTo(a, ln, sym)) break;
+    if (!readSnapTemporalLineW(a, ln, sym)) break;
   }
   a.correct();
   return i>0;

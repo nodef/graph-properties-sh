@@ -28,7 +28,7 @@ auto topologicalSort(const G& x) {
   using K = typename G::key_type; vector<K> a;
   auto vis = createContainer(x, bool());
   x.forEachVertexKey([&](auto u) {
-    if (!vis[u]) dfsEndTo(a, vis, x, u);
+    if (!vis[u]) dfsEndW(a, vis, x, u);
   });
   reverse(a.begin(), a.end());
   return a;
@@ -98,9 +98,9 @@ inline auto levelwiseGroupIndices(const G& x, const H& xt) {
 // Get components in topological order.
 
 template <class G, class K>
-inline void topologicalComponentsTo(vector2d<K>& cs, const G& b) {
+inline void topologicalComponentsW(vector2d<K>& cs, const G& b) {
   auto bks = topologicalSort(b);
-  reorderDirty(cs, bks);
+  reorderDirtyU(cs, bks);
 }
 template <class G, class K>
 inline auto topologicalComponentsFrom(const vector2d<K>& cs, const G& b) {
@@ -111,7 +111,7 @@ template <class G, class H>
 inline auto topologicalComponents(const G& x, const H& xt) {
   auto cs = components(x, xt);
   auto b  = blockgraph(x, cs);
-  topologicalComponentsTo(cs, b);
+  topologicalComponentsW(cs, b);
   return cs;
 }
 
@@ -122,9 +122,9 @@ inline auto topologicalComponents(const G& x, const H& xt) {
 // --------------------
 
 template <class G, class H, class K>
-inline void levelwiseComponentsTo(vector2d<K>& cs, const G& b, const H& bt) {
+inline void levelwiseComponentsW(vector2d<K>& cs, const G& b, const H& bt) {
   auto bks = levelwiseSort(b, bt);
-  reorderDirty(cs, bks);
+  reorderDirtyU(cs, bks);
 }
 template <class G, class H, class K>
 inline auto levelwiseComponentsFrom(const vector2d<K>& cs, const G& b, const H& bt) {
@@ -136,7 +136,7 @@ inline auto levelwiseComponents(const G& x, const H& xt) {
   auto cs = components(x, xt);
   auto b  = blockgraph(x, cs);
   auto bt = transpose(x);
-  levelwiseComponentsTo(cs, b, bt);
+  levelwiseComponentsW(cs, b, bt);
   return cs;
 }
 

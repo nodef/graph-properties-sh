@@ -40,13 +40,13 @@ inline void dfsMark(const G& x, K u) {
 }
 
 template <class G, class K>
-inline void dfsTo(vector<K>& a, vector<bool>& vis, const G& x, K u) {
+inline void dfsW(vector<K>& a, vector<bool>& vis, const G& x, K u) {
   dfsDoLoop(vis, x, u, [&](auto u) { a.push_back(u); });
 }
 template <class G, class K>
 inline auto dfs(const G& x, K u) {
   auto vis = createContainer(x, bool());
-  vector<K> a; dfsTo(a, vis, x, u);
+  vector<K> a; dfsW(a, vis, x, u);
   return a;
 }
 
@@ -85,13 +85,13 @@ inline void dfsEndMark(const G& x, K u) {
 }
 
 template <class G, class K>
-inline void dfsEndTo(vector<K>& a, vector<bool>& vis, const G& x, K u) {
+inline void dfsEndW(vector<K>& a, vector<bool>& vis, const G& x, K u) {
   dfsEndDoLoop(vis, x, u, [&](auto v) { a.push_back(v); });
 }
 template <class G, class K>
 inline auto dfsEnd(const G& x, K u) {
   auto vis = createContainer(x, bool());
-  vector<K> a; dfsEndTo(a, vis, x, u);
+  vector<K> a; dfsEndW(a, vis, x, u);
   return a;
 }
 
@@ -129,12 +129,12 @@ inline void dfsDepthMark(const G& x, K u, K d) {
 }
 
 template <class G, class K>
-inline void dfsDepthTo(vector<pair<K, K>>& a, vector<bool>& vis, const G& x, K u, K d) {
+inline void dfsDepthW(vector<pair<K, K>>& a, vector<bool>& vis, const G& x, K u, K d) {
   dfsDepthDoLoop(vis, x, u, d, [&](auto v, auto d) { a.push_back({v, d}); });
 }
 template <class G, class K>
 inline auto dfsDepth(const G& x, K u, K d) {
   auto vis = createContainer(x, bool());
-  vector<pair<K, K>> a; dfsDepthTo(a, vis, x, u, d);
+  vector<pair<K, K>> a; dfsDepthW(a, vis, x, u, d);
   return a;
 }
